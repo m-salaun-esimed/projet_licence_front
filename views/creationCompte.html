@@ -1,0 +1,50 @@
+<h1 class="text-center mt-3">Création d'un compte</h1>
+
+<div class="container mt-5 ">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="text-center mt-3">Création d'un compte </h3>
+                    <form>
+                        <div class="form-group">
+                            <label for="login">Pseudo :</label>
+                            <input type="text" class="form-control" id="pseudo" placeholder="Votre pseudo">
+                        </div>
+                        <div class="form-group input-group mt-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <img src="../images/box-arrow-in-right.svg" alt="Login Image" height="20">
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" id="login" placeholder="Votre login">
+
+                        </div>
+                        <div class="form-group input-group mt-3">
+                            <input type="password" class="form-control" id="password" placeholder="Votre mot de passe">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <img src="../images/lock.svg" alt="Password Image" height="20">
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col d-flex justify-content-center">
+                                <button type="button" class="btn btn-outline-primary" onclick="creationCompteController.pageConnexion()">Page connexion</button>
+                            </div>
+                            <div class="col d-flex justify-content-center">
+                                <button type="button" class="btn btn-outline-primary" onclick="creationCompteController.creationCompte()">Créer un compte</button>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="alert alert-danger mt-3" role="alert" id="danger">
+                        Veuillez remplir tout les champs
+                    </div>
+                    <div class="alert alert-danger mt-3" role="alert" id="erreur">
+                        Le login ou le mot de passe est erroné
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
