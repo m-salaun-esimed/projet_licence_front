@@ -19,40 +19,49 @@ class CreationCompteController extends BaseController {
         let password = document.getElementById("password").value;
         let password2 = document.getElementById("password2").value;
         if (displayName !== "" && login !== "" && password !== "" && password2 !== "") {
-            if (password === password2){
-                try {
-                    const response = await this.userModel.createAccount(displayName, login, password);
-                    if (response.status === 200) {
-                        console.log("Creation Compte réussie");
-                        document.getElementById("erreur").style.display = "none";
+            const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            let verifierSiEmailEstValide =  regexEmail.test(login);
+            if (verifierSiEmailEstValide){
+                if (password === password2){
+                    try {
+                        const response = await this.userModel.createAccount(displayName, login, password);
+                        if (response.status === 200) {
+                            console.log("Creation Compte réussie");
+                            document.getElementById("erreur").style.display = "none";
 
-                        const responseData = await response.json(); // Parse the JSON content
-                        const token = responseData.token;
-                        console.log(token);
-                        sessionStorage.setItem("token", token);
+                            const responseData = await response.json(); // Parse the JSON content
+                            const token = responseData.token;
+                            console.log(token);
+                            sessionStorage.setItem("token", token);
 
-                        navigate("formulaireRoulette")
+                            navigate("formulaireRoulette")
 
-                    } else {
-                        console.log("Échec Creation Compte");
-                        if (response.status === 400) {
-                            const errorData = await response.json();
-                            console.error("Erreur API:", errorData.error);
+                        } else {
+                            console.log("Échec Creation Compte");
+                            if (response.status === 400) {
+                                const errorData = await response.json();
+                                console.error("Erreur API:", errorData.error);
 
-                            const errorDiv = document.getElementById("erreur");
-                            errorDiv.textContent = ""
-                            errorDiv.textContent = errorData.error;
-                            errorDiv.style.display = "block";
+                                const errorDiv = document.getElementById("erreur");
+                                errorDiv.textContent = ""
+                                errorDiv.textContent = errorData.error;
+                                errorDiv.style.display = "block";
+                            }
                         }
+                    }catch (e){
+                        throw e;
                     }
-            }catch (e){
-                    throw e;
                 }
-            }
-            else{
+                else{
+                    const errorDiv = document.getElementById("erreur");
+                    errorDiv.textContent = ""
+                    errorDiv.textContent = "Mot de passe non identique";
+                    errorDiv.style.display = "block";
+                }
+            }else{
                 const errorDiv = document.getElementById("erreur");
                 errorDiv.textContent = ""
-                errorDiv.textContent = "Mot de passe non identique";
+                errorDiv.textContent = "login non comforme : format adresse mail";
                 errorDiv.style.display = "block";
             }
         }else{
