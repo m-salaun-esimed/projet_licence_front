@@ -3,12 +3,11 @@
 <div class="container mt-5 ">
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <div class="card">
+            <div class="card shadow">
                 <div class="card-body">
                     <h3 class="text-center mt-3">Création d'un compte </h3>
                     <form>
                         <div class="form-group">
-                            <label for="login">Pseudo :</label>
                             <input type="text" class="form-control" id="pseudo" placeholder="Votre pseudo">
                         </div>
                         <div class="form-group input-group mt-3">
@@ -17,11 +16,13 @@
                                     <img src="../images/box-arrow-in-right.svg" alt="Login Image" height="20">
                                 </span>
                             </div>
-                            <input type="text" class="form-control" id="login" placeholder="Votre login">
+                            <input type="email" class="form-control" id="login" placeholder="Votre login (adresse mail)">
 
                         </div>
                         <div class="form-group input-group mt-3">
+                            <label>Le mot de passe doit contenir au moins 8 caractères, dont une majuscule, une minuscule, un chiffre et un caractère spécial.</label>
                             <input type="password" class="form-control" id="password" placeholder="Votre mot de passe">
+                            <input type="password" class="form-control" id="password2" placeholder="Verifier votre mot de passe">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">
                                     <img src="../images/lock.svg" alt="Password Image" height="20">
@@ -37,11 +38,9 @@
                             </div>
                         </div>
                     </form>
-                    <div class="alert alert-danger mt-3" role="alert" id="danger">
-                        Veuillez remplir tout les champs
-                    </div>
+
                     <div class="alert alert-danger mt-3" role="alert" id="erreur">
-                        Le login ou le mot de passe est erroné
+
                     </div>
                 </div>
             </div>

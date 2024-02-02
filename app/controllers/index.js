@@ -32,9 +32,9 @@ class IndexController extends BaseController {
     }
 
     async authenticate() {
-        let login = document.getElementById("login").value;
+        let login = document.getElementById("login").value.trim();
         let password = document.getElementById("password").value;
-
+        console.log(`login : ${login}`)
         if (login !== "" && password !== "") {
             console.log(`login, password : ${login}, ${password}`);
 

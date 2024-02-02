@@ -28,10 +28,31 @@
 </style>
 <div class="container mt-3">
     <div class="titre-container">
-        <h1 class="text-center mt-3">Bienvenue sur la roulette à film !</h1>
+        <div class="row mt-3 text-center">
+            <div class="col">
+                <h1 class="text-center ">Bienvenue sur la roulette à film !</h1>
+            </div>
+            <div class="col mt-2">
+                <button type="button" class="text-center btn btn-outline-primary"  data-bs-toggle="modal" data-bs-target="#exampleModal">Deconnexion</button>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            Êtes-vous sûr de vouloir vous déconnecter ?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                            <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" onclick="formulaireRouletteController.deconnexion()">Deconnexion</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="card">
+    <div class="card shadow">
         <div class="row justify-content-center mt-2">
             <div class="col-md-6">
 

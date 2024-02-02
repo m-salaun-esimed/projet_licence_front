@@ -103,6 +103,11 @@ class FormulaireController extends BaseController {
         }
     }
 
+    deconnexion(){
+        console.log("deconnexion")
+        sessionStorage.removeItem("token");
+        navigate("index")
+    }
 
 
 }
