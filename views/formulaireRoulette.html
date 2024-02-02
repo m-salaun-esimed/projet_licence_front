@@ -1,11 +1,10 @@
 <style>
+
+    body{
+        background-color: white;
+    }
     .titre-container {
-        background-color: #395886;
-        border-radius: 15px;
-        padding: 20px;
-        color: white;
-        text-align: center;
-        margin-top: 20px;
+        color: #2C3E50;
     }
 
     .titre-container h1,
@@ -14,59 +13,97 @@
     }
 
     .card-body h1, .card-body h3{
-        color: #628ECB;
+        color: #2C3E50  ;
+    }
+
+    .type{
+        color: black;
+    }
+
+    .card{
+        background-color: white;
+        border-color: black;
+        border-radius: 24px;
     }
 </style>
 <div class="container mt-3">
     <div class="titre-container">
         <h1 class="text-center mt-3">Bienvenue sur la roulette à film !</h1>
-        <h3 class="text-center mt-2">Pour générer une roulette aléatoire, il faut répondre à plusieurs questions :</h3>
     </div>
 
-    <div class="row justify-content-center mt-5">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <h3 class="text-center mt-3">Choisir une plateforme de streaming</h3>
-                    <hr>
-                    <form>
-                        <div class="row mt-3">
-                            <div class="col text-center">
-                                <img src="../images/netflix.jpg" class="img-fluid rounded" alt="Netflix" style="max-width: 100%;">
-                                <label class="mt-2"><input type="checkbox" class="form-check"></label>
+    <div class="card">
+        <div class="row justify-content-center mt-2">
+            <div class="col-md-6">
+
+                    <div class="card-body">
+                        <h3 class="text-center mt-3">Choisir une plateforme de streaming</h3>
+                        <form id="formulaireStreamingPlatform">
+                            <div class="row mt-3">
+                                <div id="platformStreamingDiv">
+
+                                </div>
                             </div>
-                            <div class="col text-center">
-                                <img src="../images/disney.jpg" class="img-fluid rounded" alt="Disney+" style="max-width: 100%;">
-                                <label class="mt-2"><input type="checkbox" class="form-check"></label>
+                            <div class="alert alert-danger mt-2 " role="alert" id="platformStreaming">
+                                Sélectionnez un seul service de streaming
                             </div>
-                            <div class="col text-center">
-                                <img src="../images/amazon.jpg" class="img-fluid rounded" alt="Amazon Prime" style="max-width: 100%;">
-                                <label class="mt-2"><input type="checkbox" class="form-check"></label>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                        </form>
+                    </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="card">
+        <div class="row justify-content-center mt-1">
+            <div class="col-md-6">
+
+                    <div class="card-body">
+                        <h3 class="text-center mt-3">Choisir entre 0 et 2 categories de film</h3>
+                        <form>
+                            <div class="container mt-5">
+                                <div class="row">
+                                    <div class="col">
+                                        <p class="type" id="super_hero">super hero <input type="checkbox"></p>
+                                        <p class="type" id="aventure">aventure <input type="checkbox"></p>
+                                    </div>
+                                    <div class="col">
+                                        <p class="type" id="thrillers">thrillers <input type="checkbox"></p>
+                                        <p class="type" id="comedie">comedie <input type="checkbox"></p>
+                                    </div>
+                                    <div class="col">
+                                        <p class="type" id="scientifique">scientifique <input type="checkbox"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+            </div>
+        </div>
+        <div class="row justify-content-center mt-3 text-center">
+
                 <div class="card-body">
-                    <h3 class="text-center mt-3">Choisir la categories de film que vous souhaitez</h3>
-                    <hr>
+                    <h3 class="text-center mt-3">Plutôt film ou serie ?</h3>
                     <form>
                         <div class="container mt-5">
-                            <div class="form-group">
-                                <label for="exampleCombobox">Sélectionnez une categorie :</label>
-                                <select class="form-control" id="exampleCombobox">
-                                    <option value="">Choisissez...</option>
-                                    <option value="option1">Action</option>
-                                    <option value="option2">Horreur</option>
-                                    <option value="option3">Policier</option>
-                                </select>
+                            <div class="row">
+                                <div class="col">
+                                    <p class="type">Film <input type="checkbox" id="film"></p>
+                                </div>
+                                <div class="col">
+                                    <p class="type">Serie <input type="checkbox" id="serie"></p>
+                                </div>
                             </div>
+                        </div>
+                        <div class="alert alert-danger mt-2 " role="alert" id="type">
+                            Sélectionnez un seul type
                         </div>
                     </form>
                 </div>
+
+        </div>
+
+        <div class="row justify-content-center mt-2 text-center mb-5">
+            <div class="col-md-2"> <!-- Ajustez la classe col-md-* en conséquence -->
+                <button type="button" class="btn btn-outline-primary  w-100" onclick="formulaireRouletteController.traiterFormulaire()">
+                    <img src="../images/plus-circle%20(1).svg" style="width: 30%;" alt="Ajouter">
+                </button>
             </div>
         </div>
     </div>

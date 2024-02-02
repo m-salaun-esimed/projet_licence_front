@@ -1,4 +1,4 @@
-module.exports = class UserModel {
+module.exports = class User {
     constructor(displayName, login, password) {
         this.displayName = displayName
         this.login = login

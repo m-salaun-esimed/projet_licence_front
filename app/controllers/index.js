@@ -49,7 +49,6 @@ class IndexController extends BaseController {
                     const token = responseData.token;
                     console.log(token);
                     sessionStorage.setItem("token", token);
-
                     navigate("formulaireRoulette")
 
                 } else {
