@@ -1,84 +1,39 @@
 import BaseController from "../controllers/basecontroller.js"
-import StreamingPlatformModel from "../dataModel/streamingPlatformModel.js";
+import CategorieModel from "../dataModel/categorieModel.js";
 
 class FormulaireController extends BaseController {
     constructor() {
         super()
-        this.streamingPlatformModel = new StreamingPlatformModel()
-        document.getElementById("platformStreaming").style.display = "none"
-        document.getElementById("type").style.display = "none"
-        this.getStreamingPlatform()
-    }
+        this.categorieModel = new CategorieModel()
 
-    async getStreamingPlatform() {
-        try {
-            const listStreamingPlatform = await this.streamingPlatformModel.getAllStreamingPlatform();
-            console.log(listStreamingPlatform);
-            let platformStreamingDiv = document.getElementById("platformStreamingDiv")
-            if (listStreamingPlatform.length > 0) {
-
-                const selectElement = document.createElement('select');
-                selectElement.className = 'form-control';
-                selectElement.addEventListener('change', (event) => {
-                    this.selectedOption = event.target.value;
-                    console.log('Selected option:', this.selectedOption);
-                });
-                const defaultOptionElement = document.createElement('option');
-                defaultOptionElement.value = undefined; // You can set this to an appropriate default value
-                defaultOptionElement.textContent = 'Veuillez choisir';
-                selectElement.appendChild(defaultOptionElement);
-
-                // Create option elements for each streaming platform
-                listStreamingPlatform.forEach(platform => {
-                    const optionElement = document.createElement('option');
-                    optionElement.value = platform.name; // Assuming the streaming platform has an 'id' property
-                    optionElement.textContent = platform.name; // Assuming the streaming platform has a 'name' property
-                    selectElement.appendChild(optionElement);
-                });
-
-                platformStreamingDiv.appendChild(selectElement);
-            } else {
-                // No streaming platforms found
-                const alertDiv = document.createElement('div');
-                alertDiv.className = 'alert alert-danger mt-2';
-                alertDiv.textContent = 'Aucune plateforme de streaming disponible';
-                platformStreamingDiv.appendChild(alertDiv);
+        document.getElementById("type").style.display = "none";
+        document.getElementById("cardType").style.display = "block"
+        document.getElementById("cardGenres").style.display = "none"
+        if (localStorage.getItem("type") !== null){
+            document.getElementById("cardType").style.display = "none";
+            if (localStorage.getItem("listGenre").length !== 0){
+                navigate("rouletteAleatoire")
             }
-
-        } catch (e) {
-            console.error(e);
-            throw e;
         }
     }
 
-    traiterFormulaire(){
-        this.getFormulaireStreamingPlatform()
-        this.getMovieCategorie()
-        this.getMovieType()
-    }
+    traiterFormulaireType() {
+        const selectedType = document.querySelector('input[name="type"]:checked');
+        if (!selectedType) {
+            document.getElementById("type").style.display = "block";
+            return;
+        }
+        localStorage.setItem("type", selectedType.value);
 
-    getFormulaireStreamingPlatform(){
-        if(this.selectedOption === undefined){
-            console.log("undefined")
-            document.getElementById("platformStreaming").style.display = "block"
-
-        }else {
-            console.log(this.selectedOption)
-            document.getElementById("platformStreaming").style.display = "none"
-
+        if (selectedType.value === "film") {
+            //TODO AFFICHER LES GENRES FILM
+            document.getElementById("cardType").style.display = "none";
+            document.getElementById("cardGenres").style.display = "block";
+            this.getMovieGenres();
+        } else {
+            //TODO AFFICHER LES GENRES SERIE
         }
     }
-
-    getMovieCategorie(){
-        let super_hero = document.getElementById("super_hero").checked
-        let aventure = document.getElementById("aventure").checked
-        let thrillers = document.getElementById("thrillers").checked
-        let comedie = document.getElementById("comedie").checked
-        let scientifique = document.getElementById("scientifique").checked
-
-
-    }
-
     getMovieType(){
         let film = document.getElementById("film").checked
         let serie = document.getElementById("serie").checked
@@ -90,17 +45,67 @@ class FormulaireController extends BaseController {
         } else if (!film && serie) {
             console.log("Série est sélectionnée.");
             this.movieType = "serie";
+            localStorage.setItem("type", "serie")
             document.getElementById("type").style.display = "none";
-            return true
         } else if (film && !serie) {
             console.log("Film est sélectionné.");
             this.movieType = "film";
+            localStorage.setItem("type", "film")
             document.getElementById("type").style.display = "none";
-            return true
         } else {
             console.log("Aucun type sélectionné.");
             document.getElementById("type").style.display = "block";
         }
+    }
+    async getMovieGenres(){
+        const response = await this.categorieModel.getAllCategorieMovie();
+        console.log("getMovieGenres  " + response)
+
+        const maxPerRow = 6;
+
+        const container = document.getElementById('checkboxContainer');
+
+        let row;
+        response.forEach((genre, index) => {
+            if (index % maxPerRow === 0) {
+                row = document.createElement('div');
+                row.classList.add('row');
+                container.appendChild(row);
+            }
+
+            const col = document.createElement('div');
+            col.classList.add('col');
+            const label = document.createElement('label');
+            label.classList.add('type');
+            label.innerHTML = `
+            ${genre.name}
+            <br>
+            <input type="checkbox" name="genre" value="${genre.name}">
+        `;
+            col.appendChild(label);
+            row.appendChild(col);
+        });
+    }
+
+    traiterFormulaireCategorie(){
+        const checkboxes = document.querySelectorAll('input[type="checkbox"][name="genre"]');
+
+        const tab = [];
+
+        checkboxes.forEach(checkbox => {
+            if (checkbox.checked) {
+                tab.push(checkbox.value);
+            }
+        });
+        if (tab.length === 0){
+            alert("Veuillez choisir au minimun un genre de film")
+        }
+        else {
+            localStorage.setItem("listGenre", tab)
+            navigate("rouletteAleatoire")
+        }
+        console.log("Genres sélectionnés :", tab);
+        return tab;
     }
 
     deconnexion(){
@@ -108,8 +113,6 @@ class FormulaireController extends BaseController {
         sessionStorage.removeItem("token");
         navigate("index")
     }
-
-
 }
 
 export default() => window.formulaireRouletteController = new FormulaireController()

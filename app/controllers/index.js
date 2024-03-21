@@ -48,9 +48,10 @@ class IndexController extends BaseController {
                     const responseData = await response.json(); // Parse the JSON content
                     const token = responseData.token;
                     console.log(token);
+                    const user = responseData.user;
+                    console.log("user " + user)
                     sessionStorage.setItem("token", token);
                     navigate("formulaireRoulette")
-
                 } else {
                     console.log("Échec de l'authentification");
                     document.getElementById("erreur").style.display = "block"

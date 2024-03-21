@@ -1,39 +1,15 @@
 <style>
-
-    body{
-        background-color: white;
-    }
-    .titre-container {
-        color: #2C3E50;
-    }
-
-    .titre-container h1,
-    .titre-container h3 {
-        margin-bottom: 15px;
-    }
-
-    .card-body h1, .card-body h3{
-        color: #2C3E50  ;
-    }
-
-    .type{
-        color: black;
-    }
-
-    .card{
-        background-color: white;
-        border-color: black;
-        border-radius: 24px;
-    }
 </style>
 <div class="container mt-3">
     <div class="titre-container">
         <div class="row mt-3 text-center">
-            <div class="col">
-                <h1 class="text-center ">Bienvenue sur la roulette à film !</h1>
+            <div class="col-3">
             </div>
-            <div class="col mt-2">
-                <button type="button" class="text-center btn btn-outline-primary"  data-bs-toggle="modal" data-bs-target="#exampleModal">Deconnexion</button>
+            <div class="col-6 text-center">
+                <h1>Bienvenue sur la roulette à film !</h1>
+            </div>
+            <div class="col-3 text-end">
+                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Déconnexion</button>
             </div>
             <!-- Modal -->
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -52,63 +28,28 @@
         </div>
     </div>
 
-    <div class="card shadow">
-        <div class="row justify-content-center mt-2">
-            <div class="col-md-6">
-
-                    <div class="card-body">
-                        <h3 class="text-center mt-3">Choisir une plateforme de streaming</h3>
-                        <form id="formulaireStreamingPlatform">
-                            <div class="row mt-3">
-                                <div id="platformStreamingDiv">
-
-                                </div>
-                            </div>
-                            <div class="alert alert-danger mt-2 " role="alert" id="platformStreaming">
-                                Sélectionnez un seul service de streaming
-                            </div>
-                        </form>
-                    </div>
-            </div>
-        </div>
-        <div class="row justify-content-center mt-1">
-            <div class="col-md-6">
-
-                    <div class="card-body">
-                        <h3 class="text-center mt-3">Choisir entre 0 et 2 categories de film</h3>
-                        <form>
-                            <div class="container mt-5">
-                                <div class="row">
-                                    <div class="col">
-                                        <p class="type" id="super_hero">super hero <input type="checkbox"></p>
-                                        <p class="type" id="aventure">aventure <input type="checkbox"></p>
-                                    </div>
-                                    <div class="col">
-                                        <p class="type" id="thrillers">thrillers <input type="checkbox"></p>
-                                        <p class="type" id="comedie">comedie <input type="checkbox"></p>
-                                    </div>
-                                    <div class="col">
-                                        <p class="type" id="scientifique">scientifique <input type="checkbox"></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-
-            </div>
-        </div>
+    <div class="card shadow" id="cardType">
         <div class="row justify-content-center mt-3 text-center">
-
+            <div class="col-md-6">
                 <div class="card-body">
-                    <h3 class="text-center mt-3">Plutôt film ou serie ?</h3>
+                    <h3 class="text-center mt-3">Plutôt film où serie ?</h3>
+                    <hr>
                     <form>
                         <div class="container mt-5">
                             <div class="row">
                                 <div class="col">
-                                    <p class="type">Film <input type="checkbox" id="film"></p>
+                                    <label class="type">
+                                        <h3>Film</h3>
+                                        <br>
+                                        <input type="radio" name="type" value="film" style="transform: scale(1.5);">
+                                    </label>
                                 </div>
                                 <div class="col">
-                                    <p class="type">Serie <input type="checkbox" id="serie"></p>
+                                    <label class="type">
+                                        <h3>Série</h3>
+                                        <br>
+                                        <input type="radio" name="type" value="serie" style="transform: scale(1.5);">
+                                    </label>
                                 </div>
                             </div>
                         </div>
@@ -117,14 +58,39 @@
                         </div>
                     </form>
                 </div>
+            </div>
 
+            <div class="row justify-content-center mt-2 text-center mb-5">
+                <div class="col-md-2"> <!-- Ajustez la classe col-md-* en conséquence -->
+                    <button type="button" class="btn btn-outline-primary  w-100" onclick="formulaireRouletteController.traiterFormulaireType()">
+                        <img src="../images/arrow-down-circle.svg" style="width: 30%;" alt="Ajouter">
+                    </button>
+                </div>
+            </div>
         </div>
+    </div>
+    <div class="card shadow" id="cardGenres">
+        <div class="row justify-content-center mt-3 text-center">
+            <div class="col-md-6">
+                <div class="card-body">
+                    <h3 class="text-center mt-3">Choisissez vos genres préférés !</h3>
+                    <hr>
+                    <form>
+                        <div class="container mt-5">
+                            <div id="checkboxContainer">
 
-        <div class="row justify-content-center mt-2 text-center mb-5">
-            <div class="col-md-2"> <!-- Ajustez la classe col-md-* en conséquence -->
-                <button type="button" class="btn btn-outline-primary  w-100" onclick="formulaireRouletteController.traiterFormulaire()">
-                    <img src="../images/plus-circle%20(1).svg" style="width: 30%;" alt="Ajouter">
-                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="row justify-content-center mt-2 text-center mb-5">
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-outline-primary  w-100" onclick="formulaireRouletteController.traiterFormulaireCategorie()">
+                        <img src="../images/arrow-down-circle.svg" style="width: 30%;" alt="Ajouter">
+                    </button>
+                </div>
             </div>
         </div>
     </div>

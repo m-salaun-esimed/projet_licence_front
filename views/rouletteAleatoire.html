@@ -1,0 +1,51 @@
+
+<div class="container">
+    <div class="row mt-3 text-center">
+        <div class="col-3">
+            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModalSetting">Réinitialiser les paramètres
+            </button>
+        </div>
+
+        <div class="modal fade" id="exampleModalSetting" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        Êtes-vous sûr de vouloir réinitialiser les paramètres ?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                        <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" onclick="rouletteAleatoire.resetSettings()">Réinitiliser</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 text-center">
+            <h1>Roulette Aleatoire <div id="user"></div></h1>
+        </div>
+        <div class="col-3 text-end">
+            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Déconnexion</button>
+        </div>
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        Êtes-vous sûr de vouloir vous déconnecter ?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                        <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" onclick="formulaireRouletteController.deconnexion()">Deconnexion</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row text-center">
+        <div class="col-6">
+            <h2 id="genres"></h2>
+        </div>
+        <div class="col-6">
+            <h2 id="type"></h2>
+        </div>
+    </div>
+</div>
