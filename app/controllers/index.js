@@ -66,7 +66,6 @@ class IndexController extends BaseController {
             console.log("vide");
             document.getElementById("danger").style.display = "block";
             document.getElementById("erreur").style.display = "none"
-
         }
     }
 

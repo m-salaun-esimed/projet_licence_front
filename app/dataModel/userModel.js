@@ -45,6 +45,4 @@ export default class userModel {
             throw e;
         }
     }
-
-
 }

@@ -1,5 +1,5 @@
 body{
-    background-color: #15202B;
+    background-color: #22303C;
 }
 .titre-container {
     color: white;
@@ -29,4 +29,88 @@ body{
 
 h1, h2{
     color: white;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px; /* Largeur de la barre latérale */
+    height: 100%;
+    background-color: #15202B; /* Couleur de fond de la barre latérale */
+    color: #fff; /* Couleur du texte */
+    transition: transform 0.3s ease; /* Ajoute une transition fluide */
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    padding: 10px;
+}
+
+.sidebar ul li a {
+    color: inherit;
+    text-decoration: none;
+}
+
+
+.content {
+    margin-left: 250px;
+    transition: margin 0.3s ease;
+}
+.content.expanded {
+    margin-left: 0;
+}
+
+
+.sidebar.closed {
+    transform: translateX(-250px);
+}
+
+.content.expanded {
+    margin-left: 0;
+}
+
+#toggleButton {
+    position: relative;
+    top: 10px;
+    left: 15px;
+}
+
+.ham {
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform 400ms;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.hamRotate.active {
+    transform: rotate(45deg);
+}
+.hamRotate180.active {
+    transform: rotate(180deg);
+}
+.line {
+    fill:none;
+    transition: stroke-dasharray 400ms, stroke-dashoffset 400ms;
+    stroke:#000;
+    stroke-width:5.5;
+    stroke-linecap:round;
+}
+.ham1 .top {
+    stroke-dasharray: 40 139;
+}
+.ham1 .bottom {
+    stroke-dasharray: 40 180;
+}
+.ham1.active .top {
+    stroke-dashoffset: -98px;
+}
+.ham1.active .bottom {
+    stroke-dashoffset: -138px;
 }

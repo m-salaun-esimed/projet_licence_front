@@ -34,32 +34,10 @@ class FormulaireController extends BaseController {
             //TODO AFFICHER LES GENRES SERIE
         }
     }
-    getMovieType(){
-        let film = document.getElementById("film").checked
-        let serie = document.getElementById("serie").checked
 
-        console.log(`film : ${film}, serie : ${serie}`)
-        if (film && serie) {
-            console.log("Erreur : sélectionnez un seul type.");
-            document.getElementById("type").style.display = "block";
-        } else if (!film && serie) {
-            console.log("Série est sélectionnée.");
-            this.movieType = "serie";
-            localStorage.setItem("type", "serie")
-            document.getElementById("type").style.display = "none";
-        } else if (film && !serie) {
-            console.log("Film est sélectionné.");
-            this.movieType = "film";
-            localStorage.setItem("type", "film")
-            document.getElementById("type").style.display = "none";
-        } else {
-            console.log("Aucun type sélectionné.");
-            document.getElementById("type").style.display = "block";
-        }
-    }
     async getMovieGenres(){
-        const response = await this.categorieModel.getAllCategorieMovie();
-        console.log("getMovieGenres  " + response)
+        const response = await this.categorieModel.getAllCategorieMovie(sessionStorage.getItem("token"));
+        console.log("getMovieGenres  " + response[0].id)
 
         const maxPerRow = 6;
 
@@ -80,7 +58,7 @@ class FormulaireController extends BaseController {
             label.innerHTML = `
             ${genre.name}
             <br>
-            <input type="checkbox" name="genre" value="${genre.name}">
+            <input type="checkbox" name="genre" value="${genre.id},${genre.name}">
         `;
             col.appendChild(label);
             row.appendChild(col);
@@ -89,24 +67,29 @@ class FormulaireController extends BaseController {
 
     traiterFormulaireCategorie(){
         const checkboxes = document.querySelectorAll('input[type="checkbox"][name="genre"]');
-
-        const tab = [];
+        const selectedGenres = [];
 
         checkboxes.forEach(checkbox => {
             if (checkbox.checked) {
-                tab.push(checkbox.value);
+                const genreValues = checkbox.value.split(','); // Divise la valeur de la case à cocher
+                selectedGenres.push({
+                    id: genreValues[0],
+                    name: genreValues[1]
+                });
             }
         });
-        if (tab.length === 0){
-            alert("Veuillez choisir au minimun un genre de film")
+
+        if (selectedGenres.length === 0){
+            alert("Veuillez choisir au moins un genre de film");
+        } else {
+            localStorage.setItem("listGenre", JSON.stringify(selectedGenres)); // Stocke les genres sélectionnés
+            navigate("rouletteAleatoire");
         }
-        else {
-            localStorage.setItem("listGenre", tab)
-            navigate("rouletteAleatoire")
-        }
-        console.log("Genres sélectionnés :", tab);
-        return tab;
+
+        console.log("Genres sélectionnés :", selectedGenres);
+        return selectedGenres;
     }
+
 
     deconnexion(){
         console.log("deconnexion")
