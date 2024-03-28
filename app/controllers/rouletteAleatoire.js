@@ -1,12 +1,16 @@
 import MoviesModel from "../dataModel/moviesModel.js";
+import FavoriteModel from "../dataModel/favoriteModel.js";
+import UserModel from "../dataModel/userModel.js";
 
 class RouletteAleatoire {
     constructor() {
         this.moviesModel = new MoviesModel()
-
+        this.favoriteModel = new FavoriteModel()
+        this.userModel = new UserModel()
         this.init();
         this.addOptionsList().then(options => {
             this.options = options;
+            this.addMovieList();
             this.startAngle = 0;
             this.arc = Math.PI / (this.options.length / 2);
             this.spinTimeout = null;
@@ -19,17 +23,23 @@ class RouletteAleatoire {
         }).catch(error => {
             console.error(error);
         });
-
     }
 
+    addMovieList() {
+        let listDesFilms = document.querySelector(".listDesFilms");
+        for (let i = 0; i < this.options.length; i++) {
+            let movieName = document.createElement("p");
+            movieName.textContent = this.options[i].name;
+            listDesFilms.appendChild(movieName);
+        }
+    }
 
     async addOptionsList() {
         try {
-            const listGenre = JSON.parse(localStorage.getItem("listGenre")); // Convertir la chaîne JSON en tableau
+            const token = sessionStorage.getItem("token")
+            const listGenre = JSON.parse(localStorage.getItem("listGenre"));
             const categoryids = listGenre.map(genre => genre.id);
-            console.log(categoryids);
-            const response = await this.moviesModel.get5RandomMovies(categoryids);
-            console.log(response);
+            const response = await this.moviesModel.get5RandomMovies(categoryids, token);
             return response;
         } catch (error) {
             console.error(error);
@@ -37,19 +47,17 @@ class RouletteAleatoire {
         }
     }
 
-
-
     init() {
         let type = document.getElementById("type");
         let movieGenres = document.getElementById("genres");
         let storedType = localStorage.getItem("type");
         let storedGenres = localStorage.getItem("listGenre");
 
-        type.innerText = storedType;
+        type.textContent = storedType;
 
         let selectedGenres = JSON.parse(storedGenres);
         let genreNames = selectedGenres.map(genre => genre.name).join(', ');
-        movieGenres.innerText = genreNames;
+        movieGenres.textContent = genreNames;
     }
 
     sideBar() {
@@ -57,38 +65,18 @@ class RouletteAleatoire {
         const toggleButton = document.getElementById('toggleButton');
         const content = document.querySelector('.content');
 
-        toggleButton.addEventListener('click', function () {
+        toggleButton.addEventListener('click', () => {
             sidebar.classList.toggle('closed');
             content.classList.toggle('expanded');
         });
     }
+
     resetSettings() {
         localStorage.removeItem("listGenre");
         localStorage.removeItem("type");
         navigate("formulaireRoulette");
     }
 
-    byte2Hex(n) {
-        var nybHexString = "0123456789ABCDEF";
-        return String(nybHexString.substr((n >> 4) & 0x0F, 1)) + nybHexString.substr(n & 0x0F, 1);
-    }
-
-    RGB2Color(r, g, b) {
-        return '#' + this.byte2Hex(r) + this.byte2Hex(g) + this.byte2Hex(b);
-    }
-
-    getColor(item, maxitem) {
-        var phase = 0;
-        var center = 128;
-        var width = 127;
-        var frequency = Math.PI * 2 / maxitem;
-
-        var red = Math.sin(frequency * item + 2 + phase) * width + center;
-        var green = Math.sin(frequency * item + 0 + phase) * width + center;
-        var blue = Math.sin(frequency * item + 4 + phase) * width + center;
-
-        return this.RGB2Color(red, green, blue);
-    }
 
     drawRouletteWheel() {
         var canvas = document.getElementById("canvas");
@@ -99,7 +87,7 @@ class RouletteAleatoire {
 
             this.ctx = canvas.getContext("2d");
             this.ctx.clearRect(0, 0, 500, 500);
-
+            this.ctx.font = 'bold 10px Helvetica, Arial';
             this.ctx.fillStyle = "#ECECEC";
 
             for (var i = 0; i < this.options.length; i++) {
@@ -163,10 +151,10 @@ class RouletteAleatoire {
         var degrees = this.startAngle * 180 / Math.PI + 90;
         var arcd = this.arc * 180 / Math.PI;
         var index = Math.floor((360 - degrees % 360) / arcd);
+        this.index = index;
         this.ctx.save();
-        this.ctx.font = 'bold 30px Helvetica, Arial';
+        this.ctx.font = 'bold 10px Helvetica, Arial';
         var text = this.options[index].name;
-        this.ctx.fillText(text, 250 - this.ctx.measureText(text).width / 2, 250 + 10);
         var modal = new bootstrap.Modal(document.getElementById('modalMovie'));
         modal.show();
         var infoMovie = document.querySelector('.nameMovie');
@@ -174,14 +162,75 @@ class RouletteAleatoire {
         var descriptionMovie = document.querySelector('.descriptionMovie');
         var descriptionMovietext = this.options[index].overview;
         descriptionMovie.innerText = descriptionMovietext;
+
+        var imageMovie = document.querySelector('.imageMovie');
+        if (imageMovie) {
+            var imgElement = document.createElement('img');
+            imgElement.src = 'https://image.tmdb.org/t/p/w500' + this.options[index].poster_path;
+            imgElement.classList.add('img-fluid');
+            imageMovie.innerHTML = '';
+            imageMovie.appendChild(imgElement);
+        } else {
+            console.error("Element .imageMovie non trouvé");
+        }
+
+
+        var noteMovie = document.getElementsByClassName("noteMovie")[0];
+        var noteMovieMovietext = this.options[index].note;
+        noteMovie.innerHTML = '<div>' + noteMovieMovietext + '/10</div>';
+
+        // Création des boutons avec les actions dynamiques
+        var modalFooter = document.querySelector('.modal-footer');
+        modalFooter.innerHTML = '';
+
+        modalFooter.appendChild(viewedButton);
+
         this.ctx.restore();
     }
+
 
     easeOut(t, b, c, d) {
         var ts = (t /= d) * t;
         var tc = ts * t;
         return b + c * (tc + -3 * ts + 3 * t);
     }
+
+    refreshRoulette(){
+        location.reload();
+    }
+
+    favoriPage(){
+        navigate("favori")
+    }
+
+    async addFavorite(index) {
+        try {
+            const responseIdUser = await this.userModel.getIdUser(sessionStorage.getItem("token"), localStorage.getItem("login"));
+            const responseAllFav = await this.favoriteModel.getAllFavorite(responseIdUser[0].id);
+            console.log(responseAllFav)
+            for(let i = 0; i < responseAllFav.length; i++){
+                console.log(responseAllFav[i].idmovieapi)
+                if (responseAllFav[i].idmovieapi === this.options[index].idapi){
+                    console.log("reponse idapi : " + responseAllFav[i].idapi)
+                    console.log("idapi modal : " + this.options[index].idapi)
+                    alert("Film déjà dans les favoris");
+                    return;
+                }
+            }
+            console.log(this.options[index].id);
+            const data = {
+                idMovieApi: this.options[index].idapi,
+                idUser: responseIdUser[0].id
+            };
+            const response = await this.favoriteModel.postFavoriteMovie(sessionStorage.getItem("token"), data);
+            console.log(response);
+            alert("Le film a été ajouté avec succès aux favoris.");
+        } catch (error) {
+            console.error("Erreur lors de l'ajout du film aux favoris :", error);
+            alert("Une erreur est survenue lors de l'ajout du film aux favoris. Veuillez réessayer plus tard.");
+        }
+    }
+
 }
 
 export default () => window.rouletteAleatoire = new RouletteAleatoire();

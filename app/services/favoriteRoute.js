@@ -1,32 +1,34 @@
 import Api from "./api.js";
-export default class MoviesRoute extends Api {
+
+export default class FavoriteRoute extends Api {
     constructor() {
         super();
-        this.routesUrl = ``;
     }
 
-    async get5RandomMovies(categoryids, token) {
+    async postFavoriteMovie(token, data) {
         try {
-            let events = `getRandomMovies`;
+            console.log(data)
+            let events = `postFavoriteMovie`
             const headers = new Headers();
-            headers.append('categoryids', categoryids.join(','));
+            headers.append('Content-Type', 'application/json');
             headers.append('Authorization', token);
-            const response = await fetch(`${this.apiServer}/${events}`, { method: 'GET', headers });
-            const data = await response.json();
-            return data;
+            const response = await fetch(`${this.apiServer}/${events}`,
+                { method: 'POST', headers, body: JSON.stringify(data)});
+            const dataRequete = await response.json();
+            return dataRequete;
         } catch (e) {
             console.error(e);
             throw e;
         }
     }
 
-    async getMovieByIdMovieApi(idmovieapi){
+    async getAllFavoriteApi(idUser){
         const token = sessionStorage.getItem("token")
         try {
-            let events = `movieByIdMovieApi`;
             const headers = new Headers();
-            headers.append('idmovieapi', idmovieapi);
+            headers.append('iduser', idUser);
             headers.append('Authorization', token);
+            let events = `getAllFavoriteByIdUser`
             const response = await fetch(`${this.apiServer}/${events}`, { method: 'GET', headers });
             const data = await response.json();
             return data;
@@ -35,5 +37,4 @@ export default class MoviesRoute extends Api {
             throw e;
         }
     }
-
 }

@@ -45,4 +45,21 @@ export default class userModel {
             throw e;
         }
     }
+
+    async getIdUser(token, login){
+        const response = await this.verifyToken(token)
+        if (response.status === 200) {
+            try {
+                const responseId =  await this.api.getIdUserApi(login)
+                console.log( "getIdUser : " + responseId)
+                return responseId
+            } catch (error) {
+                console.error("Erreur lors de la vérification de l'event", error);
+            }
+        }
+        else{
+            sessionStorage.removeItem("token")
+            navigate("index")
+        }
+    }
 }

@@ -50,7 +50,9 @@ class IndexController extends BaseController {
                     console.log(token);
                     const user = responseData.user;
                     console.log("user " + user)
-                    sessionStorage.setItem("token", token);
+                    sessionStorage.setItem("token", "Bearer " + token);
+                    localStorage.setItem("login", user);
+
                     navigate("formulaireRoulette")
                 } else {
                     console.log("Échec de l'authentification");

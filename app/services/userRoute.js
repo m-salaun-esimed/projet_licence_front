@@ -26,8 +26,25 @@ export default class UserRoute extends Api {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${data.authorization}`
+                'Authorization': `${data.authorization}`
             },
         })
+    }
+
+    async getIdUserApi(login){
+        console.log("getIdUserApi " + login)
+        let routeAuthenticate = "user/IdByLogin"
+        try {
+            let route = `user/IdByLogin`;
+            const headers = new Headers();
+            headers.append('login', login);
+
+            const response = await fetch(`${this.apiServer}/${routeAuthenticate}`, { method: 'GET', headers });
+            const data = await response.json();
+            return data;
+        } catch (e) {
+            console.error(e);
+            throw e;
+        }
     }
 }

@@ -114,3 +114,20 @@ h1, h2{
 .ham1.active .bottom {
     stroke-dashoffset: -138px;
 }
+
+#carouselExample {
+    height: 50vh; /* 50% de la hauteur de la fenêtre */
+}
+
+.carousel-inner {
+    height: 100%; /* Assurez-vous que la hauteur du carousel est à 100% de son conteneur */
+}
+
+.carousel-item {
+    height: 100%; /* Assurez-vous que la hauteur des éléments de la diapositive est à 100% du carousel */
+}
+
+.carousel-item img {
+    object-fit: cover; /* Pour ajuster l'image de la diapositive à la taille du conteneur */
+    height: 100%; /* Assurez-vous que l'image occupe toute la hauteur de l'élément de la diapositive */
+}

@@ -34,9 +34,12 @@
                                             <button class="btn btn-outline-primary mt-3">LISTE DEJA VUE</button>
                                         </div>
                                         <div class="col-12">
-                                            <button class="btn btn-outline-primary mt-3">LISTE DES FAVORIS</button>
+                                            <button class="btn btn-outline-primary mt-3" onclick="rouletteAleatoire.favoriPage()">LISTE DES FAVORIS</button>
                                         </div>
                                         <hr class="mt-3">
+                                        <div class="col-12">
+                                            <button type="button" class="btn btn-outline-danger mt-3" onclick="rouletteAleatoire.refreshRoulette()">CHANGER LA ROULETTE</button>
+                                        </div>
                                         <div class="col-12">
                                             <button type="button" class="btn btn-outline-danger mt-3" data-bs-toggle="modal" data-bs-target="#exampleModalSetting">REINITIALISER PARAMETRE</button>
                                         </div>
@@ -64,7 +67,8 @@
             </div>
 
             <div class="col-8 text-center">
-                <h1 style="color: #DC3545">ROULETTE ALEATOIRE<div id="user"></div></h1>
+<!--                <h1 style="color: #DC3545">ROULETTE ALEATOIRE<div id="user"></div></h1>-->
+                <h1>LA ROULETTE A FILM<div id="user"></div></h1>
             </div>
             <div class="col-2 text-end">
             </div>
@@ -82,28 +86,27 @@
                 </div>
             </div>
         </div>
-        <div class="row text-center">
-            <div class="col-6">
-                <h2>Genres sélectionnés : </h2>
-                <h2 id="genres"></h2>
-            </div>
-            <div class="col-6">
-                <h2>Type :</h2>
-                <h2 id="type"></h2>
-            </div>
-        </div>
 
         <div class="container">
             <div class="row">
-                <div class="col-3">
+                <div class="row">
+                    <div class="col-3 text-center align-self-center">
+                        <h3 style="color: white">Films présents dans la roulette.</h3>
+                        <hr>
+                        <div class="listDesFilms" style="color: white">
 
+                        </div>
+                    </div>
+                    <div class="col-6 text-center align-self-center">
+                        <canvas id="canvas" width="500" height="500"></canvas>
+                    </div>
+                    <div class="col-3 text-center align-self-center">
+                        <h2 id="type"></h2>
+                        <hr>
+                        <h2 id="genres"></h2>
+                    </div>
                 </div>
-                <div class="col-6 text-center">
-                    <canvas id="canvas" width="500" height="500"></canvas>
-                </div>
-                <div class="col-3">
 
-                </div>
             </div>
             <div class="row">
                 <div class="col-3">
@@ -119,22 +122,64 @@
         </div>
     </div>
 
-    <div class="modal fade" id="modalMovie" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="card-head">
-                    <h2 style="color: black" class="text-center">Film selectionné</h2>
+<div class="modal fade" id="modalMovie" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" id="test">
+            <div class="modal-body">
+<!--                <div class="card" style="background-color: rgba(255, 255, 255, 0.3); border: none;">-->
+<!--                    <div class="card-body">-->
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="text-center">
+                                    <p class="imageMovie"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="text-center">
+                                    <div class="row">
+                                        <div class="col-2">
+                                            <p> Note : <div class="noteMovie" style="color: red"></div></p>
+                                        </div>
+                                        <div class="col-10">
+                                            <h1 class="nameMovie" style="color: black"></h1>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <p class="movieCategorys"></p>
+                                </div>
+                                <hr>
+                                <h2 style="color: black">Synopsis</h2>
+                                <div class="descriptionMovie text-center">
+                                </div>
+                            </div>
+<!--                        </div>-->
+<!--                    </div>-->
                 </div>
-                <div class="modal-body">
-                    <div class="nameMovie text-center" style="color: red">
+            </div>
+            <div class="modal-footer">
+                <div class="row text-center">
+                    <div class="col-4">
+                        <button type="button" class="btn rounded-circle" style="background-color: #22303C" title="Ajouter aux favoris"
+                        onclick="rouletteAleatoire.addFavorite(rouletteAleatoire.index)" id="fav">
+                            <img src="../images/heart-fill%20(1).svg" width="20" height="20" alt="Favori">
+                        </button>
                     </div>
-                    <div class="descriptionMovie text-center">
+                    <div class="col-4">
+                        <button type="button" class="btn rounded-circle" style="background-color: #22303C" title="Ajouter aux déjà vu">
+                            <img src="../images/eye-slash-fill.svg" width="20" height="20" alt="Déjà vu" id="imageModal">
+                        </button>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                    <div class="col-4">
+                        <button type="button" class="btn rounded-circle" style="background-color: #22303C" data-bs-dismiss="modal">
+                            <img src="../images/x-circle.svg" width="20" height="20" alt="Fermer">
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
+
+</div>
 
