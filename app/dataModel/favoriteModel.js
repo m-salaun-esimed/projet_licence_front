@@ -16,6 +16,14 @@ export default class FavoriteModel {
             }
     }
 
+    async removeFavoriteMovie(token, movieidapi){
+        try {
+            return await this.api.removeFavoriteMovie(token, movieidapi);
+        } catch (error) {
+            console.error("Erreur lors de la vérification de l'event", error);
+        }
+    }
+
     async getAllFavorite(idUser){
             try {
                 return await this.api.getAllFavoriteApi(idUser);

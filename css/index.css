@@ -1,5 +1,26 @@
-body{
+
+$itemGrow: 1.2;
+$duration: 250ms;
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
     background-color: #22303C;
+}
+
+.background-container {
+    background-image: url("../images/FR-fr-20240326-popsignuptwoweeks-perspective_alpha_website_small.jpg");
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+}
+
+h1 {
+    font-family: Arial;
+    color: red;
 }
 .titre-container {
     color: white;
@@ -27,9 +48,9 @@ body{
     color: black;
 }
 
-h1, h2{
-    color: white;
-}
+/*h1, h2{*/
+/*    color: white;*/
+/*}*/
 
 .sidebar {
     position: fixed;
@@ -131,3 +152,5 @@ h1, h2{
     object-fit: cover; /* Pour ajuster l'image de la diapositive à la taille du conteneur */
     height: 100%; /* Assurez-vous que l'image occupe toute la hauteur de l'élément de la diapositive */
 }
+
+

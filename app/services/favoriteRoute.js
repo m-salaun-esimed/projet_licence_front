@@ -22,6 +22,28 @@ export default class FavoriteRoute extends Api {
         }
     }
 
+
+    async removeFavoriteMovie(token, movieidapi) {
+        const data = {
+            movieidapi : movieidapi
+        }
+        console.log("token " + token + "movieidapi " + JSON.stringify(data))
+        try {
+            let route = `deleteFavoriteByMovieIdApiUser`
+            const headers = new Headers();
+            headers.append('Content-Type', 'application/json');
+            headers.append('Authorization', token);
+            const response = await fetch(`${this.apiServer}/${route}`,
+                { method: 'DELETE', headers, body: JSON.stringify(data)});
+            const dataRequete = await response.json();
+            return dataRequete;
+        } catch (e) {
+            console.error(e);
+            throw e;
+        }
+    }
+
+
     async getAllFavoriteApi(idUser){
         const token = sessionStorage.getItem("token")
         try {

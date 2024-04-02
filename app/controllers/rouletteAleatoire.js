@@ -28,11 +28,17 @@ class RouletteAleatoire {
     addMovieList() {
         let listDesFilms = document.querySelector(".listDesFilms");
         for (let i = 0; i < this.options.length; i++) {
-            let movieName = document.createElement("p");
-            movieName.textContent = this.options[i].name;
-            listDesFilms.appendChild(movieName);
+            let movieButton = document.createElement("button");
+            movieButton.textContent = this.options[i].name;
+            movieButton.classList.add("btn", "btn-outline-primary", "d-block", "m-3", "text-center");
+            movieButton.onclick = () => {
+                console.log("Bouton cliqué pour :", this.options[i].name);
+                rouletteAleatoire.showModalMovie(i)
+            };
+            listDesFilms.appendChild(movieButton);
         }
     }
+
 
     async addOptionsList() {
         try {
@@ -154,6 +160,13 @@ class RouletteAleatoire {
         this.index = index;
         this.ctx.save();
         this.ctx.font = 'bold 10px Helvetica, Arial';
+        this.showModalMovie(index)
+
+        this.ctx.restore();
+    }
+
+    showModalMovie(index){
+        this.index = index
         var text = this.options[index].name;
         var modal = new bootstrap.Modal(document.getElementById('modalMovie'));
         modal.show();
@@ -174,20 +187,15 @@ class RouletteAleatoire {
             console.error("Element .imageMovie non trouvé");
         }
 
-
         var noteMovie = document.getElementsByClassName("noteMovie")[0];
         var noteMovieMovietext = this.options[index].note;
         noteMovie.innerHTML = '<div>' + noteMovieMovietext + '/10</div>';
 
-        // Création des boutons avec les actions dynamiques
         var modalFooter = document.querySelector('.modal-footer');
         modalFooter.innerHTML = '';
 
-        modalFooter.appendChild(viewedButton);
-
-        this.ctx.restore();
+        modalFooter.appendChild(viewedButton);""
     }
-
 
     easeOut(t, b, c, d) {
         var ts = (t /= d) * t;
@@ -229,6 +237,15 @@ class RouletteAleatoire {
             console.error("Erreur lors de l'ajout du film aux favoris :", error);
             alert("Une erreur est survenue lors de l'ajout du film aux favoris. Veuillez réessayer plus tard.");
         }
+    }
+
+    async removeFavorite(movieidapi){
+        console.log("removeFavorite " + movieidapi)
+        const response = await this.favoriteModel.removeFavoriteMovie(sessionStorage.getItem("token"), movieidapi);
+        console.log(response);
+        alert("Le film a été supprimée avec succès aux favoris.");
+        navigate("favori")
+        console.log(movieidapi)
     }
 
 }

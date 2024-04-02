@@ -2,18 +2,20 @@
 
 </style>
     <div class="container">
-        <div class="row mt-3 text-center">
-            <div class="col-2">
-                <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
-                    <img src="../images/list.svg" style="width: 200%; height: 200%">
-                </button>
-                <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel" style="background-color: #22303C">
-                    <div class="offcanvas-header">
-                        <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel" style="color: white">PARAMETRE</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                    </div>
-                    <div class="offcanvas-body">
-                        <div class="container">
+        <div class="container mt-3">
+            <div class="card">
+                <div class="row mt-3 text-center">
+                    <div class="col-2">
+                        <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
+                            <img src="../images/list.svg" style="width: 200%; height: 200%">
+                        </button>
+                        <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel" style="background-color: #22303C">
+                            <div class="offcanvas-header">
+                                <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel" style="color: white">PARAMETRE</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                            </div>
+                            <div class="offcanvas-body">
+                                <div class="container">
                                     <div class="row">
                                         <div class="col-12">
                                             <button class="btn btn-outline-primary mt-3">AJOUTER UN AMI</button>
@@ -48,75 +50,71 @@
                                         </div>
                                     </div>
                                 </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal fade" id="exampleModalSetting" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            Êtes-vous sûr de vouloir réinitialiser les paramètres ?
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                            <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" onclick="rouletteAleatoire.resetSettings()">Réinitiliser</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
 
-            <div class="col-8 text-center">
-<!--                <h1 style="color: #DC3545">ROULETTE ALEATOIRE<div id="user"></div></h1>-->
-                <h1>LA ROULETTE A FILM<div id="user"></div></h1>
-            </div>
-            <div class="col-2 text-end">
-            </div>
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            Êtes-vous sûr de vouloir vous déconnecter ?
+                    <div class="modal fade" id="exampleModalSetting" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    Êtes-vous sûr de vouloir réinitialiser les paramètres ?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                    <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" onclick="rouletteAleatoire.resetSettings()">Réinitiliser</button>
+                                </div>
+                            </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                            <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" onclick="formulaireRouletteController.deconnexion()">Deconnexion</button>
+                    </div>
+
+                    <div class="col-8">
+                        <h1 style="color: red">ROULETTE ALEATOIRE<div id="user"></div></h1>
+                    </div>
+                    <div class="col-2 text-end">
+                    </div>
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    Êtes-vous sûr de vouloir vous déconnecter ?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                    <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" onclick="formulaireRouletteController.deconnexion()">Deconnexion</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <div class="container">
-            <div class="row">
-                <div class="row">
+                <div class="row m-3">
                     <div class="col-3 text-center align-self-center">
-                        <h3 style="color: white">Films présents dans la roulette.</h3>
+                        <h3 style="color: black">Films présents dans la roulette.</h3>
                         <hr>
-                        <div class="listDesFilms" style="color: white">
+                        <div class="listDesFilms" style="color: black">
 
                         </div>
                     </div>
                     <div class="col-6 text-center align-self-center">
                         <canvas id="canvas" width="500" height="500"></canvas>
                     </div>
-                    <div class="col-3 text-center align-self-center">
-                        <h2 id="type"></h2>
+                    <div class="col-3 text-center align-self-center" style="color: black">
+                        <h2 id="type" style="color: black"></h2>
                         <hr>
-                        <h2 id="genres"></h2>
+                        <h2 id="genres" style="color: black"></h2>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-3">
 
-            </div>
-            <div class="row">
-                <div class="col-3">
+                    </div>
+                    <div class="col-6 text-center align-self-center mt-3">
+                        <input type="button" value="LANCER" id='spin' class="text-center btn btn-outline-primary m-3"/>
+                    </div>
+                    <div class="col-3">
 
-                </div>
-                <div class="col-6 text-center">
-                    <input type="button" value="LANCER" id='spin' class="text-center btn btn-outline-primary"/>
-                </div>
-                <div class="col-3">
-
+                    </div>
                 </div>
             </div>
         </div>
@@ -140,6 +138,7 @@
                                         <div class="col-2">
                                             <p> Note : <div class="noteMovie" style="color: red"></div></p>
                                         </div>
+
                                         <div class="col-10">
                                             <h1 class="nameMovie" style="color: black"></h1>
                                         </div>

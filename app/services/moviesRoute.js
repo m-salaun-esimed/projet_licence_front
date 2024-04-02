@@ -36,4 +36,20 @@ export default class MoviesRoute extends Api {
         }
     }
 
+    async searchMovies(query) {
+        try {
+            let events = `searchMovies`;
+            const token = sessionStorage.getItem("token");
+            const headers = new Headers();
+            headers.append('query', query);
+            headers.append('Authorization', token);
+            const response = await fetch(`${this.apiServer}/${events}`, { method: 'GET', headers });
+            const data = await response.json();
+            return data;
+        } catch (e) {
+            console.error(e);
+            throw e;
+        }
+    }
+
 }

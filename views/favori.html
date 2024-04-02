@@ -1,10 +1,81 @@
 <div class="container">
     <div class="row">
-        <div class="col-12 text-center mt-4">
-           <h1>LISTE DE FAVORIS</h1>
+        <div class="col-2">
+            <a onclick="favori.changePageToRoulette()"> <img src="../images/arrow-left%20(2).svg" alt="fleche gauche" style="width: 40%" class="m-3"></a>
+        </div>
+        <div class="col-6">
+            <h1 class="m-3">LISTE DES FAVORIS</h1>
+        </div>
+        <div class="col-4">
+            <div class="form-floating m-3 text-center">
+                <input type="text" name="recherche" id="recherche" class="form-control" placeholder=" " autocomplete="off">
+                <label for="recherche">Rechercher un film</label>
+            </div>
         </div>
     </div>
     <div id="listFavorite">
+    </div>
 
+
+
+
+    <div class="modal fade" id="modalMovie" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" id="test">
+                <div class="modal-body">
+                    <!--                <div class="card" style="background-color: rgba(255, 255, 255, 0.3); border: none;">-->
+                    <!--                    <div class="card-body">-->
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="text-center">
+                                <p class="imageMovie"></p>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="text-center">
+                                <div class="row">
+                                    <div class="col-2">
+                                        <p> Note : <div class="noteMovie" style="color: red"></div></p>
+                                    </div>
+
+                                    <div class="col-10">
+                                        <h1 class="nameMovie" style="color: black"></h1>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="movieCategorys"></p>
+                            </div>
+                            <hr>
+                            <h2 style="color: black">Synopsis</h2>
+                            <div class="descriptionMovie text-center">
+                            </div>
+                        </div>
+                        <!--                        </div>-->
+                        <!--                    </div>-->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="row text-center">
+                        <div class="col-4">
+<!--                            <button type="button" class="btn rounded-circle" style="background-color: #22303C" title="Ajouter aux favoris"-->
+<!--                                    onclick="rouletteAleatoire.addFavorite(rouletteAleatoire.index)" id="fav">-->
+<!--                                <img src="../images/heart-fill%20(1).svg" width="20" height="20" alt="Favori">-->
+<!--                            </button>-->
+                        </div>
+                        <div class="col-4">
+                            <button type="button" class="btn rounded-circle" style="background-color: #22303C" title="Ajouter aux déjà vu">
+                                <img src="../images/eye-slash-fill.svg" width="20" height="20" alt="Déjà vu" id="imageModal">
+                            </button>
+                        </div>
+                        <div class="col-4">
+                            <button type="button" class="btn rounded-circle" style="background-color: #22303C" data-bs-dismiss="modal">
+                                <img src="../images/x-circle.svg" width="20" height="20" alt="Fermer">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

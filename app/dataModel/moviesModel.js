@@ -20,4 +20,12 @@ export default class MoviesModel {
             throw e;
         }
     }
+
+    async searchMovies(query) {
+        try {
+            return await this.api.searchMovies(query);
+        }catch (e){
+            throw e;
+        }
+    }
 }

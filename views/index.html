@@ -1,44 +1,48 @@
+<div class="background-container">
 <div class="container">
-    <h1 class="text-center mt-5">La Roulette à Film</h1>
-    <div class="row justify-content-center mt-5">
-        <div class="col-md-6">
-            <div class="card shadow">
-                <div class="card-body">
-                    <h3 class="text-center mb-4">Connexion</h3>
-                    <form>
-                        <div class="form-group input-group">
-                            <div class="input-group-prepend">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow mt-5">
+                    <h1 class="text-center mt-3">La Roulette à Film</h1>
+                    <div class="card-body">
+                        <h3 class="mb-4">Connexion</h3>
+                        <form>
+                            <div class="form-group input-group">
+                                <div class="input-group-prepend">
                                     <span class="input-group-text">
                                         <img src="../images/box-arrow-in-right.svg" alt="Login Image" height="20">
                                     </span>
+                                </div>
+                                <input type="text" class="form-control" id="login" placeholder="Votre login (adresse mail)">
                             </div>
-                            <input type="text" class="form-control" id="login" placeholder="Votre login (adresse mail)">
-                        </div>
-                        <div class="form-group input-group mt-3">
-                            <input type="password" class="form-control" id="password" placeholder="Votre mot de passe">
+                            <div class="form-group input-group mt-3">
+                                <input type="password" class="form-control" id="password" placeholder="Votre mot de passe">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">
                                         <img src="../images/lock.svg" alt="Password Image" height="20">
                                     </span>
                                 </div>
-                        </div>
-                        <div class="row mt-4">
-                            <div class="col d-flex justify-content-center">
-                                <button type="button" class="btn btn-outline-primary" onclick="indexController.authenticate()">Se connecter</button>
                             </div>
-                            <div class="col d-flex justify-content-center">
-                                <button type="button" class="btn btn-outline-primary" onclick="indexController.creationCompte()">Créer un compte</button>
+                            <div class="row mt-4">
+                                <div class="col d-flex justify-content-center">
+                                    <button type="button" class="btn btn-outline-primary" onclick="indexController.authenticate()">Se connecter</button>
+                                </div>
                             </div>
+                            <div class="row mt-4">
+                                <div class="col d-flex justify-content-center">
+                                    <button type="button" class="btn btn-outline-primary" onclick="indexController.creationCompte()">Créer un compte</button>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="alert alert-danger mt-4" role="alert" id="danger">
+                            Veuillez remplir tous les champs.
                         </div>
-                    </form>
-                    <div class="alert alert-danger mt-4" role="alert" id="danger">
-                        Veuillez remplir tous les champs.
-                    </div>
-                    <div class="alert alert-danger mt-4" role="alert" id="erreur">
-                        Erreur lors de l'authentification du à un mauvais mot de passe ou login.
+                        <div class="alert alert-danger mt-4" role="alert" id="erreur">
+                            Erreur lors de l'authentification du à un mauvais mot de passe ou login.
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+</div>
 </div>
