@@ -6,34 +6,32 @@ class FormulaireController extends BaseController {
         super()
         this.categorieModel = new CategorieModel()
 
-        document.getElementById("type").style.display = "none";
-        document.getElementById("cardType").style.display = "block"
-        document.getElementById("cardGenres").style.display = "none"
-        if (localStorage.getItem("type") !== null){
-            document.getElementById("cardType").style.display = "none";
-            if (localStorage.getItem("listGenre").length !== 0){
-                navigate("rouletteAleatoire")
-            }
+        // document.getElementById("type").style.display = "none";
+        // document.getElementById("cardType").style.display = "block"
+        // document.getElementById("cardGenres").style.display = "none"
+        if (localStorage.getItem("listGenre") !== null){
+            navigate("rouletteAleatoire")
         }
+        this.getMovieGenres()
     }
 
-    traiterFormulaireType() {
-        const selectedType = document.querySelector('input[name="type"]:checked');
-        if (!selectedType) {
-            document.getElementById("type").style.display = "block";
-            return;
-        }
-        localStorage.setItem("type", selectedType.value);
-
-        if (selectedType.value === "film") {
-            //TODO AFFICHER LES GENRES FILM
-            document.getElementById("cardType").style.display = "none";
-            document.getElementById("cardGenres").style.display = "block";
-            this.getMovieGenres();
-        } else {
-            //TODO AFFICHER LES GENRES SERIE
-        }
-    }
+    // traiterFormulaireType() {
+    //     const selectedType = document.querySelector('input[name="type"]:checked');
+    //     if (!selectedType) {
+    //         document.getElementById("type").style.display = "block";
+    //         return;
+    //     }
+    //     localStorage.setItem("type", selectedType.value);
+    //
+    //     if (selectedType.value === "film") {
+    //         //TODO AFFICHER LES GENRES FILM
+    //         document.getElementById("cardType").style.display = "none";
+    //         document.getElementById("cardGenres").style.display = "block";
+    //         this.getMovieGenres();
+    //     } else {
+    //         //TODO AFFICHER LES GENRES SERIE
+    //     }
+    // }
 
     async getMovieGenres(){
         const response = await this.categorieModel.getAllCategorieMovie(sessionStorage.getItem("token"));
