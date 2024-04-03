@@ -218,6 +218,10 @@ class RouletteAleatoire {
         navigate("dejavu")
     }
 
+    addFriendsPage(){
+        navigate("ajouter_ami")
+    }
+
     async addFavorite(index) {
         try {
             const responseIdUser = await this.userModel.getIdUser(sessionStorage.getItem("token"), localStorage.getItem("login"));

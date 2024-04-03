@@ -50,7 +50,7 @@ export default class userModel {
         const response = await this.verifyToken(token)
         if (response.status === 200) {
             try {
-                const responseId =  await this.api.getIdUserApi(login)
+                const responseId =  await this.api.getIdUserApi(token, login)
                 console.log( "getIdUser : " + responseId)
                 return responseId
             } catch (error) {
@@ -62,4 +62,13 @@ export default class userModel {
             navigate("index")
         }
     }
+
+    async displaynamebyid(token, sender_id){
+            try {
+                return await this.api.displaynamebyid(token,sender_id)
+            } catch (e) {
+                throw e
+            }
+    }
+
 }

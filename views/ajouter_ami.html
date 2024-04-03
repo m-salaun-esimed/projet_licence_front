@@ -1,0 +1,32 @@
+<div class="container">
+    <div class="row">
+        <div class="col-2">
+            <a onclick="ajouterAmiController.roulettePage()"> <img src="../images/arrow-left%20(2).svg" alt="fleche gauche" style="width: 40%" class="m-3"></a>
+        </div>
+        <div class="col-6">
+            <h1 class="m-3">AJOUTER UN AMI</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-8 text-center">
+            <div class="form-floating m-3 text-center">
+                <input type="text" name="recherche" id="recherche" class="form-control" placeholder=" " autocomplete="off">
+                <label for="recherche">Rechercher un utilisateur</label>
+            </div>
+            <ul class="autocomplete-results" style="color: white;   list-style-type: none;"></ul>
+        </div>
+        <div class="col-4">
+            <button class="btn btn-outline-primary m-3" onclick="ajouterAmiController.ajouter()">
+                Ajouter
+            </button>
+        </div>
+        <div class="alert alert-success mt-3" role="alert" id="success">
+            Demande d'ami envoyée !
+        </div>
+    </div>
+    <hr>
+    <h1 style="color: white">DEMANDE D'AMI(S)</h1>
+    <div class="friendsRequests">
+    </div>
+
+</div>

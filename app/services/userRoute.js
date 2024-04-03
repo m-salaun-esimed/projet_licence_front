@@ -31,15 +31,31 @@ export default class UserRoute extends Api {
         })
     }
 
-    async getIdUserApi(login){
+    async getIdUserApi(token, login){
         console.log("getIdUserApi " + login)
         let routeAuthenticate = "user/IdByLogin"
         try {
             let route = `user/IdByLogin`;
             const headers = new Headers();
             headers.append('login', login);
+            headers.append('authorization', token);
 
             const response = await fetch(`${this.apiServer}/${routeAuthenticate}`, { method: 'GET', headers });
+            const data = await response.json();
+            return data;
+        } catch (e) {
+            console.error(e);
+            throw e;
+        }
+    }
+
+    async displaynamebyid(token, sender_id){
+        try {
+            let events = `user/displaynamebyid`;
+            const headers = new Headers();
+            headers.append('iduser', sender_id);
+            headers.append('Authorization', token);
+            const response = await fetch(`${this.apiServer}/${events}`, { method: 'GET', headers });
             const data = await response.json();
             return data;
         } catch (e) {
