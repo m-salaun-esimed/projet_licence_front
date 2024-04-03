@@ -1,12 +1,15 @@
 import MoviesModel from "../dataModel/moviesModel.js";
 import FavoriteModel from "../dataModel/favoriteModel.js";
 import UserModel from "../dataModel/userModel.js";
+import DejaVuModel from "../dataModel/dejaVuModel.js";
 
 class RouletteAleatoire {
     constructor() {
         this.moviesModel = new MoviesModel()
         this.favoriteModel = new FavoriteModel()
         this.userModel = new UserModel()
+        this.dejaVuModel = new DejaVuModel()
+
         this.init();
         this.addOptionsList().then(options => {
             this.options = options;
@@ -30,7 +33,7 @@ class RouletteAleatoire {
         for (let i = 0; i < this.options.length; i++) {
             let movieButton = document.createElement("button");
             movieButton.textContent = this.options[i].name;
-            movieButton.classList.add("btn", "btn-outline-primary", "d-block", "m-3", "text-center");
+            movieButton.classList.add("btn", "btn-outline-light", "d-block", "m-3", "text-center");
             movieButton.onclick = () => {
                 console.log("Bouton cliqué pour :", this.options[i].name);
                 rouletteAleatoire.showModalMovie(i)
@@ -211,6 +214,10 @@ class RouletteAleatoire {
         navigate("favori")
     }
 
+    alreadyseenPage(){
+        navigate("dejavu")
+    }
+
     async addFavorite(index) {
         try {
             const responseIdUser = await this.userModel.getIdUser(sessionStorage.getItem("token"), localStorage.getItem("login"));
@@ -233,6 +240,31 @@ class RouletteAleatoire {
             const response = await this.favoriteModel.postFavoriteMovie(sessionStorage.getItem("token"), data);
             console.log(response);
             alert("Le film a été ajouté avec succès aux favoris.");
+        } catch (error) {
+            console.error("Erreur lors de l'ajout du film aux favoris :", error);
+            alert("Une erreur est survenue lors de l'ajout du film aux favoris. Veuillez réessayer plus tard.");
+        }
+    }
+
+    async addDejaVu(index){
+        try {
+            const responseAllFav = await this.dejaVuModel.getAllAlreadySeenMovie();
+            for( let i = 0; i < responseAllFav.length; i++){
+                console.log(responseAllFav[i].idmovieapi)
+                if (responseAllFav[i].idmovieapi === this.options[index].idapi){
+                    console.log("reponse idapi : " + responseAllFav[i].idapi)
+                    console.log("idapi modal : " + this.options[index].idapi)
+                    alert("Film déjà dans les déjà vu");
+                    return;
+                }
+            }
+            const data = {
+                idMovieApi: this.options[index].idapi,
+            };
+            const response = await this.dejaVuModel.postAlreadySeenMovie(sessionStorage.getItem("token"), data);
+            console.log(response);
+            alert("Le film a été ajouté avec succès aux déjà vu.");
+            location.reload();
         } catch (error) {
             console.error("Erreur lors de l'ajout du film aux favoris :", error);
             alert("Une erreur est survenue lors de l'ajout du film aux favoris. Veuillez réessayer plus tard.");

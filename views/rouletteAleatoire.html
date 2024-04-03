@@ -3,7 +3,6 @@
 </style>
     <div class="container">
         <div class="container mt-3">
-            <div class="card">
                 <div class="row mt-3 text-center">
                     <div class="col-2">
                         <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
@@ -11,32 +10,32 @@
                         </button>
                         <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel" style="background-color: #22303C">
                             <div class="offcanvas-header">
-                                <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel" style="color: white">PARAMETRE</h5>
+                                <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel" style="color: white">MENU</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                             </div>
                             <div class="offcanvas-body">
                                 <div class="container">
                                     <div class="row">
                                         <div class="col-12">
-                                            <button class="btn btn-outline-primary mt-3">AJOUTER UN AMI</button>
+                                            <button class="btn btn-outline-light mt-3">AJOUTER UN AMI</button>
                                         </div>
                                         <div class="col-12">
-                                            <button class="btn btn-outline-primary mt-3">LISTE D'AMIS</button>
+                                            <button class="btn btn-outline-light mt-3">LISTE D'AMIS</button>
                                         </div>
                                         <hr class="mt-3">
                                         <div class="col-12">
-                                            <button class="btn btn-outline-primary mt-3">CREER SA PROPRE ROUELETTE</button>
+                                            <button class="btn btn-outline-light mt-3">CREER SA PROPRE ROUELETTE</button>
                                         </div>
                                         <div class="col-12">
-                                            <button class="btn btn-outline-primary mt-3">CHOISIR UNE ROUELETTE</button>
+                                            <button class="btn btn-outline-light mt-3">CHOISIR UNE ROUELETTE</button>
                                         </div>
                                         <hr class="mt-3">
 
                                         <div class="col-12">
-                                            <button class="btn btn-outline-primary mt-3">LISTE DEJA VUE</button>
+                                            <button class="btn btn-outline-light mt-3"onclick="rouletteAleatoire.alreadyseenPage() ">LISTE DÉJÀ VU</button>
                                         </div>
                                         <div class="col-12">
-                                            <button class="btn btn-outline-primary mt-3" onclick="rouletteAleatoire.favoriPage()">LISTE DES FAVORIS</button>
+                                            <button class="btn btn-outline-light mt-3" onclick="rouletteAleatoire.favoriPage()">LISTE DES FAVORIS</button>
                                         </div>
                                         <hr class="mt-3">
                                         <div class="col-12">
@@ -69,7 +68,7 @@
                     </div>
 
                     <div class="col-8">
-                        <h1 style="color: red">ROULETTE ALEATOIRE<div id="user"></div></h1>
+                        <h1 style="color: white">ROULETTE ALEATOIRE<div id="user"></div></h1>
                     </div>
                     <div class="col-2 text-end">
                     </div>
@@ -90,7 +89,7 @@
 
                 <div class="row m-3">
                     <div class="col-3 text-center align-self-center">
-                        <h3 style="color: black">Films présents dans la roulette.</h3>
+                        <h3 style="color: white">Films présents dans la roulette.</h3>
                         <hr>
                         <div class="listDesFilms" style="color: black">
 
@@ -100,9 +99,9 @@
                         <canvas id="canvas" width="500" height="500"></canvas>
                     </div>
                     <div class="col-3 text-center align-self-center" style="color: black">
-                        <h2 id="type" style="color: black"></h2>
+                        <h2 id="type" style="color: white"></h2>
                         <hr>
-                        <h2 id="genres" style="color: black"></h2>
+                        <h2 id="genres" style="color: white"></h2>
                     </div>
                 </div>
                 <div class="row">
@@ -110,13 +109,12 @@
 
                     </div>
                     <div class="col-6 text-center align-self-center mt-3">
-                        <input type="button" value="LANCER" id='spin' class="text-center btn btn-outline-primary m-3"/>
+                        <input type="button" value="LANCER" id='spin' class="text-center btn btn-outline-light m-3"/>
                     </div>
                     <div class="col-3">
 
                     </div>
                 </div>
-            </div>
         </div>
     </div>
 
@@ -165,7 +163,8 @@
                         </button>
                     </div>
                     <div class="col-4">
-                        <button type="button" class="btn rounded-circle" style="background-color: #22303C" title="Ajouter aux déjà vu">
+                        <button type="button" class="btn rounded-circle" style="background-color: #22303C" title="Ajouter aux déjà vu"
+                                onclick="rouletteAleatoire.addDejaVu(rouletteAleatoire.index)" id="dejaVu">
                             <img src="../images/eye-slash-fill.svg" width="20" height="20" alt="Déjà vu" id="imageModal">
                         </button>
                     </div>

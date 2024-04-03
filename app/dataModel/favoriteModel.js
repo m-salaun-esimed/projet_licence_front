@@ -8,7 +8,6 @@ export default class FavoriteModel {
     }
 
     async postFavoriteMovie(token, data){
-        //const response = await this.userModel.verifyToken(token)
             try {
                 return await this.api.postFavoriteMovie(token, data);
             } catch (error) {
