@@ -23,9 +23,9 @@ export default class FavoriteRoute extends Api {
     }
 
 
-    async removeFavoriteMovie(token, movieidapi) {
+    async removeFavoriteMovie(token, idapi) {
         const data = {
-            movieidapi : movieidapi
+            idapi : idapi
         }
         console.log("token " + token + "movieidapi " + JSON.stringify(data))
         try {
@@ -44,7 +44,7 @@ export default class FavoriteRoute extends Api {
     }
 
 
-    async getAllFavoriteApi(idUser){
+    async getAllFavoriteApi(idUser, type){
         const token = sessionStorage.getItem("token")
         try {
             const headers = new Headers();

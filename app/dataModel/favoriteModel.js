@@ -15,17 +15,17 @@ export default class FavoriteModel {
             }
     }
 
-    async removeFavoriteMovie(token, movieidapi){
+    async removeFavoriteMovie(token, idapi){
         try {
-            return await this.api.removeFavoriteMovie(token, movieidapi);
+            return await this.api.removeFavoriteMovie(token, idapi);
         } catch (error) {
             console.error("Erreur lors de la vérification de l'event", error);
         }
     }
 
-    async getAllFavorite(idUser){
+    async getAllFavorite(idUser, type){
             try {
-                return await this.api.getAllFavoriteApi(idUser);
+                return await this.api.getAllFavoriteApi(idUser, type);
             } catch (error) {
                 console.error("Erreur lors de la vérification de l'event", error);
             }

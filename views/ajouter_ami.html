@@ -1,32 +1,52 @@
 <div class="container">
     <div class="row">
         <div class="col-2">
-            <a onclick="ajouterAmiController.roulettePage()"> <img src="../images/arrow-left%20(2).svg" alt="fleche gauche" style="width: 40%" class="m-3"></a>
+            <a onclick="ajouterAmiController.roulettePage()" class="m-3"> <img src="../images/arrow-left%20(2).svg" alt="fleche gauche" style="width: 40%" class="m-3"></a>
         </div>
-        <div class="col-6">
-            <h1 class="m-3">AJOUTER UN AMI</h1>
+        <div class="col-7">
+            <h1 class="m-3 text-center">AJOUTER DES AMIS</h1>
+        </div>
+        <div class="col-3">
         </div>
     </div>
     <div class="row">
-        <div class="col-8 text-center">
-            <div class="form-floating m-3 text-center">
-                <input type="text" name="recherche" id="recherche" class="form-control" placeholder=" " autocomplete="off">
-                <label for="recherche">Rechercher un utilisateur</label>
-            </div>
-            <ul class="autocomplete-results" style="color: white;   list-style-type: none;"></ul>
-        </div>
         <div class="col-4">
-            <button class="btn btn-outline-primary m-3" onclick="ajouterAmiController.ajouter()">
+
+        </div>
+        <div class="col-3 text-center">
+            <div class="input-group">
+                <span class="input-group-text">
+                    <img src="/images/search%20(1).svg" alt="Image" style="max-height: 100%;">
+                </span>
+                <input type="text" name="recherche" id="recherche" class="form-control" placeholder="Recherche" autocomplete="off">
+            </div>
+            <ul class="autocomplete-results mt-2" style="color: white;   list-style-type: none;"></ul>
+        </div>
+        <div class="col-1   ">
+            <button class="btn btn-outline-primary" onclick="ajouterAmiController.ajouter()">
                 Ajouter
             </button>
+        </div>
+        <div class="col-4">
+
         </div>
         <div class="alert alert-success mt-3" role="alert" id="success">
             Demande d'ami envoyée !
         </div>
     </div>
     <hr>
-    <h1 style="color: white">DEMANDE D'AMI(S)</h1>
-    <div class="friendsRequests">
+
+    <div class="row">
+        <div class="col-6">
+            <h1 style="color: white" class="text-center">DEMANDE D'AMI(S)</h1>
+            <div class="friendsRequests">
+            </div>
+        </div>
+        <div class="col-6 ">
+            <h1 class="text-center">LISTE D'AMIS</h1>
+            <div class="friends">
+            </div>
+        </div>
     </div>
 
 </div>

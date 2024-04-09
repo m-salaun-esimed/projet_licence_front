@@ -23,9 +23,9 @@ export default class DejaVuModel {
         }
     }
 
-    async removeDejaVuMovie(token, movieidapi){
+    async removeDejaVuMovie(token, movieidapi, typecontenu){
         try {
-            return await this.api.removeAlreadySeenMovie(token, movieidapi);
+            return await this.api.removeAlreadySeenMovie(token, movieidapi, typecontenu);
         } catch (error) {
             console.error("Erreur lors de la vérification de l'event", error);
         }

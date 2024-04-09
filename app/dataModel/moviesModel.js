@@ -28,4 +28,12 @@ export default class MoviesModel {
             throw e;
         }
     }
+
+    async getPlatforms(idmovieapi, token){
+        try {
+            return await this.api.getPlatforms(idmovieapi, token)
+        }catch (e){
+            throw e;
+        }
+    }
 }

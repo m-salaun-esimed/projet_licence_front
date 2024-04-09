@@ -3,71 +3,71 @@
 
     </div>
 
-<!--    <div class="card shadow" id="cardType">-->
-<!--        <div class="row m-3 text-center">-->
-<!--            <div class="col-3">-->
-<!--            </div>-->
-<!--            <div class="col-6 text-center">-->
-<!--                <h1>Bienvenue sur la roulette à film !</h1>-->
-<!--            </div>-->
-<!--            <div class="col-3 text-end">-->
-<!--                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Déconnexion</button>-->
-<!--            </div>-->
-<!--            &lt;!&ndash; Modal &ndash;&gt;-->
-<!--            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">-->
-<!--                <div class="modal-dialog">-->
-<!--                    <div class="modal-content">-->
-<!--                        <div class="modal-body">-->
-<!--                            Êtes-vous sûr de vouloir vous déconnecter ?-->
-<!--                        </div>-->
-<!--                        <div class="modal-footer">-->
-<!--                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>-->
-<!--                            <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" onclick="formulaireRouletteController.deconnexion()">Deconnexion</button>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="row justify-content-center mt-3 text-center">-->
-<!--            <div class="col-md-6">-->
-<!--                <div class="card-body">-->
-<!--                    <h3 class="text-center mt-3">Plutôt film où serie ?</h3>-->
-<!--                    <hr>-->
-<!--                    <form>-->
-<!--                        <div class="container mt-5">-->
-<!--                            <div class="row">-->
-<!--                                <div class="col">-->
-<!--                                    <label class="type">-->
-<!--                                        <h3>Film</h3>-->
-<!--                                        <br>-->
-<!--                                        <input type="radio" name="type" value="film" style="transform: scale(1.5);">-->
-<!--                                    </label>-->
-<!--                                </div>-->
-<!--                                <div class="col">-->
-<!--                                    <label class="type">-->
-<!--                                        <h3>Série</h3>-->
-<!--                                        <br>-->
-<!--                                        <input type="radio" name="type" value="serie" style="transform: scale(1.5);">-->
-<!--                                    </label>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="alert alert-danger mt-2 " role="alert" id="type">-->
-<!--                            Sélectionnez un seul type-->
-<!--                        </div>-->
-<!--                    </form>-->
-<!--                </div>-->
-<!--            </div>-->
+    <div class="card shadow" id="cardType">
+        <div class="row m-3 text-center">
+            <div class="col-3">
+            </div>
+            <div class="col-6 text-center">
+                <h1 style="color: black">Bienvenue sur la roulette à film !</h1>
+            </div>
+            <div class="col-3 text-end">
+                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Déconnexion</button>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            Êtes-vous sûr de vouloir vous déconnecter ?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                            <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" onclick="formulaireRouletteController.deconnexion()">Deconnexion</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-3 text-center">
+            <div class="col-md-6">
+                <div class="card-body">
+                    <h3 class="text-center mt-3">Plutôt film où serie ?</h3>
+                    <hr>
+                    <form>
+                        <div class="container mt-5">
+                            <div class="row">
+                                <div class="col">
+                                    <label class="type">
+                                        <h3>Film</h3>
+                                        <br>
+                                        <input type="radio" name="type" value="film" style="transform: scale(1.5);">
+                                    </label>
+                                </div>
+                                <div class="col">
+                                    <label class="type">
+                                        <h3>Série</h3>
+                                        <br>
+                                        <input type="radio" name="type" value="serie" style="transform: scale(1.5);">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="alert alert-danger mt-2 " role="alert" id="type">
+                            Sélectionnez un seul type
+                        </div>
+                    </form>
+                </div>
+            </div>
 
-<!--            <div class="row justify-content-center mt-2 text-center mb-5">-->
-<!--                <div class="col-md-2"> &lt;!&ndash; Ajustez la classe col-md-* en conséquence &ndash;&gt;-->
-<!--                    <button type="button" class="btn btn-outline-primary  w-100" onclick="formulaireRouletteController.traiterFormulaireType()">-->
-<!--                        <img src="../images/arrow-down-circle.svg" style="width: 30%;" alt="Ajouter">-->
-<!--                    </button>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
+            <div class="row justify-content-center mt-2 text-center mb-5">
+                <div class="col-md-2"> <!-- Ajustez la classe col-md-* en conséquence -->
+                    <button type="button" class="btn btn-outline-primary  w-100" onclick="formulaireRouletteController.traiterFormulaireType()">
+                        <img src="../images/arrow-down-circle.svg" style="width: 30%;" alt="Ajouter">
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="card shadow" id="cardGenres">
         <div class="row justify-content-center mt-3 text-center">
             <div class="col-md-6">

@@ -1,13 +1,13 @@
 import Api from "./api.js";
-export default class MoviesRoute extends Api {
+export default class SerieRoute extends Api {
     constructor() {
         super();
         this.routesUrl = ``;
     }
 
-    async get5RandomMovies(categoryids, token) {
+    async get5RandomSeries(categoryids, token) {
         try {
-            let events = `getRandomMovies`;
+            let events = `getRandomSeries`;
             const headers = new Headers();
             headers.append('categoryids', categoryids.join(','));
             headers.append('Authorization', token);
@@ -20,13 +20,12 @@ export default class MoviesRoute extends Api {
         }
     }
 
-    async getMovieByIdMovieApi(idmovieapi){
+    async getSerieByIdSerieApi(idserieapi){
         const token = sessionStorage.getItem("token")
-        console.log("getMovieByIdMovieApi : " + idmovieapi)
         try {
-            let events = `movieByIdMovieApi`;
+            let events = `serieByIdSerieApi`;
             const headers = new Headers();
-            headers.append('idmovieapi', idmovieapi);
+            headers.append('idserieapi', idserieapi);
             headers.append('Authorization', token);
             const response = await fetch(`${this.apiServer}/${events}`, { method: 'GET', headers });
             const data = await response.json();
@@ -37,14 +36,11 @@ export default class MoviesRoute extends Api {
         }
     }
 
-
-
-    async searchMovies(query) {
+    async getPlatforms(idapi, token){
         try {
-            let events = `searchMovies`;
-            const token = sessionStorage.getItem("token");
+            let events = `serie/platform`;
             const headers = new Headers();
-            headers.append('query', query);
+            headers.append('idserieapi', idapi);
             headers.append('Authorization', token);
             const response = await fetch(`${this.apiServer}/${events}`, { method: 'GET', headers });
             const data = await response.json();
@@ -54,20 +50,4 @@ export default class MoviesRoute extends Api {
             throw e;
         }
     }
-
-    async getPlatforms(idmovieapi, token){
-        try {
-            let events = `platform`;
-            const headers = new Headers();
-            headers.append('idmovieapi', idmovieapi);
-            headers.append('Authorization', token);
-            const response = await fetch(`${this.apiServer}/${events}`, { method: 'GET', headers });
-            const data = await response.json();
-            return data;
-        } catch (e) {
-            console.error(e);
-            throw e;
-        }
-    }
-
 }

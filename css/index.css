@@ -20,7 +20,7 @@ body {
 }
 h1 {
     font-family: Arial;
-    color: red;
+    color: white;
 }
 .titre-container {
     color: white;
@@ -136,21 +136,71 @@ h1 {
     stroke-dashoffset: -138px;
 }
 
-#carouselExample {
-    height: 50vh; /* 50% de la hauteur de la fenêtre */
+
+
+.film-list {
+    display: flex;
+    flex-wrap: wrap; /* Permettre le passage à la ligne si l'espace est insuffisant */
+    justify-content: center; /* Centrer les éléments horizontalement */
+    gap: 10px; /* Espacement entre les éléments */
 }
 
-.carousel-inner {
-    height: 100%; /* Assurez-vous que la hauteur du carousel est à 100% de son conteneur */
+.film-list button {
+    /* Ajoutez ici les styles supplémentaires des boutons */
 }
 
-.carousel-item {
-    height: 100%; /* Assurez-vous que la hauteur des éléments de la diapositive est à 100% du carousel */
-}
 
-.carousel-item img {
-    object-fit: cover; /* Pour ajuster l'image de la diapositive à la taille du conteneur */
-    height: 100%; /* Assurez-vous que l'image occupe toute la hauteur de l'élément de la diapositive */
+@-webkit-keyframes scroll {
+    0% {
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+    }
+    100% {
+        -webkit-transform: translateX(calc(-250px * 7));
+        transform: translateX(calc(-250px * 7));
+    }
 }
-
+@keyframes scroll {
+    0% {
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+    }
+    100% {
+        -webkit-transform: translateX(calc(-250px * 7));
+        transform: translateX(calc(-250px * 7));
+    }
+}
+.slider {
+    box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.125);
+    margin: auto;
+    position: relative;
+    overflow-x: hidden;
+    width: 100%;
+}
+.slider::before, .slider::after {
+    background: linear-gradient(to right, white 0%, rgba(255, 255, 255, 0) 100%);
+    content: "";
+    position: absolute;
+    z-index: 2;
+}
+.slider::after {
+    right: 0;
+    top: 0;
+    -webkit-transform: rotateZ(180deg);
+    transform: rotateZ(180deg);
+}
+.slider::before {
+    left: 0;
+    top: 0;
+}
+.slider .slide-track {
+    -webkit-animation: scroll 40s linear infinite;
+    animation: scroll 40s linear infinite;
+    display: flex;
+    width: calc(250px * 14);
+}
+.slider .slide {
+    height: 100%;
+    width: 100%;
+}
 

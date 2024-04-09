@@ -37,9 +37,10 @@ export default class DejaVuRoute extends Api {
         }
     }
 
-    async removeAlreadySeenMovie(token, movieidapi){
+    async removeAlreadySeenMovie(token, idApi, typecontenu){
         const data = {
-            movieidapi : movieidapi
+            idapi : idApi,
+            typecontenu : typecontenu
         }
         console.log("token " + token + "movieidapi " + JSON.stringify(data))
 

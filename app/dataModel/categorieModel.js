@@ -17,4 +17,14 @@ export default class CategorieModel {
                 console.error("Erreur lors de la vérification de l'event", error);
             }
     }
+
+    async getAllCategorieSerie(token){
+        try {
+            const response = await this.api.getAllCategorieSerie(token);
+            console.log(response);
+            return response;
+        } catch (error) {
+            console.error("Erreur lors de la vérification de l'event", error);
+        }
+    }
 }

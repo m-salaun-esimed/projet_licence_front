@@ -10,6 +10,7 @@ class AjouterAmiController {
         const rechercheInput = document.getElementById('recherche');
         rechercheInput.addEventListener('input', this.autocomplete.bind(this));
         this.afficherLesDemandes()
+        this.afficherLesAmis()
     }
     async autocomplete(event) {
         this.recherche = event.target.value.trim();
@@ -55,22 +56,25 @@ class AjouterAmiController {
         for (const suggestion of this.suggestions) {
             if (suggestion.displayname === displayName) {
                 try {
-                    const responses = await this.ajouterAmiModel.getFriendsRequests(sessionStorage.getItem("token"));
-                    console.log(responses)
-                    const requestExists = responses.some(request => request.receiver_id === suggestion.id);
+                    const responsesSend = await this.ajouterAmiModel.getFriendsRequestsSend(sessionStorage.getItem("token"));
+
+                    const requestExists = responsesSend.some(request => request.receiver_id === suggestion.id && (request.status !== 'accepted' || request.status !== 'pending'));
+
+                    console.log("requestExists " + requestExists)
                     if (requestExists) {
-                        alert("Demande d'ami déjà envoyée");
+                        alert("Demande d'ami déjà envoyée ou acceptée");
                         return;
                     }
+                    else {
+                        const data = {
+                            idUser: suggestion.id
+                        };
+                        const responsesAdd = await this.ajouterAmiModel.ajouter(sessionStorage.getItem("token"), data);
 
-                    const data = {
-                        idUser: suggestion.id
-                    };
-                    const responsesAdd = await this.ajouterAmiModel.ajouter(sessionStorage.getItem("token"), data);
-
-                    document.getElementById('recherche').value = '';
-                    document.getElementById("success").style.display = "block";
-                    return;
+                        document.getElementById('recherche').value = '';
+                        document.getElementById("success").style.display = "block";
+                        return;
+                    }
                 } catch (error) {
                     console.error(error);
                 }
@@ -85,34 +89,45 @@ class AjouterAmiController {
 
     async afficherLesDemandes() {
         const responses = await this.ajouterAmiModel.afficherLesDemandes(sessionStorage.getItem("token"));
+        console.log("responses : " + responses)
         const container = document.querySelector('.friendsRequests');
 
-        // Supprimer le contenu existant du conteneur
         container.innerHTML = '';
 
         let row;
         for (const demande of responses) {
             const index = responses.indexOf(demande);
             const senderInfo = await this.userModel.displaynamebyid(sessionStorage.getItem("token"), demande.sender_id);
-
-            if (index % 5 === 0) {
+            const notification = await  this.ajouterAmiModel.getNotificationById(sessionStorage.getItem("token"), demande.notification_id)
+            if (index % 2 === 0) {
                 row = document.createElement('div');
                 row.classList.add('row', 'mb-3');
                 container.appendChild(row);
             }
 
             const card = document.createElement('div');
-            card.classList.add('col-md-2');
+            card.classList.add('col-md-6');
             card.classList.add('m-3');
 
-            card.innerHTML = `
+            // Formater la date et l'heure
+            const sentAtDate = new Date(demande.sent_at);
+            const options = { year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric", second: "numeric" };
+            const sentAtFormatted = sentAtDate.toLocaleDateString("fr-FR", options);
+
+            card.innerHTML = `    
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Notification de demande d'ami</h5>
-                    <p class="card-text">Expéditeur: ${senderInfo[0].displayname}</p>
-                    <p class="card-text">Message: ${demande.notification_message}</p>
-                    <button class="btn btn-primary accepter m-1" data-id="${demande.id}">Accepter</button>
-                    <button class="btn btn-danger refuser m-1" data-id="${demande.id}">Refuser</button>
+                    <div class="row">
+                        <div class="col">
+                            <p class="card-text">Demande de: ${senderInfo[0].displayname}</p>
+                        </div>
+                        <div class="col">
+                            <p class="card-text">Envoyée le : 
+<br>${sentAtFormatted}</p>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary accepter m-1" data-id="${demande.id}" onclick="ajouterAmiController.accepterDemande(${demande.id}, ${notification[0].id})">Accepter</button>
+                    <button class="btn btn-danger refuser m-1" data-id="${demande.id}" onclick="ajouterAmiController.refuserDemande(${demande.id}, ${notification[0].id})">Refuser</button>
                 </div>
             </div>
         `;
@@ -122,6 +137,63 @@ class AjouterAmiController {
     }
 
 
+
+    async afficherLesAmis() {
+        try {
+            const friends = await this.ajouterAmiModel.getFriends(sessionStorage.getItem("token"));
+            const friendsContainer = document.querySelector('.friends');
+            friendsContainer.innerHTML = ""
+            for (let i = 0; i < friends.length; i++) {
+                const friend = friends[i][0];
+
+                const card = document.createElement('div');
+                card.classList.add('card');
+                card.classList.add('mb-3');
+
+                card.innerHTML = `
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <h5 class="card-title">${friend.displayname}</h5>
+                        </div>
+                        <div class="col-6">
+                            <button class="btn btn-outline-danger" onclick="ajouterAmiController.deleteFriend(${friend.id})"><img src="/images/x-lg.svg" alt=""></button>
+                        </div> 
+                    </div>
+                </div>
+            `;
+
+                friendsContainer.appendChild(card);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+
+
+
+    async accepterDemande(friendRequestId, notificationId){
+        console.log("accepter : " + friendRequestId + " notificationId : " + notificationId )
+        await this.ajouterAmiModel.accpeterDemande(sessionStorage.getItem("token"),friendRequestId,notificationId);
+        alert("demande d'ami acceptée")
+        this.afficherLesDemandes()
+        this.afficherLesAmis()
+
+    }
+
+    async refuserDemande(friendRequestId, notificationId){
+        console.log("refuser : " + friendRequestId + " notificationId : " + notificationId )
+        await this.ajouterAmiModel.refuserDemande(sessionStorage.getItem("token"),friendRequestId,notificationId);
+        alert("demande d'ami refusé")
+        this.afficherLesDemandes()
+    }
+
+    async deleteFriend(iduser){
+        console.log("deleteFriend : " + iduser)
+        await this.ajouterAmiModel.deleteFriend(sessionStorage.getItem("token"), iduser);
+        this.afficherLesAmis()
+    }
 }
 
 export default() => window.ajouterAmiController = new AjouterAmiController()

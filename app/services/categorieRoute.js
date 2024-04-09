@@ -19,4 +19,19 @@ export default class CategorieRoute extends Api {
             throw e;
         }
     }
+
+    async getAllCategorieSerie(token) {
+        try {
+            console.log("token : " + token)
+            let events = `serieCategory`
+            const response = await fetch(`${this.apiServer}/${events}`, { method: 'GET', headers:{
+                    authorization : token
+                }  });
+            const data = await response.json();
+            return data;
+        } catch (e) {
+            console.error(e);
+            throw e;
+        }
+    }
 }
