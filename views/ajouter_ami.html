@@ -1,29 +1,28 @@
-<div class="container">
-    <div class="row">
-        <div class="col-2">
-            <a onclick="ajouterAmiController.roulettePage()" class="m-3"> <img src="../images/arrow-left%20(2).svg" alt="fleche gauche" style="width: 40%" class="m-3"></a>
-        </div>
-        <div class="col-7">
-            <h1 class="m-3 text-center">AJOUTER DES AMIS</h1>
-        </div>
-        <div class="col-3">
+<style>
+</style>
+<nav class="navbar navbar-dark bg-body-tertiary" style="background-color: #081118">
+    <div class="container-fluid">
+        <a class="navbar-brand m-3" style="color: #00e36a">AJOUTER DES AMIS</a>
+        <div class="ms-auto">
+            <a onclick="ajouterAmiController.roulettePage()" class="m-3"> <img src="../images/x-lg.svg" alt="fleche gauche" style="width: 40%" class="m-3"></a>
         </div>
     </div>
+</nav>
     <div class="row">
         <div class="col-4">
 
         </div>
-        <div class="col-3 text-center">
+        <div class="col-3 text-center mt-3">
             <div class="input-group">
-                <span class="input-group-text">
-                    <img src="/images/search%20(1).svg" alt="Image" style="max-height: 100%;">
-                </span>
-                <input type="text" name="recherche" id="recherche" class="form-control" placeholder="Recherche" autocomplete="off">
+            <span class="input-group-text">
+                <img src="/images/search%20(1).svg" alt="Image" style="max-height: 100%;">
+            </span>
+                <input type="text" name="recherche" id="recherche" class="form-control" placeholder="Rechercher un ami" autocomplete="off">
             </div>
-            <ul class="autocomplete-results mt-2" style="color: white;   list-style-type: none;"></ul>
+            <ul class="autocomplete-results mt-2"></ul>
         </div>
         <div class="col-1   ">
-            <button class="btn btn-outline-primary" onclick="ajouterAmiController.ajouter()">
+            <button class="btn mt-3" onclick="ajouterAmiController.ajouter()" style="border-color: #00e36a; color: #00e36a">
                 Ajouter
             </button>
         </div>
@@ -48,5 +47,3 @@
             </div>
         </div>
     </div>
-
-</div>

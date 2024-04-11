@@ -36,4 +36,12 @@ export default class MoviesModel {
             throw e;
         }
     }
+
+    async getCompletion(token, recherche){
+        try {
+            return await this.api.getCompletion(token, recherche)
+        }catch (e){
+            throw e;
+        }
+    }
 }

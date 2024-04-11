@@ -1,20 +1,15 @@
-<div class="container">
-    <div class="row">
-        <div class="col-2">
-            <a onclick="dejaVu.roulettePage()" class="m-3"> <img src="../images/arrow-left%20(2).svg" alt="fleche gauche" style="width: 40%" class="m-3"></a>
-        </div>
-        <div class="col-6">
-            <h1 class="m-3 text-center">LISTE DES DÉJÀ VU</h1>
-            <p style="color: white">Les déjà vus ne seront plus affichés dans la roulette.</p>
-        </div>
-        <div class="col-4">
-<!--            <div class="form-floating m-3 text-center">-->
-<!--                <input type="text" name="recherche" id="recherche" class="form-control" placeholder=" " autocomplete="off">-->
-<!--                <label for="recherche">Rechercher un film</label>-->
-<!--            </div>-->
+<nav class="navbar navbar-dark bg-body-tertiary" style="background-color: #081118">
+    <div class="container-fluid">
+        <a class="navbar-brand m-3" style="color: #00e36a">LISTE DES DÉJÀ VU</a>
+        <div class="ms-auto">
+            <a onclick="dejaVu.roulettePage()" class="m-3"> <img src="../images/x-lg.svg" alt="fleche gauche" style="width: 40%" class="m-3"></a>
         </div>
     </div>
-    <div id="listDejaVu">
+</nav>
+
+<div class="row">
+    <p class="m-3" style="color:white;">Les films déjà vu ne seront plus présent dans la roulette.</p>
+    <div id="listDejaVu" class="m-3">
     </div>
 
 
@@ -77,4 +72,3 @@
             </div>
         </div>
     </div>
-</div>

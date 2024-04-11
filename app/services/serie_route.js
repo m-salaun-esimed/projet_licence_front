@@ -43,6 +43,7 @@ export default class SerieRoute extends Api {
             headers.append('idserieapi', idapi);
             headers.append('Authorization', token);
             const response = await fetch(`${this.apiServer}/${events}`, { method: 'GET', headers });
+            console.log(response)
             const data = await response.json();
             return data;
         } catch (e) {

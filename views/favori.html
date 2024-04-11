@@ -1,30 +1,22 @@
-<div class="container">
-    <div class="row">
-        <div class="col-2">
-            <a onclick="favori.changePageToRoulette()" class="m-3"> <img src="../images/arrow-left%20(2).svg" alt="fleche gauche" style="width: 40%" class="m-3"></a>
-        </div>
-        <div class="col-6">
-            <h1 class="m-3 text-center">MA LISTE DE FAVORI</h1>
-        </div>
-        <div class="col-4">
-<!--            <div class="form-floating m-3 text-center">-->
-<!--                <input type="text" name="recherche" id="recherche" class="form-control" placeholder=" " autocomplete="off">-->
-<!--                <label for="recherche">Rechercher dans la liste</label>-->
-<!--            </div>-->
+<nav class="navbar navbar-dark bg-body-tertiary" style="background-color: #081118">
+    <div class="container-fluid">
+        <a class="navbar-brand m-3" style="color: #00e36a">MA LISTE DE FAVORI</a>
+        <button class="btn rounded" style="background: #00fc76; color: black" onclick="">
+            <img src="/images/list-ul.svg" alt="Image" style="width: 20px; margin-right: 5px;">
+            Créer une liste
+        </button>
+        <div class="ms-auto">
+            <a onclick="favori.changePageToRoulette()" class="m-3"> <img src="../images/x-lg.svg" alt="fleche gauche" style="width: 40%" class="m-3"></a>
         </div>
     </div>
-    <div id="listFavorite">
+</nav>
+    <div id="listFavorite" class="m-3">
     </div>
-
-
-
 
     <div class="modal fade" id="modalMovie" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content" id="test">
                 <div class="modal-body">
-                    <!--                <div class="card" style="background-color: rgba(255, 255, 255, 0.3); border: none;">-->
-                    <!--                    <div class="card-body">-->
                     <div class="row">
                         <div class="col-md-4">
                             <div class="text-center">
@@ -37,7 +29,6 @@
                                     <div class="col-2">
                                         <p> Note : <div class="noteMovie" style="color: red"></div></p>
                                     </div>
-
                                     <div class="col-10">
                                         <h1 class="nameMovie" style="color: black"></h1>
                                     </div>
@@ -51,8 +42,6 @@
                             <div class="descriptionMovie text-center">
                             </div>
                         </div>
-                        <!--                        </div>-->
-                        <!--                    </div>-->
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -78,4 +67,3 @@
             </div>
         </div>
     </div>
-</div>

@@ -14,6 +14,11 @@ class RouletteAleatoire {
         this.dejaVuModel = new DejaVuModel()
         this.serieModel = new SerieModel()
         this.ajouterAmiModel = new AjouterAmiModel()
+        this.choix = []
+        const rechercheInputs = document.getElementById('recherche');
+        rechercheInputs.addEventListener('input', this.autocomplete.bind(this))
+
+
         this.init();
         this.addOptionsList().then(options => {
             this.options = options;
@@ -26,12 +31,13 @@ class RouletteAleatoire {
             this.spinTimeTotal = 0;
             this.ctx = null;
             document.getElementById("spin").addEventListener("click", () => this.spin());
+            document.getElementById("spinPersonnalisee").addEventListener("click", () => this.spinPersonnalisee());
+
             this.drawRouletteWheel();
             this.sideBar();
         }).catch(error => {
             console.error(error);
         });
-
     }
 
     addMovieList() {
@@ -61,13 +67,6 @@ class RouletteAleatoire {
             }
         }
     }
-
-
-
-
-
-
-
 
     async addOptionsList() {
         try {
@@ -204,7 +203,7 @@ class RouletteAleatoire {
     }
 
     async showModalMovie(index){
-        this.index = index
+        this.index = index;
         var text = this.options[index].name;
         var modal = new bootstrap.Modal(document.getElementById('modalMovie'));
         modal.show();
@@ -214,26 +213,6 @@ class RouletteAleatoire {
         var descriptionMovie = document.querySelector('.descriptionMovie');
         var descriptionMovietext = this.options[index].overview;
         descriptionMovie.innerText = descriptionMovietext;
-
-        const response = await this.moviesModel.getPlatforms(this.options[index].idapi, sessionStorage.getItem("token"));
-        console.log(response);
-
-        if (response && response.flatrate) {
-            const platformsData = response.flatrate;
-
-            let platformsHTML = '';
-            platformsData.forEach(platform => {
-                platformsHTML += `<div class="platform-info" style="display: flex; align-items: center;">
-            <p>${platform.provider_name}</p>
-            <img src="https://image.tmdb.org/t/p/w500/${platform.logo_path}" alt="${platform.provider_name} Logo" style="width: 30%;">
-        </div>`;
-            });
-
-            const platformsElement = document.querySelector('.platforms');
-            platformsElement.innerHTML = platformsHTML;
-        } else {
-            console.error("La réponse de l'API n'est pas valide ou les données des plateformes sont vides.");
-        }
 
         var imageMovie = document.querySelector('.imageMovie');
         if (imageMovie) {
@@ -246,14 +225,40 @@ class RouletteAleatoire {
             console.error("Element .imageMovie non trouvé");
         }
 
-        var noteMovie = document.getElementsByClassName("noteMovie")[0];
+        const response = await this.moviesModel.getPlatforms(this.options[index].idapi, sessionStorage.getItem("token"));
+        console.log(response);
+
+        if (response && response.flatrate) {
+            const platformsData = response.flatrate.slice(0, 3);
+
+            let platformsHTML = '<div class="row">';
+            platformsData.forEach(platform => {
+                platformsHTML += `
+            <div class="col-md-4 mt-1">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-title">${platform.provider_name}</p>
+                        <img src="https://image.tmdb.org/t/p/w500/${platform.logo_path}" alt="${platform.provider_name} Logo" class="card-img-top" style="width: 20%;">
+                    </div>
+                </div>
+            </div>`;
+            });
+            platformsHTML += '</div>'; // Fermeture de la div row
+
+            const platformsElement = document.querySelector('.platforms');
+            platformsElement.innerHTML = platformsHTML;
+        }
+        else {
+            let platformsHTML = '';
+
+            const platformsElement = document.querySelector('.platforms');
+            platformsElement.innerHTML = platformsHTML;
+            console.error("La réponse de l'API n'est pas valide ou les données des plateformes sont vides.");
+        }
+
+        var noteMovie = document.querySelector(".noteMovie");
         var noteMovieMovietext = this.options[index].note;
         noteMovie.innerHTML = '<div>' + noteMovieMovietext + '/10</div>';
-
-        var modalFooter = document.querySelector('.modal-footer');
-        modalFooter.innerHTML = '';
-
-        modalFooter.appendChild(viewedButton);
     }
 
 
@@ -283,19 +288,26 @@ class RouletteAleatoire {
         console.log(response);
 
         if (response && response.flatrate) {
-            const platformsData = response.flatrate;
+            const platformsData = response.flatrate.slice(0, 3); // Sélectionner les 3 premières plateformes
 
-            let platformsHTML = '';
+            let platformsHTML = '<div class="row">';
             platformsData.forEach(platform => {
-                platformsHTML += `<div class="platform-info" style="display: flex; align-items: center;">
-            <p>${platform.provider_name}</p>
-            <img src="https://image.tmdb.org/t/p/w500/${platform.logo_path}" alt="${platform.provider_name} Logo" style="width: 30%;">
-        </div>`;
+                platformsHTML += `
+            <div class="col-md-4 mt-1">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-title">${platform.provider_name}</p>
+                        <img src="https://image.tmdb.org/t/p/w500/${platform.logo_path}" alt="${platform.provider_name} Logo" class="card-img-top" style="width: 20%;">
+                    </div>
+                </div>
+            </div>`;
             });
+            platformsHTML += '</div>'; // Fermeture de la div row
 
             const platformsElement = document.querySelector('.platformsSerie');
             platformsElement.innerHTML = platformsHTML;
-        } else {
+        }
+        else {
             let platformsHTML = '';
 
             const platformsElement = document.querySelector('.platformsSerie');
@@ -307,10 +319,64 @@ class RouletteAleatoire {
         var noteMovieMovietext = this.options[index].note;
         noteMovie.innerHTML = '<div>' + noteMovieMovietext + '/10</div>';
 
-        var modalFooter = document.querySelector('.modal-footer');
-        modalFooter.innerHTML = '';
+    }
 
-        modalFooter.appendChild(viewedButton);""
+    async showModal(randomFilm){
+        var text = randomFilm.name;
+        var modal = new bootstrap.Modal(document.getElementById('modal'));
+        modal.show();
+        var infoMovie = document.querySelector('.name');
+        infoMovie.innerText = text;
+
+        var descriptionMovie = document.querySelector('.description');
+        var descriptionMovietext = randomFilm.overview;
+        descriptionMovie.innerText = descriptionMovietext;
+
+        var imageMovie = document.querySelector('.image');
+        if (imageMovie) {
+            var imgElement = document.createElement('img');
+            imgElement.src = 'https://image.tmdb.org/t/p/w500' + randomFilm.poster_path;
+            imgElement.classList.add('img-fluid');
+            imageMovie.innerHTML = '';
+            imageMovie.appendChild(imgElement);
+        } else {
+            console.error("Element .imageMovie non trouvé");
+        }
+
+        const response = await this.moviesModel.getPlatforms(randomFilm.idapi, sessionStorage.getItem("token"));
+        console.log(response);
+
+        if (response && response.flatrate) {
+            const platformsData = response.flatrate.slice(0, 3);
+
+            let platformsHTML = '<div class="row">';
+            platformsData.forEach(platform => {
+                platformsHTML += `
+            <div class="col-md-4 mt-1">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-title">${platform.provider_name}</p>
+                        <img src="https://image.tmdb.org/t/p/w500/${platform.logo_path}" alt="${platform.provider_name} Logo" class="card-img-top" style="width: 20%;">
+                    </div>
+                </div>
+            </div>`;
+            });
+            platformsHTML += '</div>';
+
+            const platformsElement = document.querySelector('.platforms');
+            platformsElement.innerHTML = platformsHTML;
+        }
+        else {
+            let platformsHTML = '';
+
+            const platformsElement = document.querySelector('.platforms');
+            platformsElement.innerHTML = platformsHTML;
+            console.error("La réponse de l'API n'est pas valide ou les données des plateformes sont vides.");
+        }
+
+        var noteMovie = document.querySelector(".note");
+        var noteMovieMovietext = randomFilm.note;
+        noteMovie.innerHTML = '<div>' + noteMovieMovietext + '/10</div>';
     }
 
     easeOut(t, b, c, d) {
@@ -398,6 +464,100 @@ class RouletteAleatoire {
         navigate("favori")
         console.log(idapi)
     }
+
+    getNbrCase(event) {
+        if (event.target.value < 3) {
+            alert("Veuillez entrer au moins 3 cases !");
+            event.target.value = '';
+        }
+        this.nbrCase = event.target.value;
+        console.log(this.nbrCase);
+    }
+
+
+    renderAutocompleteResults(suggestions) {
+        const autocompleteList = document.querySelector('.autocomplete-results');
+        autocompleteList.innerHTML = '';
+
+        const maxSuggestions = 5;
+        const displayedSuggestions = suggestions.slice(0, maxSuggestions);
+
+        displayedSuggestions.forEach(suggestion => {
+            const listItem = document.createElement('li');
+            listItem.classList = "m-2";
+            listItem.textContent = suggestion.name;
+            listItem.addEventListener('click', () => {
+                document.getElementById('recherche').value = "";
+                this.clearAutocompleteResults();
+                this.addFilmToChoice(suggestion);
+
+            });
+            autocompleteList.appendChild(listItem);
+        });
+    }
+
+    addFilmToChoice(film) {
+        this.choix.push(film);
+        console.log(this.choix);
+
+        const dynamicContenu = document.getElementById("dynamicContenu");
+        dynamicContenu.innerHTML = "";
+
+        this.choix.forEach(film => {
+            const filmContainer = document.createElement("div");
+            filmContainer.classList.add("film-container");
+
+            const img = document.createElement("img");
+            img.src = 'https://image.tmdb.org/t/p/w500' + film.poster_path;
+
+            const paragraph = document.createElement("p");
+            paragraph.textContent = film.name;
+
+            filmContainer.appendChild(img);
+            filmContainer.appendChild(paragraph);
+            dynamicContenu.appendChild(filmContainer);
+        });
+    }
+
+
+
+
+    clearAutocompleteResults() {
+        const autocompleteList = document.querySelector('.autocomplete-results');
+        autocompleteList.innerHTML = '';
+    }
+
+    async autocomplete(event) {
+        const recherche = event.target.value.trim();
+
+        if (recherche.length === 0) {
+            this.clearAutocompleteResults();
+            return;
+        }
+
+        try {
+            const suggestions = await this.moviesModel.getCompletion(sessionStorage.getItem("token"), recherche);
+            console.log(suggestions);
+            this.renderAutocompleteResults(suggestions);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    spinPersonnalisee(){
+        if (this.choix.length === 0) {
+            console.log("Aucun film disponible.");
+            return;
+        }
+
+        const randomIndex = Math.floor(Math.random() * this.choix.length);
+        const randomFilm = this.choix[randomIndex];
+
+        console.log("Film choisi aléatoirement :", randomFilm);
+        console.log(randomFilm.type)
+        this.showModal(randomFilm)
+    }
+
 
 }
 
