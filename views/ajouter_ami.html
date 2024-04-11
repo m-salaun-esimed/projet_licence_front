@@ -20,17 +20,21 @@
                 <input type="text" name="recherche" id="recherche" class="form-control" placeholder="Rechercher un ami" autocomplete="off">
             </div>
             <ul class="autocomplete-results mt-2"></ul>
+            <div class="alert alert-success mt-3" role="alert" id="erreur">
+                Vous ne pouvez pas vous ajouter vous-même.
+            </div>
+            <div class="alert alert-success mt-3" role="alert" id="success">
+                Demande d'ami envoyée !
+            </div>
         </div>
-        <div class="col-1   ">
+        <div class="col-1">
             <button class="btn mt-3" onclick="ajouterAmiController.ajouter()" style="border-color: #00e36a; color: #00e36a">
                 Ajouter
             </button>
+
         </div>
         <div class="col-4">
 
-        </div>
-        <div class="alert alert-success mt-3" role="alert" id="success">
-            Demande d'ami envoyée !
         </div>
     </div>
     <hr>

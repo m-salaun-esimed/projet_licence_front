@@ -7,7 +7,7 @@ export default class MoviesRoute extends Api {
 
     async get5RandomMovies(categoryids, token) {
         try {
-            let events = `getRandomMovies`;
+            let events = `movie/randomMovies`;
             const headers = new Headers();
             headers.append('categoryids', categoryids.join(','));
             headers.append('Authorization', token);
@@ -24,7 +24,7 @@ export default class MoviesRoute extends Api {
         const token = sessionStorage.getItem("token")
         console.log("getMovieByIdMovieApi : " + idmovieapi)
         try {
-            let events = `movieByIdMovieApi`;
+            let events = `movie/ByidMovieApi`;
             const headers = new Headers();
             headers.append('idmovieapi', idmovieapi);
             headers.append('Authorization', token);
@@ -57,7 +57,7 @@ export default class MoviesRoute extends Api {
 
     async getPlatforms(idmovieapi, token){
         try {
-            let events = `platform`;
+            let events = `movie/platform`;
             const headers = new Headers();
             headers.append('idmovieapi', idmovieapi);
             headers.append('Authorization', token);
@@ -72,7 +72,7 @@ export default class MoviesRoute extends Api {
 
     async getCompletion(token, recherche){
         try {
-            let events = `searchMoviesSerie`;
+            let events = `movie/search`;
             const headers = new Headers();
             headers.append('query', recherche);
             headers.append('Authorization', token);

@@ -323,7 +323,7 @@ class RouletteAleatoire {
 
     async showModal(randomFilm){
         var text = randomFilm.name;
-        var modal = new bootstrap.Modal(document.getElementById('modal'));
+        var modal = new bootstrap.Modal(document.getElementById('modalperso'));
         modal.show();
         var infoMovie = document.querySelector('.name');
         infoMovie.innerText = text;

@@ -125,7 +125,7 @@ class DejaVu {
         }
 
         var noteMovie = document.getElementsByClassName("noteMovie")[0];
-        var noteMovieMovietext = this.responseMovieInfo[0].note;
+        var noteMovieMovietext = this.responseInfo[0].note;
         noteMovie.innerHTML = '<div>' + noteMovieMovietext + '/10</div>';
 
         var modalFooter = document.querySelector('.modal-footer');

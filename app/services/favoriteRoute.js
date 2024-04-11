@@ -8,7 +8,7 @@ export default class FavoriteRoute extends Api {
     async postFavoriteMovie(token, data) {
         try {
             console.log(data)
-            let events = `postFavoriteMovie`
+            let events = `favorite/post`
             const headers = new Headers();
             headers.append('Content-Type', 'application/json');
             headers.append('Authorization', token);
@@ -29,7 +29,7 @@ export default class FavoriteRoute extends Api {
         }
         console.log("token " + token + "movieidapi " + JSON.stringify(data))
         try {
-            let route = `deleteFavoriteByMovieIdApiUser`
+            let route = `favorite/delete`
             const headers = new Headers();
             headers.append('Content-Type', 'application/json');
             headers.append('Authorization', token);
@@ -50,7 +50,7 @@ export default class FavoriteRoute extends Api {
             const headers = new Headers();
             headers.append('iduser', idUser);
             headers.append('Authorization', token);
-            let events = `getAllFavoriteByIdUser`
+            let events = `favorite`
             const response = await fetch(`${this.apiServer}/${events}`, { method: 'GET', headers });
             const data = await response.json();
             return data;

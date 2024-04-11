@@ -22,7 +22,7 @@ export default class AjouterAmiRoute extends Api {
     async ajouter(token, data){
         try {
             console.log("data"+data)
-            let events = `addFriend`
+            let events = `friend/add`
             const headers = new Headers();
             headers.append('Content-Type', 'application/json');
             headers.append('Authorization', token);
@@ -40,7 +40,7 @@ export default class AjouterAmiRoute extends Api {
         try {
             const headers = new Headers();
             headers.append('authorization', token);
-            let events = `getFriendsRequestsSend`
+            let events = `friend/requestsSend`
             const response = await fetch(`${this.apiServer}/${events}`, { method: 'GET', headers });
             const data = await response.json();
             return data;
@@ -54,7 +54,7 @@ export default class AjouterAmiRoute extends Api {
         try {
             const headers = new Headers();
             headers.append('authorization', token);
-            let events = `getFriendsRequestsReceived`
+            let events = `friend/requestsReceived`
             const response = await fetch(`${this.apiServer}/${events}`, { method: 'GET', headers });
             const data = await response.json();
             return data;
@@ -68,7 +68,7 @@ export default class AjouterAmiRoute extends Api {
         try {
             const headers = new Headers();
             headers.append('authorization', token);
-            let events = `getFriendsRequestsReceived`
+            let events = `friend/requestsReceived`
             const response = await fetch(`${this.apiServer}/${events}`, { method: 'GET', headers });
             const data = await response.json();
             return data;
@@ -83,7 +83,7 @@ export default class AjouterAmiRoute extends Api {
             const headers = new Headers();
             headers.append('authorization', token);
             headers.append('idnotification', notification_id);
-            let events = `notificationbyid`
+            let events = `friend/notification`
             const response = await fetch(`${this.apiServer}/${events}`, { method: 'GET', headers });
             const data = await response.json();
             return data;
@@ -97,7 +97,7 @@ export default class AjouterAmiRoute extends Api {
         try {
             const headers = new Headers();
             headers.append('authorization', token);
-            let events = `ami`
+            let events = `friend/friends`
             const response = await fetch(`${this.apiServer}/${events}`, { method: 'GET', headers });
             const data = await response.json();
             return data;
@@ -115,7 +115,7 @@ export default class AjouterAmiRoute extends Api {
 
             const bodyData = JSON.stringify({ friendrequestid, notificationid });
 
-            let events = `valider`;
+            let events = `friend/validerNotification`;
 
             const response = await fetch(`${this.apiServer}/${events}`, {
                 method: 'PUT',
@@ -139,7 +139,7 @@ export default class AjouterAmiRoute extends Api {
 
             const bodyData = JSON.stringify({ friendrequestid, notificationid });
 
-            let events = `rejeter`;
+            let events = `friend/rejeterNotification`;
 
             const response = await fetch(`${this.apiServer}/${events}`, {
                 method: 'PUT',
@@ -166,7 +166,7 @@ export default class AjouterAmiRoute extends Api {
                 idfriend : iduser
             };
 
-            const events = `ami`;
+            const events = `friend/deleteFriends`;
             const response = await fetch(`${this.apiServer}/${events}`, {
                 method: 'DELETE',
                 headers: headers,

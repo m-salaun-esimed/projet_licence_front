@@ -85,8 +85,8 @@
                             <div class="input-group m-3">
                                 <input type="text" name="recherche" id="recherche" class="form-control" placeholder="Rechercher film ou serie" autocomplete="off">
                                 <span class="input-group-text">
-                <img src="/images/search%20(1).svg" alt="Image" style="max-height: 100%;">
-            </span>
+                                <img src="/images/search%20(1).svg" alt="Image" style="max-height: 100%;">
+                            </span>
                             </div>
                         </div>
                     </div>
@@ -164,7 +164,53 @@
 </div>
 
 
+<div class="modal fade" id="modalperso" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="text-center">
+                            <p class="image"></p>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="text-center">
+                            <div class="row">
+                                <div class="col-2">
+                                    <p> Note : <div class="note" style="color: red"></div></p>
+                                </div>
 
+                                <div class="col-7">
+                                    <h1 class="name" style="color: black"></h1>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="Categorys"></p>
+                        </div>
+                        <hr>
+                        <h2 style="color: black">Synopsis</h2>
+                        <div class="description text-center">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <p class="platforms" style="color: black"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+            <div class="col-4">
+                <button type="button" class="btn rounded-circle" style="background-color: #22303C" data-bs-dismiss="modal">
+                    <img src="../images/x-circle.svg" width="20" height="20" alt="Fermer">
+                </button>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="modal fade" id="modalSerie" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content" id="test2">
@@ -251,48 +297,6 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
                 <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" onclick="rouletteAleatoire.resetSettings()">Réinitiliser</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="modal fade" id="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="text-center">
-                            <p class="image"></p>
-                        </div>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="text-center">
-                            <div class="row">
-                                <div class="col-2">
-                                    <p> Note : <div class="note" style="color: red"></div></p>
-                                </div>
-
-                                <div class="col-7">
-                                    <h1 class="name" style="color: black"></h1>
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <p class="Categorys"></p>
-                        </div>
-                        <hr>
-                        <h2 style="color: black">Synopsis</h2>
-                        <div class="description text-center">
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12 text-center">
-                        <p class="platforms" style="color: black"></p>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

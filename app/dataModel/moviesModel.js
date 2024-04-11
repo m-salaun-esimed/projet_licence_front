@@ -14,11 +14,7 @@ export default class MoviesModel {
     }
 
     async getMovieByIdMovieApi(idmovieapi){
-        try {
-            return await this.api.getMovieByIdMovieApi(idmovieapi)
-        }catch (e){
-            throw e;
-        }
+        return await this.api.getMovieByIdMovieApi(idmovieapi)
     }
 
     async searchMovies(query) {

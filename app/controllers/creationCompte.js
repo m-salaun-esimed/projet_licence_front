@@ -29,12 +29,12 @@ class CreationCompteController extends BaseController {
                             console.log("Creation Compte réussie");
                             document.getElementById("erreur").style.display = "none";
 
-                            const responseData = await response.json(); // Parse the JSON content
-                            const token = responseData.token;
-                            console.log(token);
-                            sessionStorage.setItem("token", token);
+                            // const responseData = await response.json(); // Parse the JSON content
+                            // const token = responseData.token;
+                            // console.log(token);
+                            // sessionStorage.setItem("token", token);
 
-                            navigate("formulaireRoulette")
+                            navigate("index")
 
                         } else {
                             console.log("Échec Creation Compte");

@@ -7,7 +7,7 @@ export default class SerieRoute extends Api {
 
     async get5RandomSeries(categoryids, token) {
         try {
-            let events = `getRandomSeries`;
+            let events = `serie/random`;
             const headers = new Headers();
             headers.append('categoryids', categoryids.join(','));
             headers.append('Authorization', token);
@@ -23,7 +23,7 @@ export default class SerieRoute extends Api {
     async getSerieByIdSerieApi(idserieapi){
         const token = sessionStorage.getItem("token")
         try {
-            let events = `serieByIdSerieApi`;
+            let events = `serie/byidserieapi`;
             const headers = new Headers();
             headers.append('idserieapi', idserieapi);
             headers.append('Authorization', token);

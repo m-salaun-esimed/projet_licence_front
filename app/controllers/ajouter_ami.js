@@ -7,6 +7,7 @@ class AjouterAmiController {
         this.userModel = new UserModel()
         this.recherche = ""
         document.getElementById("success").style.display = "none"
+        document.getElementById("erreur").style.display = "none";
         const rechercheInput = document.getElementById('recherche');
         rechercheInput.addEventListener('input', this.autocomplete.bind(this));
         this.afficherLesDemandes()
@@ -85,16 +86,26 @@ class AjouterAmiController {
                             idUser: suggestion.id
                         };
                         const responsesAdd = await this.ajouterAmiModel.ajouter(sessionStorage.getItem("token"), data);
-
-                        document.getElementById('recherche').value = '';
-                        document.getElementById("success").style.display = "block";
+                        console.log(responsesAdd)
+                        if (responsesAdd.status === 422) {
+                            document.getElementById('recherche').value = '';
+                            document.getElementById("erreur").style.display = "block";
+                        }
+                        else {
+                            document.getElementById('recherche').value = '';
+                            document.getElementById("erreur").style.display = "none";
+                            document.getElementById("success").style.display = "block";
+                        }
                         return;
                     }
                 } catch (error) {
-                    console.error(error);
+                        console.error(error);
                 }
             }
         }
+        alert("L'utilisateur n'existe pas, veuillez en rechercher un et cliquer dessus.")
+        document.getElementById("success").style.display = "none";
+
     }
 
 

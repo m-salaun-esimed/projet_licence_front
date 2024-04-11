@@ -8,7 +8,7 @@ export default class DejaVuRoute extends Api {
     async postAlreadySeenMovie(token, data) {
         try {
             console.log("data"+data)
-            let events = `postAlreadySeenMovie`
+            let events = `alreadySeenMovie/post`
             const headers = new Headers();
             headers.append('Content-Type', 'application/json');
             headers.append('Authorization', token);
@@ -27,7 +27,7 @@ export default class DejaVuRoute extends Api {
         try {
             const headers = new Headers();
             headers.append('Authorization', token);
-            let events = `getAllAlreadySeenMovie`
+            let events = `alreadySeenMovie`
             const response = await fetch(`${this.apiServer}/${events}`, { method: 'GET', headers });
             const data = await response.json();
             return data;
@@ -45,7 +45,7 @@ export default class DejaVuRoute extends Api {
         console.log("token " + token + "movieidapi " + JSON.stringify(data))
 
         try {
-            let route = `deleteAlreadySeenMovieByMovieIdApiUser`
+            let route = `alreadySeenMovie/delete`
             const headers = new Headers();
             headers.append('Content-Type', 'application/json');
             headers.append('Authorization', token);
