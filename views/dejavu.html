@@ -1,14 +1,53 @@
-<nav class="navbar navbar-dark bg-body-tertiary" style="background-color: #081118">
-    <div class="container-fluid">
-        <a class="navbar-brand m-3" style="color: #00e36a">LISTE DES DÉJÀ VU</a>
-        <div class="ms-auto">
-            <a onclick="dejaVu.roulettePage()" class="m-3"> <img src="../images/x-lg.svg" alt="fleche gauche" style="width: 40%" class="m-3"></a>
-        </div>
-    </div>
+<nav class="navbar">
+    <ul class="navbar__menu">
+        <li class="navbar__item" style="">
+            <a class="navbar__link" onclick="rouletteAleatoire.redirectionHomePage()"><img src="../images/film.svg"><span>Roulette</span></a>
+        </li>
+        <li class="navbar__item" style="">
+            <a class="navbar__link"><img src="../images/edit.svg"><span>Roulette Personnalisée</span></a>
+        </li>
+        <!--            <li class="navbar__item">-->
+        <!--                <a class="navbar__link" onclick="rouletteAleatoire.addFriendsPage()" ><img src="../images/user-plus.svg" onclick="rouletteAleatoire.addFriendsPage()"><span id="notification">Ajouter Ami(e)s</span></a>-->
+        <!--            </li>-->
+        <li class="navbar__item">
+            <a class="navbar__link" onclick="rouletteAleatoire.friendsPage()"><img src="../images/users.svg"><span>Ami(e)s</span></a>
+        </li>
+        <li class="navbar__item">
+            <a class="navbar__link" onclick="rouletteAleatoire.favoriPage()"><img src="../images/list.svg"><span>Favoris</span></a>
+        </li>
+        <li class="navbar__item">
+            <a  class="navbar__link" onclick="rouletteAleatoire.alreadyseenPage()"><img src="../images/eye.svg"><span>Déjà vu</span></a>
+        </li>
+        <li class="navbar__item">
+            <a  class="navbar__link" data-bs-toggle="modal" data-bs-target="#exampleModal"><img src="../images/log-out.svg"><span>Déconnexion</span></a>
+        </li>
+    </ul>
 </nav>
 
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">-->
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                Êtes-vous sûr de vouloir vous déconnecter ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" onclick="formulaireRouletteController.deconnexion()">Deconnexion</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="margin-left: 10%; margin-right: 10%;">
+    <div style="position: relative; float: right" id="admin">
+        <a  class="navbar__link" onclick="rouletteAleatoire.adminPage()"><img src="../images/settings.svg"><span>Admin</span></a>
+    </div>
 <div class="row">
     <p class="m-3" style="color:white;">Les films déjà vu ne seront plus présent dans la roulette.</p>
+    <div id="loadingSpinner" class="justify-content-center align-items-center vh-100" style="color: white">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
     <div id="listDejaVu" class="m-3">
     </div>
 
@@ -45,30 +84,18 @@
                             <div class="descriptionMovie text-center">
                             </div>
                         </div>
-                        <!--                        </div>-->
-                        <!--                    </div>-->
                     </div>
                 </div>
                 <div class="modal-footer">
                     <div class="row text-center">
-                        <div class="col-4">
-                            <!--                            <button type="button" class="btn rounded-circle" style="background-color: #22303C" title="Ajouter aux favoris"-->
-                            <!--                                    onclick="rouletteAleatoire.addFavorite(rouletteAleatoire.index)" id="fav">-->
-                            <!--                                <img src="../images/heart-fill%20(1).svg" width="20" height="20" alt="Favori">-->
-                            <!--                            </button>-->
-                        </div>
-                        <div class="col-4">
-                            <button type="button" class="btn rounded-circle" style="background-color: #22303C" title="Ajouter aux déjà vu">
-                                <img src="../images/eye-slash-fill.svg" width="20" height="20" alt="Déjà vu" id="imageModal">
-                            </button>
-                        </div>
-                        <div class="col-4">
-                            <button type="button" class="btn rounded-circle" style="background-color: #22303C" data-bs-dismiss="modal">
-                                <img src="../images/x-circle.svg" width="20" height="20" alt="Fermer">
-                            </button>
+                        <div class="row text-center">
+                            <div class="col-4">
+                                <a class="navbar__link" data-bs-dismiss="modal"><img src="../images/x-circle.svg"><span style="z-index: 9999">Fermer</span></a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>

@@ -1,6 +1,6 @@
 import AjouterAmiRoute from "../services/ajouterAmiRoute.js";
 
-export default class AjouterAmiModel {
+export default class AmiModel {
     constructor() {
         this.api = new AjouterAmiRoute();
     }

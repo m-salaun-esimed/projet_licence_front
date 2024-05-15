@@ -71,4 +71,22 @@ export default class userModel {
             }
     }
 
+    async refreshToken(token){
+        return await this.api.refreshToken(token)
+    }
+
+    async verifyEstAdmin(idUser){
+        const response = await this.verifyToken(sessionStorage.getItem("token"))
+        if (response.status === 200) {
+            try {
+                return await this.api.verifyEstAdmin(idUser)
+            } catch (error) {
+                console.error("Erreur lors de la vérification de l'event", error);
+            }
+        }
+        else{
+            sessionStorage.removeItem("token")
+            navigate("index")
+        }
+    }
 }

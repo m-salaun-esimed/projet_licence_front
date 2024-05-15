@@ -10,31 +10,42 @@ class DejaVu {
         this.moviesModel = new MoviesModel()
         this.serieModel = new SerieModel()
         this.init()
+        this.verifyAdmin();
     }
+    async verifyAdmin(){
+        const responseIdUser = await this.userModel.getIdUser(sessionStorage.getItem("token"), localStorage.getItem("login"))
+        const estAdmin = await this.userModel.verifyEstAdmin(responseIdUser[0].id);
+        console.log(estAdmin[0].admin)
+        sessionStorage.setItem("admin", estAdmin[0].admin)
+        if (sessionStorage.getItem("admin") === "true") {
+            document.getElementById("admin").style.display = "block";
+        } else {
+            document.getElementById("admin").style.display = "none";
+        }
+    }
+    async init() {
+        try {
+            let listDejaVu = document.getElementById("listDejaVu");
+            this.response = await this.dejaVuModel.getAllAlreadySeenMovie();
 
-    async init(){
-        let listDejaVu = document.getElementById("listDejaVu");
-        this.response = await this.dejaVuModel.getAllAlreadySeenMovie();
+            let row = document.createElement("div");
+            row.classList.add("row");
+            let count = 0;
 
-        let row = document.createElement("div");
-        row.classList.add("row");
-        let count = 0;
+            for (const dejaVu of this.response) {
+                console.log(dejaVu.typecontenu);
+                if (dejaVu.typecontenu === 'film') {
+                    this.responseInfo = await this.moviesModel.getMovieByIdMovieApi(dejaVu.idapi);
+                } else {
+                    this.responseInfo = await this.serieModel.getSerieByIdSerieApi(dejaVu.idapi);
+                }
+                console.log(this.responseInfo);
 
-        for (const dejaVu of this.response) {
-            console.log(dejaVu.typecontenu)
-            if (dejaVu.typecontenu === 'film'){
-                this.responseInfo = await this.moviesModel.getMovieByIdMovieApi(dejaVu.idapi)
-            }
-            else{
-                this.responseInfo = await this.serieModel.getSerieByIdSerieApi(dejaVu.idapi)
-            }
-            console.log(this.responseInfo)
-
-            let card = document.createElement("div");
-            card.classList.add("card");
-            card.classList.add("m-3");
-            card.style.width = "200px";
-            card.innerHTML = `
+                let card = document.createElement("div");
+                card.classList.add("card");
+                card.classList.add("m-3");
+                card.style.width = "200px";
+                card.innerHTML = `
             <div class="card-body text-center">
                 <div class="card-content">
                     <div class="row">
@@ -44,39 +55,33 @@ class DejaVu {
                     </div>    
                     <div class="row">
                         <div class="col-6">
-                          <button type="button" class="btn rounded-circle mt-2" style="background-color: #22303C" title="Supprimer des déjà vu"
-                              onclick="dejaVu.removeDejaVu(${dejaVu.idapi}, '${dejaVu.typecontenu}')" id="fav">
-                            <img src="../images/eye-slash-fill.svg" width="20" height="20" alt="Favori">
-                        </button>
-
+                              <a  class="navbar__link" onclick="dejaVu.removeDejaVu(${dejaVu.idapi}, '${dejaVu.typecontenu}')"><img src="../images/eye-off.svg" alt="Favori"><span style="z-index: 9999">Supprimer des déjà vu</span></a>
                         </div>
                         <div class="col-6">
-                          <button type="button" class="btn rounded-circle mt-2"  style="background-color: #22303C; color: white"
-                          onclick="dejaVu.showModalMovie(${dejaVu.idapi}, '${dejaVu.typecontenu}')">
-                            Info
-                          </button>
+                          <a  class="navbar__link" onclick="dejaVu.showModalMovie(${dejaVu.idapi}, '${dejaVu.typecontenu}')"><img src="../images/info.svg" alt="Favori"><span style="z-index: 9999">Information</span></a>
                         </div>
                      </div>               
                 </div>
             </div>
         `;
 
-            row.appendChild(card);
-            count++;
+                row.appendChild(card);
+                count++;
 
-            // Add row to listFavorite when reaching 4 cards or at the end of the loop
-            if (count === 5 || this.response.length - 1 === this.response.indexOf(dejaVu)) {
-                listDejaVu.appendChild(row);
-                // Reset row and count for the next row
-                row = document.createElement("div");
-                row.classList.add("row");
-                count = 0;
+                if (count === 5 || this.response.length - 1 === this.response.indexOf(dejaVu)) {
+                    listDejaVu.appendChild(row);
+                    // Reset row and count for the next row
+                    row = document.createElement("div");
+                    row.classList.add("row");
+                    count = 0;
+                }
             }
-        }
-    }
 
-    roulettePage(){
-        navigate("rouletteAleatoire")
+            let loadingSpinner = document.getElementById("loadingSpinner");
+            loadingSpinner.style.display = "none";
+        } catch (error) {
+            console.error("An error occurred while fetching and displaying already seen movies:", error);
+        }
     }
 
     async removeDejaVu(movieidapi, typecontenu) {

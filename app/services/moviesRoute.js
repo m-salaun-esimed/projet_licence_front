@@ -55,11 +55,11 @@ export default class MoviesRoute extends Api {
         }
     }
 
-    async getPlatforms(idmovieapi, token){
+    async getPlatforms(idapi, token){
         try {
             let events = `movie/platform`;
             const headers = new Headers();
-            headers.append('idmovieapi', idmovieapi);
+            headers.append('idmovieapi', idapi);
             headers.append('Authorization', token);
             const response = await fetch(`${this.apiServer}/${events}`, { method: 'GET', headers });
             const data = await response.json();

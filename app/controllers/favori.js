@@ -8,132 +8,91 @@ class Favori {
         this.userModel = new UserModel()
         this.moviesModel = new MoviesModel()
         this.serieModel = new SerieModel()
+        this.verifyAdmin();
         this.init()
     }
 
     async init() {
-        let listFavorite = document.getElementById("listFavorite");
-        const responseIdUser = await this.userModel.getIdUser(sessionStorage.getItem("token"), localStorage.getItem("login"));
-        this.listeDeFav = await this.favoriteModel.getAllFavorite(responseIdUser[0].id);
-        console.log(this.listeDeFav)
-        let row = document.createElement("div");
-        row.classList.add("row");
-        let count = 0;
+        const listFavorite = document.getElementById("listFavorite");
+        const loadingSpinner = document.getElementById("loadingSpinner");
 
-        for (const favorite of this.listeDeFav) {
-            if (favorite.typecontenu === 'film'){
-                this.responseInfo = await this.moviesModel.getMovieByIdMovieApi(favorite.idapi)
-            }
-            else{
-                this.responseInfo = await this.serieModel.getSerieByIdSerieApi(favorite.idapi)
-            }
-            console.log(this.responseInfo)
+        // Show the spinner
+        loadingSpinner.style.display = "flex";
+        listFavorite.style.display = "none";
 
-            let card = document.createElement("div");
-            card.classList.add("card");
-            card.classList.add("m-3");
-            card.style.width = "200px";
-            card.innerHTML = `
-            <div class="card-body text-center">
-                <div class="card-content">
-                    <div class="row">
-                        <div>
-                            <img src="https://image.tmdb.org/t/p/w500${this.responseInfo[0].poster_path}" class="card-img rounded" alt="Image" style="width: 100%">
-                        </div>
-                    </div>    
-                    <div class="row">
-                        <div class="col-6">
-                          <button type="button" class="btn rounded-circle mt-2" style="background-color: #22303C" title="Supprimer aux favoris"
-                            onclick="rouletteAleatoire.removeFavorite(${favorite.idapi})" id="fav">
-                            <img src="../images/check-lg.svg" width="20" height="20" alt="Favori">
-                        </button>
+        try {
+            const responseIdUser = await this.userModel.getIdUser(sessionStorage.getItem("token"), localStorage.getItem("login"));
+            this.listeDeFav = await this.favoriteModel.getAllFavorite(responseIdUser[0].id);
+            console.log(this.listeDeFav);
+            let row = document.createElement("div");
+            row.classList.add("row");
+            let count = 0;
 
-                        </div>
-                        <div class="col-6">
-                          <button type="button" class="btn rounded-circle mt-2"  style="background-color: #22303C; color: white"
-                          onclick="favori.showModal(${favorite.idapi})">
-                            Info
-                          </button>
-                        </div>
-                     </div>               
+            for (const favorite of this.listeDeFav) {
+                if (favorite.typecontenu === 'film') {
+                    this.responseInfo = await this.moviesModel.getMovieByIdMovieApi(favorite.idapi);
+                } else {
+                    this.responseInfo = await this.serieModel.getSerieByIdSerieApi(favorite.idapi);
+                }
+                console.log(this.responseInfo);
+
+                let card = document.createElement("div");
+                card.classList.add("card", "m-3");
+                card.style.width = "200px";
+                card.innerHTML = `
+                <div class="card-body text-center">
+                    <div class="card-content">
+                        <div class="row">
+                            <div>
+                                <img src="https://image.tmdb.org/t/p/w500${this.responseInfo[0].poster_path}" class="card-img rounded" alt="Image" style="width: 100%">
+                            </div>
+                        </div>    
+                        <div class="row">
+                            <div class="col-6">
+                                <a class="navbar__link" onclick="rouletteAleatoire.removeFavorite(${favorite.idapi})">
+                                    <img src="../images/trash-2.svg" alt="Favori">
+                                    <span style="z-index: 9999">Supprimer de la liste</span>
+                                </a>
+                            </div>
+                            <div class="col-6">
+                                <a class="navbar__link" onclick="favori.showModal(${favorite.idapi})">
+                                    <img src="../images/info.svg" alt="Favori">
+                                    <span style="z-index: 9999">Information</span>
+                                </a>
+                            </div>
+                        </div>            
+                    </div>
                 </div>
-            </div>
-        `;
+            `;
 
-            row.appendChild(card);
-            count++;
-
-            // Add row to listFavorite when reaching 4 cards or at the end of the loop
-            if (count === 5 || this.listeDeFav.length - 1 === this.listeDeFav.indexOf(favorite)) {
-                listFavorite.appendChild(row);
-                // Reset row and count for the next row
-                row = document.createElement("div");
-                row.classList.add("row");
-                count = 0;
+                row.appendChild(card);
+                count++;
+                if (count === 5 || this.listeDeFav.length - 1 === this.listeDeFav.indexOf(favorite)) {
+                    listFavorite.appendChild(row);
+                    // Reset row and count for the next row
+                    row = document.createElement("div");
+                    row.classList.add("row");
+                    count = 0;
+                }
             }
+        } catch (error) {
+            console.error("An error occurred while fetching favorites:", error);
+        } finally {
+            console.log("test")
+            loadingSpinner.style.display = "none";
+            listFavorite.style.display = "block";
         }
     }
-
-
-    // async searchMovies(query) {
-    //     console.log("query " + query)
-    //     const response = await this.moviesModel.searchMovies(query);
-    //     document.getElementById("listFavorite").innerHTML = "";
-    //     this.displayMovies(response);
-    // }
-
-    // displayMovies(response) {
-    //     let row = document.createElement("div");
-    //     row.classList.add("row");
-    //     let count = 0;
-    //
-    //     for (const movie of response) {
-    //         let card = document.createElement("div");
-    //         card.classList.add("card");
-    //         card.classList.add("m-3");
-    //         card.style.width = "200px";
-    //         card.innerHTML = `
-    //         <div class="card-body text-center">
-    //             <div class="card-content">
-    //                  <div class="row">
-    //                     <div>
-    //                         <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" class="card-img rounded" alt="Image" style="width: 100%">
-    //                     </div>
-    //                 </div>
-    //                 <div class="row">
-    //                     <div class="col-6">
-    //                       <button type="button" class="btn rounded-circle mt-2" style="background-color: #22303C" title="Supprimer aux favoris"
-    //                         onclick="rouletteAleatoire.removeFavorite(${movie.idapi})" id="fav">
-    //                         <img src="../images/check-lg.svg" width="20" height="20" alt="Favori">
-    //                     </button>
-    //
-    //                     </div>
-    //                     <div class="col-6">
-    //                       <button type="button" class="btn rounded-circle mt-2"  style="background-color: #22303C; color: white"
-    //                       onclick="favori.showModal(${movie.idapi})">
-    //                         Info
-    //                       </button>
-    //                     </div>
-    //                  </div>
-    //             </div>
-    //         </div>
-    //     `;
-    //
-    //         row.appendChild(card);
-    //         count++;
-    //
-    //         if (count === 5 || response.length - 1 === response.indexOf(movie)) {
-    //             document.getElementById("listFavorite").appendChild(row);
-    //             // Reset row and count for the next row
-    //             row = document.createElement("div");
-    //             row.classList.add("row");
-    //             count = 0;
-    //         }
-    //     }
-    // }
-
-    changePageToRoulette(){
-        navigate("rouletteAleatoire")
+    async verifyAdmin(){
+        const responseIdUser = await this.userModel.getIdUser(sessionStorage.getItem("token"), localStorage.getItem("login"))
+        const estAdmin = await this.userModel.verifyEstAdmin(responseIdUser[0].id);
+        console.log(estAdmin[0].admin)
+        sessionStorage.setItem("admin", estAdmin[0].admin)
+        if (sessionStorage.getItem("admin") === "true") {
+            document.getElementById("admin").style.display = "block";
+        } else {
+            document.getElementById("admin").style.display = "none";
+        }
     }
 
     async showModal(idapi){
@@ -178,15 +137,3 @@ class Favori {
     }
 }
 export default() => window.favori = new Favori()
-
-// document.getElementById("recherche").addEventListener("input", function() {
-//     let listFavorite = document.getElementById("listFavorite");
-//     const query = this.value.trim();
-//     if (query !== "") {
-//         listFavorite.innerText = ""
-//         favori.searchMovies(query);
-//     } else {
-//         listFavorite.innerText = ""
-//         favori.init();
-//     }
-// });

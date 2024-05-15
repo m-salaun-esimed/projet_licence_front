@@ -1,0 +1,121 @@
+<header>
+    <link href="../css/admin.css" rel="stylesheet">
+</header>
+<nav class="navbar">
+    <ul class="navbar__menu">
+        <li class="navbar__item" style="">
+            <a class="navbar__link" onclick="rouletteAleatoire.redirectionHomePage()"><img src="../images/film.svg"><span>Roulette</span></a>
+        </li>
+        <li class="navbar__item" style="">
+            <a class="navbar__link"><img src="../images/edit.svg"><span>Roulette Personnalisée</span></a>
+        </li>
+        <!--            <li class="navbar__item">-->
+        <!--                <a class="navbar__link" onclick="rouletteAleatoire.addFriendsPage()" ><img src="../images/user-plus.svg" onclick="rouletteAleatoire.addFriendsPage()"><span id="notification">Ajouter Ami(e)s</span></a>-->
+        <!--            </li>-->
+        <li class="navbar__item">
+            <a class="navbar__link" onclick="rouletteAleatoire.friendsPage()"><img src="../images/users.svg"><span>Ami(e)s</span></a>
+        </li>
+        <li class="navbar__item">
+            <a class="navbar__link" onclick="rouletteAleatoire.favoriPage()"><img src="../images/list.svg"><span>Favoris</span></a>
+        </li>
+        <li class="navbar__item">
+            <a  class="navbar__link" onclick="rouletteAleatoire.alreadyseenPage()"><img src="../images/eye.svg"><span>Déjà vu</span></a>
+        </li>
+        <li class="navbar__item">
+            <a  class="navbar__link" data-bs-toggle="modal" data-bs-target="#exampleModal"><img src="../images/log-out.svg"><span>Déconnexion</span></a>
+        </li>
+    </ul>
+</nav>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                Êtes-vous sûr de vouloir vous déconnecter ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" onclick="formulaireRouletteController.deconnexion()">Deconnexion</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div style="margin-left: 10%; margin-right: 10%;">
+    <div style="position: relative; float: right" id="admin">
+        <a  class="navbar__link" onclick="rouletteAleatoire.adminPage()"><img src="../images/settings.svg"><span>Admin</span></a>
+    </div>
+    <h1 class="mt-3 text-center ag-courses_item">GESTION CONTENUE</h1>
+    <hr style="color: white" class="ag-courses_item">
+    <div class="ag-format-container">
+        <div class="ag-courses_box">
+            <div class="ag-courses_item">
+                <a onclick="adminController.showContent('ajouterFilmSerie')" class="ag-courses-item_link">
+                    <div class="ag-courses-item_bg"></div>
+                    <div class="ag-courses-item_title">
+                        Ajouter film / série
+                    </div>
+                </a>
+            </div>
+
+            <div class="ag-courses_item">
+                <a onclick="adminController.showContent('supprimerFilmSerie')" class="ag-courses-item_link">
+                    <div class="ag-courses-item_bg"></div>
+
+                    <div class="ag-courses-item_title">
+                        Supprimer film / série
+                    </div>
+                </a>
+            </div>
+
+            <div class="ag-courses_item">
+                <a onclick="adminController.showContent('updateFilmSerie')" class="ag-courses-item_link">
+                    <div class="ag-courses-item_bg"></div>
+
+                    <div class="ag-courses-item_title">
+                       Mettre à jour film / série
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <h1 class="mt-3 text-center ag-courses_item">GESTION UTILISATEUR</h1>
+    <hr style="color: white" class="ag-courses_item">
+    <div class="ag-format-container">
+        <div class="ag-courses_box">
+            <div class="ag-courses_item">
+                <a onclick="adminController.showContent('addDeleteUser')" class="ag-courses-item_link">
+                    <div class="ag-courses-item_bg"></div>
+
+                    <div class="ag-courses-item_title">
+                        Ajouter / Supprimer un utilisateur
+                    </div>
+                </a>
+            </div>
+
+            <div class="ag-courses_item">
+                <a onclick="adminController.showContent('updateMdpUser')"  class="ag-courses-item_link">
+                    <div class="ag-courses-item_bg">
+                    </div>
+                    <div class="ag-courses-item_title">
+                        Modifier mot de passe utilisateur
+                    </div>
+                </a>
+            </div>
+
+            <div class="ag-courses_item">
+                <a onclick="adminController.showContent('addDeleteAdmin')" class="ag-courses-item_link">
+                    <div class="ag-courses-item_bg"></div>
+
+                    <div class="ag-courses-item_title">
+                        Ajouter / Supprimer admin
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<div id="contentContainer" style="margin-left: 10%; margin-right: 10%;"></div>

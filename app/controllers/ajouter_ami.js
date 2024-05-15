@@ -1,9 +1,9 @@
-import AjouterAmiModel from "../dataModel/ajouterAmiModel.js";
+import AmiModel from "../dataModel/amiModel.js";
 import UserModel from "../dataModel/userModel.js";
 
 class AjouterAmiController {
     constructor() {
-        this.ajouterAmiModel = new AjouterAmiModel()
+        this.ajouterAmiModel = new AmiModel()
         this.userModel = new UserModel()
         this.recherche = ""
         document.getElementById("success").style.display = "none"
@@ -12,6 +12,20 @@ class AjouterAmiController {
         rechercheInput.addEventListener('input', this.autocomplete.bind(this));
         this.afficherLesDemandes()
         this.afficherLesAmis()
+        this.verifyAdmin();
+
+    }
+
+    async verifyAdmin(){
+        const responseIdUser = await this.userModel.getIdUser(sessionStorage.getItem("token"), localStorage.getItem("login"))
+        const estAdmin = await this.userModel.verifyEstAdmin(responseIdUser[0].id);
+        console.log(estAdmin[0].admin)
+        sessionStorage.setItem("admin", estAdmin[0].admin)
+        if (sessionStorage.getItem("admin") === "true") {
+            document.getElementById("admin").style.display = "block";
+        } else {
+            document.getElementById("admin").style.display = "none";
+        }
     }
     async autocomplete(event) {
         this.recherche = event.target.value.trim();
@@ -121,46 +135,46 @@ class AjouterAmiController {
         container.innerHTML = '';
 
         let row;
-        for (const demande of responses) {
-            const index = responses.indexOf(demande);
-            const senderInfo = await this.userModel.displaynamebyid(sessionStorage.getItem("token"), demande.sender_id);
-            const notification = await  this.ajouterAmiModel.getNotificationById(sessionStorage.getItem("token"), demande.notification_id)
-            if (index % 2 === 0) {
-                row = document.createElement('div');
-                row.classList.add('row', 'mb-3');
-                container.appendChild(row);
-            }
+        for (let i = 0; i < responses.length; i += 2) {
+            row = document.createElement('div');
+            row.classList.add('row', 'mb-3');
+            container.appendChild(row);
 
-            const card = document.createElement('div');
-            card.classList.add('col-md-6');
-            card.classList.add('m-3');
+            for (let j = 0; j < 2 && (i + j) < responses.length; j++) {
+                const demande = responses[i + j];
+                const senderInfo = await this.userModel.displaynamebyid(sessionStorage.getItem("token"), demande.sender_id);
+                const notification = await this.ajouterAmiModel.getNotificationById(sessionStorage.getItem("token"), demande.notification_id)
 
-            // Formater la date et l'heure
-            const sentAtDate = new Date(demande.sent_at);
-            const options = { year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric", second: "numeric" };
-            const sentAtFormatted = sentAtDate.toLocaleDateString("fr-FR", options);
+                const card = document.createElement('div');
+                card.classList.add('col-md-6');
+                card.classList.add('m-3');
 
-            card.innerHTML = `    
-            <div class="card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col">
-                            <p class="card-text">Demande de: ${senderInfo[0].displayname}</p>
+                const sentAtDate = new Date(demande.sent_at);
+                const options = { year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric", second: "numeric" };
+                const sentAtFormatted = sentAtDate.toLocaleDateString("fr-FR", options);
+
+                card.innerHTML = `    
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <p class="card-text">Demande de: ${senderInfo[0].displayname}</p>
+                            </div>
+                            <div class="col">
+                                <p class="card-text">Envoyée le : <br>${sentAtFormatted}</p>
+                            </div>
                         </div>
-                        <div class="col">
-                            <p class="card-text">Envoyée le : 
-<br>${sentAtFormatted}</p>
-                        </div>
+                        <button class="btn btn-primary accepter m-1" data-id="${demande.id}" onclick="ajouterAmiController.accepterDemande(${demande.id}, ${notification[0].id})"><img src="/images/user-check.svg" alt=""></button>
+                        <button class="btn btn-danger refuser m-1" data-id="${demande.id}" onclick="ajouterAmiController.refuserDemande(${demande.id}, ${notification[0].id})"><img src="/images/user-x.svg" alt=""></button>
                     </div>
-                    <button class="btn btn-primary accepter m-1" data-id="${demande.id}" onclick="ajouterAmiController.accepterDemande(${demande.id}, ${notification[0].id})">Accepter</button>
-                    <button class="btn btn-danger refuser m-1" data-id="${demande.id}" onclick="ajouterAmiController.refuserDemande(${demande.id}, ${notification[0].id})">Refuser</button>
                 </div>
-            </div>
-        `;
+            `;
 
-            row.appendChild(card);
+                row.appendChild(card);
+            }
         }
     }
+
 
 
 
@@ -194,25 +208,6 @@ class AjouterAmiController {
         } catch (error) {
             console.error(error);
         }
-    }
-
-
-
-
-    async accepterDemande(friendRequestId, notificationId){
-        console.log("accepter : " + friendRequestId + " notificationId : " + notificationId )
-        await this.ajouterAmiModel.accpeterDemande(sessionStorage.getItem("token"),friendRequestId,notificationId);
-        alert("demande d'ami acceptée")
-        this.afficherLesDemandes()
-        this.afficherLesAmis()
-
-    }
-
-    async refuserDemande(friendRequestId, notificationId){
-        console.log("refuser : " + friendRequestId + " notificationId : " + notificationId )
-        await this.ajouterAmiModel.refuserDemande(sessionStorage.getItem("token"),friendRequestId,notificationId);
-        alert("demande d'ami refusé")
-        this.afficherLesDemandes()
     }
 
     async deleteFriend(iduser){

@@ -25,9 +25,9 @@ export default class MoviesModel {
         }
     }
 
-    async getPlatforms(idmovieapi, token){
+    async getPlatforms(idapi, token){
         try {
-            return await this.api.getPlatforms(idmovieapi, token)
+            return await this.api.getPlatforms(idapi, token)
         }catch (e){
             throw e;
         }

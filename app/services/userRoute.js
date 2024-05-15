@@ -20,6 +20,23 @@ export default class UserRoute extends Api {
             body: JSON.stringify(data) })
     }
 
+    async verifyEstAdmin(idUser){
+        console.log("idUser " + idUser)
+        let routeAuthenticate = "user/estAdmin"
+        try {
+            const headers = new Headers();
+            headers.append('iduser', idUser);
+            headers.append('authorization',  sessionStorage.getItem("token"));
+            const response = await fetch(`${this.apiServer}/${routeAuthenticate}`, { method: 'GET', headers });
+            const data = await response.json();
+            console.log(data);
+            return data;
+        } catch (e) {
+            console.error(e);
+            throw e;
+        }
+    }
+
     verifyToken(data){
         let routeAuthenticate = "api/verifyToken"
         return fetch(`${this.apiServer}/${routeAuthenticate}`, {
@@ -62,5 +79,14 @@ export default class UserRoute extends Api {
             console.error(e);
             throw e;
         }
+    }
+
+    async refreshToken(token){
+            let events = `user/refreshtoken`;
+            const headers = new Headers();
+            headers.append('Authorization', token);
+            const response = await fetch(`${this.apiServer}/${events}`, { method: 'GET', headers });
+            const data = await response.json();
+            return data;
     }
 }
