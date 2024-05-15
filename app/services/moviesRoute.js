@@ -85,4 +85,25 @@ export default class MoviesRoute extends Api {
         }
     }
 
+    async deleteMovie(identifierType, value){
+        try {
+            let events = `movie`;
+            const headers = new Headers();
+            headers.append(identifierType, value);
+            headers.append('Authorization', sessionStorage.getItem("token"));
+            const response = await fetch(`${this.apiServer}/${events}`, { method: 'DELETE', headers });
+            console.log(response)
+            if (response.ok) {
+                alert('Film supprimée avec succès.');
+            } else {
+                alert('Erreur lors de la suppression de la série.');
+            }
+            const data = await response.json();
+            return data;
+        } catch (e) {
+            console.error(e);
+            throw e;
+        }
+    }
+
 }

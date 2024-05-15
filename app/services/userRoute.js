@@ -89,4 +89,19 @@ export default class UserRoute extends Api {
             const data = await response.json();
             return data;
     }
+
+    async deleteUser(email){
+        try {
+            let events = `user`;
+            const headers = new Headers();
+            headers.append('login', email);
+            headers.append('Authorization', sessionStorage.getItem("token"));
+            const response = await fetch(`${this.apiServer}/${events}`, { method: 'DELETE', headers });
+            const data = await response.json();
+            return data;
+        } catch (e) {
+            console.error(e);
+            throw e;
+        }
+    }
 }

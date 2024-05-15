@@ -89,4 +89,12 @@ export default class userModel {
             navigate("index")
         }
     }
+
+    async deleteUser(email){
+        try {
+            return await this.api.deleteUser(email)
+        }catch (e){
+            throw e;
+        }
+    }
 }

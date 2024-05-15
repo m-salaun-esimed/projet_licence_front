@@ -40,4 +40,12 @@ export default class MoviesModel {
             throw e;
         }
     }
+
+    async deleteMovie(identifierType, value){
+        try {
+            return await this.api.deleteMovie(identifierType, value)
+        }catch (e){
+            throw e;
+        }
+    }
 }

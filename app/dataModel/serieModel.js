@@ -27,4 +27,12 @@ export default class SerieModel {
             throw e;
         }
     }
+
+    async deleteSerie(identifierType, value){
+        try {
+            return await this.api.deleteSerie(identifierType, value)
+        }catch (e){
+            throw e;
+        }
+    }
 }
