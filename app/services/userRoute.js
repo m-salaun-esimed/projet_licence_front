@@ -104,4 +104,28 @@ export default class UserRoute extends Api {
             throw e;
         }
     }
+
+    async updatePwd(login, pwd) {
+        try {
+            let events = `user/pwd`;
+            const body = JSON.stringify({ login: login, pwd: pwd });
+            const headers = new Headers({
+                'Authorization': sessionStorage.getItem('token'),
+                'Content-Type': 'application/json' // Specify content type as JSON
+            });
+            const response = await fetch(`${this.apiServer}/${events}`, { method: 'PUT', headers, body });
+            console.log(login)
+            console.log(pwd)
+
+            if (!response.ok) {
+                throw new Error(`Erreur lors de la mise à jour du mot de passe: ${response.status}`);
+            }
+
+            const data = await response.json();
+            return data;
+        } catch (e) {
+            console.error(e);
+            throw e;
+        }
+    }
 }

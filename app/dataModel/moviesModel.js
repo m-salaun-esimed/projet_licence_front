@@ -48,4 +48,12 @@ export default class MoviesModel {
             throw e;
         }
     }
+
+    async updateMovie(args){
+        try {
+            return await this.api.updateMovie(args)
+        }catch (e){
+            throw e;
+        }
+    }
 }

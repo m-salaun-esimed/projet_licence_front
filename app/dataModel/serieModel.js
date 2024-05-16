@@ -35,4 +35,12 @@ export default class SerieModel {
             throw e;
         }
     }
+
+    async updateSerie(args){
+        try {
+            return await this.api.updateSerie(args)
+        }catch (e){
+            throw e;
+        }
+    }
 }

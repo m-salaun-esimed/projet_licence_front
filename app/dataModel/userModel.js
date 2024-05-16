@@ -97,4 +97,12 @@ export default class userModel {
             throw e;
         }
     }
+
+    async updatePwd(login, pwd){
+        try {
+            return await this.api.updatePwd(login, pwd)
+        }catch (e){
+            throw e;
+        }
+    }
 }

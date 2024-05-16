@@ -72,4 +72,44 @@ export default class SerieRoute extends Api {
             throw e;
         }
     }
+
+    async updateSerie(arg) {
+        try {
+            const events = 'serie';
+            const headers = new Headers({
+                'Authorization': sessionStorage.getItem('token'),
+                'Content-Type': 'application/json' // Specify content type as JSON
+            });
+            let body
+            if(arg.id){
+                 body = JSON.stringify({
+                    id: arg.id,
+                    newName: arg.newName,
+                    overview: arg.overview
+                });
+            }else{
+                 body = JSON.stringify({
+                    name: arg.name,
+                    newName: arg.newName,
+                    overview: arg.overview
+                });
+            }
+
+            const response = await fetch(`${this.apiServer}/${events}`, { method: 'PUT', headers, body });
+            console.log(response);
+
+            if (response.ok) {
+                alert('Série mise à jour avec succès.');
+            } else {
+                alert('Erreur lors de la mise à jour de la série.');
+            }
+
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    }
+
 }

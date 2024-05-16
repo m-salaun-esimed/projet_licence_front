@@ -62,7 +62,7 @@ class AdminController {
                     '                            <input type="radio" id="name" name="identifierType" value="name" class="me-2">\n' +
                     '                            <label for="name">Nom</label>\n' +
                     '                        </div>\n' +
-                    '                        <label for="identifier">Entrez l\'identifiant ou le nom:</label><br>\n' +
+                    '                        <label for="identifier">Entrez l\'identifiant (idapi) ou le nom:</label><br>\n' +
                     '                        <input type="text" id="identifier" name="identifier" class="form-control mb-3"><br>\n' +
                     '                        <button type="button" class="btn btn-primary" onclick="adminController.deleteSerie()"> Supprimer</button>\n' +
                     '                    </form>\n' +
@@ -78,6 +78,34 @@ class AdminController {
                     '                        Mettre à jour film / série\n' +
                     '                    </div>\n' +
                     '                </a>\n' +
+                    '            </div>' +
+                    '<div class="ag-courses_item">\n' +
+                    '                <div class="ag-courses-item_content">\n' +
+                    '                    <h2>Mettre à jour</h2>\n' +
+                    '                    <form id="updateFilmSerie" class="m-3">\n' +
+                    '                        <label for="mediaTypeUpdate">Choisir entre Film ou Série:</label><br>\n' +
+                    '                        <div class="d-flex justify-content-center align-items-center mb-3">\n' +
+                    '                            <input type="radio" id="filmUpdate" name="mediaTypeUpdate" value="film" class="me-2">\n' +
+                    '                            <label for="filmUpdate" class="me-3">Film</label>\n' +
+                    '                            <input type="radio" id="serieUpdate" name="mediaTypeUpdate" value="serie" class="me-2">\n' +
+                    '                            <label for="serieUpdate">Série</label>\n' +
+                    '                        </div>\n' +
+                    '                        <label for="identifierTypeUpdate">Choisir le type d\'identification:</label><br>\n' +
+                    '                        <div class="d-flex justify-content-center align-items-center mb-3">\n' +
+                    '                            <input type="radio" id="idUpdate" name="identifierTypeUpdate" value="id" class="me-2">\n' +
+                    '                            <label for="idUpdate" class="me-3">ID</label>\n' +
+                    '                            <input type="radio" id="nameUpdate" name="identifierTypeUpdate" value="name" class="me-2">\n' +
+                    '                            <label for="nameUpdate">Nom</label>\n' +
+                    '                        </div>\n' +
+                    '                        <label for="identifierUpdate">Entrez l\'identifiant (idapi) ou le nom:</label><br>\n' +
+                    '                        <input type="text" id="identifierUpdate" name="identifierUpdate" class="form-control mb-3"><br>\n' +
+                    '                        <label for="newName">Changer le nom :</label><br>\n' +
+                    '                        <input type="text" id="newName" name="newName" class="form-control mb-3"><br>\n' +
+                    '                        <label for="overview">Changer le Synopsis :</label><br>\n' +
+                    '                        <input type="text" id="overview" name="overview" class="form-control mb-3"><br>\n' +
+                    '                        <button type="button" class="btn btn-primary" onclick="adminController.update()">Update</button>\n' +
+                    '                    </form>\n' +
+                    '                </div>\n' +
                     '            </div>';
                 break;
             case 'addDeleteUser':
@@ -96,16 +124,16 @@ class AdminController {
                     '                        <div class="form-group">\n' +
                     '                            <div class="row">\n' + // Ajout d'une rangée pour aligner horizontalement les champs
                     '                                <div class="col">\n' + // Colonne pour "Votre pseudo"
-                    '                                    <input type="text" class="form-control" id="pseudo" placeholder="Votre pseudo">\n' +
+                    '                                    <input type="text" class="form-control" id="pseudo" placeholder="Pseudo">\n' +
                     '                                </div>\n' +
-                    '                                <div class="col">\n' + // Colonne pour "Votre login (adresse mail)"
-                    '                                    <input type="email" class="form-control" id="login" placeholder="Votre login (adresse mail)">\n' +
+                    '                                <div class="col">\n' + // Colonne pour "login (adresse mail)"
+                    '                                    <input type="email" class="form-control" id="login" placeholder="Login (adresse mail)">\n' +
                     '                                </div>\n' +
                     '                            </div>\n' +
                     '                        </div>\n' +
                     '                        <div class="form-group input-group mt-3">\n' +
-                    '                            <input type="password" class="form-control" id="password" placeholder="Votre mot de passe">\n' +
-                    '                            <input type="password" class="form-control" id="password2" placeholder="Verifier votre mot de passe">\n' +
+                    '                            <input type="password" class="form-control" id="password" placeholder="Mot de passe">\n' +
+                    '                            <input type="password" class="form-control" id="password2" placeholder="Verifier mot de passe">\n' +
                     '                            <div class="input-group-prepend">\n' +
                     '                            </div>\n' +
                     '                        </div>\n' +
@@ -128,6 +156,24 @@ class AdminController {
                     '                        Modifier le mot de passe d un utilisateur ' +
                     '                    </div>\n' +
                     '                </a>\n' +
+                    '            </div>' +
+                    '<div class="ag-courses_item">\n' +
+                    '                <div class="ag-courses-item_content">\n' +
+                    '                    <h2>Modifier mot de passe user</h2>\n' +
+                    '                    <form>\n' +
+                    '                        <div class="form-group">\n' +
+                    '                            <input type="email" class="form-control" id="loginPwd" placeholder="Adresse mail">\n' +
+                    '                        </div>\n' +
+                    '                        <div class="form-group mt-3">\n' +
+                    '                            <input type="text" class="form-control" id="pwd" placeholder="Nouveau mot de passe">\n' +
+                    '                        </div>\n' +
+                    '                        <div class="row mt-3">\n' +
+                    '                            <div class="col d-flex justify-content-center">\n' +
+                    '                                <button type="button" class="btn btn-primary" onclick="adminController.updatePwd()">Modifier</button>\n' +
+                    '                            </div>\n' +
+                    '                        </div>\n' +
+                    '                    </form>\n' +
+                    '                </div>\n' +
                     '            </div>';
                 break;
             case 'deleteUser':
@@ -237,6 +283,64 @@ class AdminController {
         }else{
           alert("Veuillez remplir tout les champs")
         }
+    }
+
+    async update(){
+        var mediaType = document.querySelector('input[name="mediaTypeUpdate"]:checked').value;
+        var identifierType = document.querySelector('input[name="identifierTypeUpdate"]:checked').value;
+        var identifier = document.getElementById('identifierUpdate').value;
+        var newName = document.getElementById('newName').value;
+        var overview = document.getElementById('overview').value;
+
+        console.log(mediaType)
+        console.log(identifierType)
+        console.log(identifier)
+        console.log(newName)
+        console.log(overview)
+        try {
+            var args = {};
+
+            if (newName.trim() !== '') {
+                args.newName = newName;
+            }
+            if (overview.trim() !== '') {
+                args.overview = overview;
+            }
+            if (mediaType === 'serie') {
+                if (identifierType === 'id') {
+                    args.id = identifier;
+                } else if (identifierType === 'name') {
+                    args.name = identifier;
+                }
+                await this.serieModel.updateSerie(args);
+            } else {
+                if (identifierType === 'id') {
+                    args.id = identifier;
+                    console.log("oui")
+                } else if (identifierType === 'name') {
+                    args.name = identifier;
+                }
+                await this.moviesModel.updateMovie(args);
+            }
+
+            document.getElementById("identifier").innerText = '';
+        } catch (error) {
+            console.error('Erreur lors de la suppression:', error);
+        }
+    }
+
+    async updatePwd(){
+        let login = document.getElementById("loginPwd").value
+        let pwd = document.getElementById("pwd").value
+        try{
+            let result = await this.userModel.updatePwd(login, pwd);
+            alert(result.message)
+            document.getElementById("loginPwd").innerText = ''
+            document.getElementById("pwd").innerText = ''
+        }catch (error){
+
+        }
+
     }
 }
 
