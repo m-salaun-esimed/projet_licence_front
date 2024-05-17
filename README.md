@@ -31,3 +31,15 @@ Apres cela une roulette aleatoire va se créer !</p>
 
 </ul>
 
+<h1>Architecture logiciel</h1>
+<p>MVC (Model-View-Controller) + service</p>
+<p>Single Page Application</p>
+<p>En lien avec un back-end (https://github.com/m-salaun-esimed/projet_licence_back)</p>
+
+<h1>Technologies utilisées</h1>
+<ul>
+  <li>HTML</li>
+  <li>CSS + Bootstrap (https://getbootstrap.com/) + FeatherIcons (https://feathericons.com/)/</li>
+  <li>JS</li>
+</ul>
+
