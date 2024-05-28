@@ -41,5 +41,6 @@ Apres cela une roulette aleatoire va se créer !</p>
   <li>HTML</li>
   <li>CSS + Bootstrap (https://getbootstrap.com/) + FeatherIcons (https://feathericons.com/)/</li>
   <li>JS</li>
+  <li>Docker</li>
 </ul>
 
