@@ -24,9 +24,9 @@ class Favori {
             const responseIdUser = await this.userModel.getIdUser(sessionStorage.getItem("token"), localStorage.getItem("login"));
             this.listeDeFav = await this.favoriteModel.getAllFavorite(responseIdUser[0].id);
             console.log(this.listeDeFav);
+
             let row = document.createElement("div");
             row.classList.add("row");
-            let count = 0;
 
             for (const favorite of this.listeDeFav) {
                 if (favorite.typecontenu === 'film') {
@@ -36,18 +36,21 @@ class Favori {
                 }
                 console.log(this.responseInfo);
 
+                let col = document.createElement("div");
+                col.classList.add("col-sm-6", "col-md-4", "col-lg-3", "mb-3");
+
                 let card = document.createElement("div");
-                card.classList.add("card", "m-3");
-                card.style.width = "200px";
+                card.classList.add("card", "h-100");
+
                 card.innerHTML = `
                 <div class="card-body text-center">
                     <div class="card-content">
                         <div class="row">
                             <div>
-                                <img src="https://image.tmdb.org/t/p/w500${this.responseInfo[0].poster_path}" class="card-img rounded" alt="Image" style="width: 100%">
+                                <img src="https://image.tmdb.org/t/p/w500${this.responseInfo[0].poster_path}" class="card-img rounded" alt="Image" style="width: 50%">
                             </div>
                         </div>    
-                        <div class="row">
+                        <div class="row mt-2">
                             <div class="col-6">
                                 <a class="navbar__link" onclick="rouletteAleatoire.removeFavorite(${favorite.idapi})">
                                     <img src="../images/trash-2.svg" alt="Favori">
@@ -65,20 +68,16 @@ class Favori {
                 </div>
             `;
 
-                row.appendChild(card);
-                count++;
-                if (count === 4 || this.listeDeFav.length - 1 === this.listeDeFav.indexOf(favorite)) {
-                    listFavorite.appendChild(row);
-                    // Reset row and count for the next row
-                    row = document.createElement("div");
-                    row.classList.add("row");
-                    count = 0;
-                }
+                col.appendChild(card);
+                row.appendChild(col);
             }
+
+            listFavorite.appendChild(row);
+
         } catch (error) {
             console.error("An error occurred while fetching favorites:", error);
         } finally {
-            console.log("test")
+            console.log("test");
             loadingSpinner.style.display = "none";
             listFavorite.style.display = "block";
         }

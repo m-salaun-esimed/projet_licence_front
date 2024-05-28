@@ -786,6 +786,13 @@ class RouletteAleatoire {
     actualitePage(){
         navigate("actualitePage")
     }
+
+    addFriendsNotificationsPage(){
+        navigate("addFriendsNotifications");
+    }
+    ajouter_ami(){
+        navigate("ajouter_ami");
+    }
 }
 
 export default () => window.rouletteAleatoire = new RouletteAleatoire();

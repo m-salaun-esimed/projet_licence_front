@@ -30,7 +30,6 @@ class DejaVu {
 
             let row = document.createElement("div");
             row.classList.add("row");
-            let count = 0;
 
             for (const dejaVu of this.response) {
                 console.log(dejaVu.typecontenu);
@@ -41,41 +40,43 @@ class DejaVu {
                 }
                 console.log(this.responseInfo);
 
+                let col = document.createElement("div");
+                col.classList.add("col-sm-6", "col-md-4", "col-lg-3", "mb-3");
+
                 let card = document.createElement("div");
-                card.classList.add("card");
-                card.classList.add("m-3");
-                card.style.width = "200px";
+                card.classList.add("card", "h-100");
+
                 card.innerHTML = `
-            <div class="card-body text-center">
-                <div class="card-content">
-                    <div class="row">
-                        <div>
-                            <img src="https://image.tmdb.org/t/p/w500${this.responseInfo[0].poster_path}" class="card-img rounded" alt="Image" style="width: 100%">
-                        </div>
-                    </div>    
-                    <div class="row">
-                        <div class="col-6">
-                              <a  class="navbar__link" onclick="dejaVu.removeDejaVu(${dejaVu.idapi}, '${dejaVu.typecontenu}')"><img src="../images/eye-off.svg" alt="Favori"><span style="z-index: 9999">Supprimer des déjà vu</span></a>
-                        </div>
-                        <div class="col-6">
-                          <a  class="navbar__link" onclick="dejaVu.showModalMovie(${dejaVu.idapi}, '${dejaVu.typecontenu}')"><img src="../images/info.svg" alt="Favori"><span style="z-index: 9999">Information</span></a>
-                        </div>
-                     </div>               
+                <div class="card-body text-center">
+                    <div class="card-content">
+                        <div class="row">
+                            <div>
+                                <img src="https://image.tmdb.org/t/p/w500${this.responseInfo[0].poster_path}" class="card-img rounded" alt="Image" style="width: 50%">
+                            </div>
+                        </div>    
+                        <div class="row mt-2">
+                            <div class="col-6">
+                                <a class="navbar__link" onclick="dejaVu.removeDejaVu(${dejaVu.idapi}, '${dejaVu.typecontenu}')">
+                                    <img src="../images/eye-off.svg" alt="Favori">
+                                    <span style="z-index: 9999">Supprimer des déjà vu</span>
+                                </a>
+                            </div>
+                            <div class="col-6">
+                                <a class="navbar__link" onclick="dejaVu.showModalMovie(${dejaVu.idapi}, '${dejaVu.typecontenu}')">
+                                    <img src="../images/info.svg" alt="Favori">
+                                    <span style="z-index: 9999">Information</span>
+                                </a>
+                            </div>
+                        </div>            
+                    </div>
                 </div>
-            </div>
-        `;
+            `;
 
-                row.appendChild(card);
-                count++;
-
-                if (count === 5 || this.response.length - 1 === this.response.indexOf(dejaVu)) {
-                    listDejaVu.appendChild(row);
-                    // Reset row and count for the next row
-                    row = document.createElement("div");
-                    row.classList.add("row");
-                    count = 0;
-                }
+                col.appendChild(card);
+                row.appendChild(col);
             }
+
+            listDejaVu.appendChild(row);
 
             let loadingSpinner = document.getElementById("loadingSpinner");
             loadingSpinner.style.display = "none";
@@ -83,6 +84,7 @@ class DejaVu {
             console.error("An error occurred while fetching and displaying already seen movies:", error);
         }
     }
+
 
     async removeDejaVu(movieidapi, typecontenu) {
         console.log(typecontenu)
