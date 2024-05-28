@@ -1,0 +1,70 @@
+<style>
+    .badge-danger {
+        color: #fff;
+        background-color: #dc3545;
+    }
+</style>
+<nav class="navbar">
+    <ul class="navbar__menu">
+        <li class="navbar__item" style="">
+            <a class="navbar__link" onclick="rouletteAleatoire.redirectionHomePage()"><img src="../images/home.svg"><span>Roulette</span></a>
+        </li>
+        <li class="navbar__item">
+            <a class="navbar__link" onclick="rouletteAleatoire.favoriPage()"><img src="../images/list.svg"><span>Favoris</span></a>
+        </li>
+        <li class="navbar__item">
+            <a  class="navbar__link" onclick="rouletteAleatoire.alreadyseenPage()"><img src="../images/eye.svg"><span>Déjà vu</span></a>
+        </li>
+        <li class="navbar__item" style="">
+            <a class="navbar__link"><img src="../images/activity.svg" onclick="rouletteAleatoire.actualitePage()"><span>Fil d'actualité</span></a>
+        </li>
+        <li class="navbar__item">
+            <a class="navbar__link" onclick="rouletteAleatoire.ajouter_ami()"><img src="../images/search.svg"><span>Rechercher</span></a>
+        </li>
+        <li class="navbar__item">
+            <a class="navbar__link" onclick="rouletteAleatoire.addFriendsNotificationsPage()"><img src="../images/heart.svg"><span>Notification</span></a>
+        </li>
+        <li class="navbar__item">
+            <a  class="navbar__link" onclick="rouletteAleatoire.friendsPage()"><img src="../images/user.svg"><span>Profil</span></a>
+        </li>
+        <li class="navbar__item">
+            <a  class="navbar__link" data-bs-toggle="modal" data-bs-target="#exampleModal"><img src="../images/log-out.svg"><span>Déconnexion</span></a>
+        </li>
+    </ul>
+</nav>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">-->
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                Êtes-vous sûr de vouloir vous déconnecter ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" onclick="formulaireRouletteController.deconnexion()">Deconnexion</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mf-3" style="margin-left: 7rem">
+    <div style="position: relative; float: right" id="admin">
+        <a  class="navbar__link" onclick="rouletteAleatoire.adminPage()"><img src="../images/settings.svg"><span>Admin</span></a>
+    </div>
+    <div class="row mt-3">
+        <div class="col-12 mt-3 d-flex justify-content-between align-items-center">
+            <h1><span id="nbrFriends" class="mf-3" style="color: white"></span> AMI(E)S </h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <div class="friends mt-3"></div>
+        </div>
+        <div class="col-3">
+        </div>
+        <div class="col-3">
+
+        </div>
+    </div>
+</div>
+
