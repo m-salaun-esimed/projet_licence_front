@@ -64,7 +64,7 @@ class AdminController {
                     '                        </div>\n' +
                     '                        <label for="identifier">Entrez l\'identifiant (idapi) ou le nom:</label><br>\n' +
                     '                        <input type="text" id="identifier" name="identifier" class="form-control mb-3"><br>\n' +
-                    '                        <button type="button" class="btn btn-primary" onclick="adminController.deleteSerie()"> Supprimer</button>\n' +
+                    '                        <button type="button" class="btn btn-outline-danger" onclick="adminController.deleteSerie()"> Supprimer</button>\n' +
                     '                    </form>\n' +
                     '                </div>\n' +
                     '            </div>';
@@ -103,7 +103,7 @@ class AdminController {
                     '                        <input type="text" id="newName" name="newName" class="form-control mb-3"><br>\n' +
                     '                        <label for="overview">Changer le Synopsis :</label><br>\n' +
                     '                        <input type="text" id="overview" name="overview" class="form-control mb-3"><br>\n' +
-                    '                        <button type="button" class="btn btn-primary" onclick="adminController.update()">Update</button>\n' +
+                    '                        <button type="button" class="btn btn-outline-warning" onclick="adminController.update()">Update</button>\n' +
                     '                    </form>\n' +
                     '                </div>\n' +
                     '            </div>';
@@ -133,13 +133,13 @@ class AdminController {
                     '                        </div>\n' +
                     '                        <div class="form-group input-group mt-3">\n' +
                     '                            <input type="password" class="form-control" id="password" placeholder="Mot de passe">\n' +
-                    '                            <input type="password" class="form-control" id="password2" placeholder="Verifier mot de passe">\n' +
+                    '                            <input type="password" class="form-control ml-3" id="password2" placeholder="Verifier mot de passe">\n' +
                     '                            <div class="input-group-prepend">\n' +
                     '                            </div>\n' +
                     '                        </div>\n' +
                     '                        <div class="row mt-3">\n' +
                     '                            <div class="col d-flex justify-content-center">\n' +
-                    '                                <button type="button" class="btn btn-outline-primary" onclick="adminController.creationCompte()">Créer un compte</button>\n' +
+                    '                                <button type="button" class="btn btn-outline-success" onclick="adminController.creationCompte()">Créer un compte</button>\n' +
                     '                            </div>\n' +
                     '                        </div>\n' +
                     '                    </form>\n' +
@@ -169,7 +169,7 @@ class AdminController {
                     '                        </div>\n' +
                     '                        <div class="row mt-3">\n' +
                     '                            <div class="col d-flex justify-content-center">\n' +
-                    '                                <button type="button" class="btn btn-primary" onclick="adminController.updatePwd()">Modifier</button>\n' +
+                    '                                <button type="button" class="btn btn-outline-warning" onclick="adminController.updatePwd()">Modifier</button>\n' +
                     '                            </div>\n' +
                     '                        </div>\n' +
                     '                    </form>\n' +
@@ -194,7 +194,7 @@ class AdminController {
                     '                        </div>\n' +
                     '                        <div class="row mt-3">\n' +
                     '                            <div class="col d-flex justify-content-center">\n' +
-                    '                                <button type="button" class="btn btn-danger" onclick="adminController.deleteUser()">Supprimer</button>\n' +
+                    '                                <button type="button" class="btn btn btn-outline-danger" onclick="adminController.deleteUser()">Supprimer</button>\n' +
                     '                            </div>\n' +
                     '                        </div>\n' +
                     '                    </form>\n' +

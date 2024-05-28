@@ -44,7 +44,7 @@ export default class FavoriteRoute extends Api {
     }
 
 
-    async getAllFavoriteApi(idUser, type){
+    async getAllFavoriteApi(idUser){
         const token = sessionStorage.getItem("token")
         try {
             const headers = new Headers();

@@ -64,7 +64,7 @@ class RouletteAleatoire {
 
                 let movieImage = document.createElement("img");
                 movieImage.src = 'https://image.tmdb.org/t/p/w500' + this.options[i].poster_path;
-                movieImage.style.width = "30%";
+                movieImage.style.width = "40%";
                 movieImage.style.borderRadius = "20px";
                 movieImage.alt = this.options[i].name;
 
@@ -104,9 +104,6 @@ class RouletteAleatoire {
     }
 
     async init() {
-        // const responses = await this.ajouterAmiModel.afficherLesDemandes(sessionStorage.getItem("token"));
-        // var badge = document.getElementById("notification");
-        // badge.innerText = `${responses.length}`
 
         let movieGenres = document.getElementById("genres");
         let storedGenres = localStorage.getItem("listGenre");
@@ -195,7 +192,7 @@ class RouletteAleatoire {
     }
 
     rotateWheel() {
-        this.spinTime += 30;
+        this.spinTime += 150;
         if (this.spinTime >= this.spinTimeTotal) {
             this.stopRotateWheel();
             return;
@@ -254,14 +251,37 @@ class RouletteAleatoire {
 
             let platformsHTML = '<div class="row">';
             platformsData.forEach(platform => {
+                let link = '';
+
+                switch (platform.provider_name) {
+                    case 'Netflix':
+                        link = `https://www.netflix.com`;
+                        break;
+                    case 'Amazon Prime Video':
+                        link = `https://www.primevideo.com/`;
+                        break;
+                    case 'Canal+':
+                        link = `https://www.canalplus.com/`;
+                        break;
+                        case 'Disney Plus':
+                            link = `https://www.disneyplus.com/`;
+                        break;
+                    case 'TF1':
+                        link = 'https://www.tf1.fr'
+                        break
+                        default:
+                        link = ``;
+                }
                 platformsHTML += `
             <div class="col-md-4 mt-1">
+            <a href="${link}">
                 <div class="card">
                     <div class="card-body">
                         <p class="card-title">${platform.provider_name}</p>
                         <img src="https://image.tmdb.org/t/p/w500/${platform.logo_path}" alt="${platform.provider_name} Logo" class="card-img-top" style="width: 20%;">
                     </div>
                 </div>
+            </a>
             </div>`;
             });
             platformsHTML += '</div>'; // Fermeture de la div row
@@ -763,8 +783,8 @@ class RouletteAleatoire {
         navigate("amis")
     }
 
-    recherchePage(){
-        navigate("recherche")
+    actualitePage(){
+        navigate("actualitePage")
     }
 }
 

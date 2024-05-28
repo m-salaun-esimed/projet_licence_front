@@ -67,7 +67,7 @@ class Favori {
 
                 row.appendChild(card);
                 count++;
-                if (count === 5 || this.listeDeFav.length - 1 === this.listeDeFav.indexOf(favorite)) {
+                if (count === 4 || this.listeDeFav.length - 1 === this.listeDeFav.indexOf(favorite)) {
                     listFavorite.appendChild(row);
                     // Reset row and count for the next row
                     row = document.createElement("div");
