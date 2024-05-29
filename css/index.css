@@ -169,37 +169,32 @@ h1, h4 {
         transform: translateX(calc(-250px * 7));
     }
 }
+
 .slider {
     margin: auto;
     position: relative;
     overflow-x: hidden;
     width: 100%;
 }
-.slider::before, .slider::after {
-    background: linear-gradient(to right, white 0%, rgba(255, 255, 255, 0) 100%);
-    content: "";
-    position: absolute;
-    z-index: 2;
+
+.slide-track{
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 300px;
+    justify-items: stretch;
+    animation: slide 20s linear infinite;
 }
-.slider::after {
-    right: 0;
-    top: 0;
-    -webkit-transform: rotateZ(180deg);
-    transform: rotateZ(180deg);
-}
-.slider::before {
-    left: 0;
-    top: 0;
-}
-.slider .slide-track {
-    -webkit-animation: scroll 40s linear infinite;
-    animation: scroll 40s linear infinite;
-    display: flex;
-    width: calc(250px * 14);
-}
-.slider .slide {
-    height: 100%;
+
+.slide-track img{
     width: 100%;
+    height: 100%;
+    border-radius: 15px;
+    object-fit: cover;
+}
+@keyframes slide {
+  to {
+      translate: calc(-4 * 250px);
+  }
 }
 
 .roulette{
