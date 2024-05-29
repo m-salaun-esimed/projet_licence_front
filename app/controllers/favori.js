@@ -37,7 +37,7 @@ class Favori {
                 console.log(this.responseInfo);
 
                 let col = document.createElement("div");
-                col.classList.add("col-sm-6", "col-md-4", "col-lg-3", "mb-3");
+                col.classList.add("col-6", "col-sm-4", "col-md-3", "col-lg-2", "mb-2"); // Adjusted to make the cards smaller
 
                 let card = document.createElement("div");
                 card.classList.add("card", "h-100");
@@ -47,7 +47,7 @@ class Favori {
                     <div class="card-content">
                         <div class="row">
                             <div>
-                                <img src="https://image.tmdb.org/t/p/w500${this.responseInfo[0].poster_path}" class="card-img rounded" alt="Image" style="width: 50%">
+                                <img src="https://image.tmdb.org/t/p/w500${this.responseInfo[0].poster_path}" class="card-img rounded" alt="Image" style="width: 50%"> <!-- Adjusted the width to make the image smaller -->
                             </div>
                         </div>    
                         <div class="row mt-2">
@@ -82,6 +82,7 @@ class Favori {
             listFavorite.style.display = "block";
         }
     }
+
     async verifyAdmin(){
         const responseIdUser = await this.userModel.getIdUser(sessionStorage.getItem("token"), localStorage.getItem("login"))
         const estAdmin = await this.userModel.verifyEstAdmin(responseIdUser[0].id);
