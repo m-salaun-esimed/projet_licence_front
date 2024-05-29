@@ -26,7 +26,50 @@
         </li>
     </ul>
 </nav>
-
+<nav class="navbarPhone navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Roulette à film</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span><img src="../images/menu.svg" alt=""></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item d-flex align-items-center">
+                    <img src="../images/homeWhite.svg" alt="" class="me-2">
+                    <a class="navbar__link nav-link" onclick="rouletteAleatoire.redirectionHomePage()">Roulette</a>
+                </li>
+                <li class="nav-item d-flex align-items-center">
+                    <img src="../images/listWhite.svg" alt="" class="me-2">
+                    <a class="navbar__link nav-link" onclick="rouletteAleatoire.favoriPage()">Favoris</a>
+                </li>
+                <li class="nav-item d-flex align-items-center">
+                    <img src="../images/eyeWhite.svg" alt="" class="me-2">
+                    <a class="navbar__link nav-link" onclick="rouletteAleatoire.alreadyseenPage()">Déjà vu</a>
+                </li>
+                <li class="nav-item d-flex align-items-center">
+                    <img src="../images/activityWhite.svg" alt="" class="me-2">
+                    <a class="navbar__link nav-link" onclick="rouletteAleatoire.actualitePage()">Fil d'actualité</a>
+                </li>
+                <li class="nav-item d-flex align-items-center">
+                    <img src="../images/searchWhite.svg" alt="" class="me-2">
+                    <a class="navbar__link nav-link" onclick="rouletteAleatoire.ajouter_ami()">Ajouter Ami</a>
+                </li>
+                <li class="nav-item d-flex align-items-center">
+                    <img src="../images/heartWhite.svg" alt="" class="me-2">
+                    <a class="navbar__link nav-link" onclick="rouletteAleatoire.addFriendsNotificationsPage()">Notification</a>
+                </li>
+                <li class="nav-item d-flex align-items-center">
+                    <img src="../images/userWhite.svg" alt="" class="me-2">
+                    <a class="navbar__link nav-link" onclick="rouletteAleatoire.friendsPage()">Profil</a>
+                </li>
+                <li class="nav-item d-flex align-items-center">
+                    <img src="../images/log-out-white.svg" alt="" class="me-2">
+                    <a class="navbar__link nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal">Déconnexion</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -40,7 +83,7 @@
         </div>
     </div>
 </div>
-<div class="mf-3" style="margin-left: 7rem; overflow: hidden">
+<div class="mf-3 bodyRoulette">
     <div style="position: relative; float: right; display: none" id="admin">
         <a  class="navbar__link" onclick="rouletteAleatoire.adminPage()"><img src="../images/settings.svg"><span>Admin</span></a>
     </div>
