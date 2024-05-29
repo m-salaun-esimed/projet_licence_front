@@ -185,6 +185,7 @@ class RouletteAleatoire {
     }
 
     spin() {
+        document.getElementById("spin").disabled = true;
         this.spinAngleStart = Math.random() * 10 + 10;
         this.spinTime = 0;
         this.spinTimeTotal = Math.random() * 3 + 4 * 1000;
@@ -216,6 +217,7 @@ class RouletteAleatoire {
         }else {
             this.showModalSerie(index)
         }
+        document.getElementById("spin").disabled = false;
 
         this.ctx.restore();
     }
