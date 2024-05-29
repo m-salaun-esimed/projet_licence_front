@@ -48,7 +48,7 @@ class AmiController {
                             <h5 class="card-title mb-0">${friend.displayname}</h5>
                         </div>
                         <div class="col-3 d-flex justify-content-end align-items-center">
-                            <button class="btn btn-outline-danger" onclick="ajouterAmiController.deleteFriend(${friend.id})">
+                            <button class="btn btn-outline-danger" onclick="amiController.deleteFriend(${friend.id})">
                                 <img src="/images/trash-2.svg" alt="">
                             </button>
                         </div> 
@@ -62,12 +62,10 @@ class AmiController {
             console.error(error);
         }
     }
-
-    addFriendsPage(){
-        navigate("ajouter_ami");
-    }
-    addFriendsNotificationsPage(){
-        navigate("addFriendsNotifications");
+    async deleteFriend(iduser){
+        console.log("deleteFriend : " + iduser)
+        await this.ajouterAmiModel.deleteFriend(sessionStorage.getItem("token"), iduser);
+        this.afficherLesAmis()
     }
 }
 
