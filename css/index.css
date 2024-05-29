@@ -261,7 +261,6 @@ h1, h4 {
 }
 
 .navbar__menu {
-    list-style-type: none; /* Supprime les tirets devant les éléments de liste */
-    padding: 0; /* Supprime le padding par défaut de la liste */
+    list-style-type: none;
+    padding: 0;
 }
-

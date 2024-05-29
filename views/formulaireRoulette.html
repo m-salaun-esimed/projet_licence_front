@@ -8,30 +8,13 @@
             <div class="col-3">
             </div>
             <div class="col-6 text-center">
-                <h1 style="color: black">Bienvenue sur la roulette à film !</h1>
-            </div>
-            <div class="col-3 text-end">
-                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Déconnexion</button>
-            </div>
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            Êtes-vous sûr de vouloir vous déconnecter ?
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                            <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" onclick="formulaireRouletteController.deconnexion()">Deconnexion</button>
-                        </div>
-                    </div>
-                </div>
+                <h1 style="color: black">La roulette à film !</h1>
             </div>
         </div>
         <div class="row justify-content-center mt-3 text-center">
             <div class="col-md-6">
                 <div class="card-body">
-                    <h3 class="text-center mt-3"">Plutôt film où serie ?</h3>
+                    <h3 class="text-center mt-3">Plutôt film où serie ?</h3>
                     <hr>
                     <form>
                         <div class="container mt-5">
@@ -60,10 +43,10 @@
             </div>
 
             <div class="row justify-content-center mt-2 text-center mb-5">
-                <div class="col-md-2"> <!-- Ajustez la classe col-md-* en conséquence -->
-                    <button type="button" class="btn btn-outline-primary  w-100" onclick="formulaireRouletteController.traiterFormulaireType()">
-                        <img src="../images/arrow-down-circle.svg" style="width: 30%;" alt="Ajouter">
-                    </button>
+                <div class="col-md-2">
+                    <a class="hover-color-change" onclick="formulaireRouletteController.traiterFormulaireType()">
+                        <img src="../images/arrow-right.svg" style="width: 30%;" alt="Ajouter">
+                    </a>
                 </div>
             </div>
         </div>
@@ -86,9 +69,9 @@
 
             <div class="row justify-content-center mt-2 text-center mb-5">
                 <div class="col-md-2">
-                    <button type="button" class="btn btn-outline-primary  w-100" onclick="formulaireRouletteController.traiterFormulaireCategorie()">
-                        <img src="../images/arrow-down-circle.svg" style="width: 30%;" alt="Ajouter">
-                    </button>
+                    <a onclick="formulaireRouletteController.traiterFormulaireCategorie()">
+                        <img src="../images/arrow-right.svg" style="width: 30%;" alt="Ajouter">
+                    </a>
                 </div>
             </div>
         </div>
