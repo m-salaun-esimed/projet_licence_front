@@ -1187,6 +1187,10 @@
   .navbar__link:hover {
     color: #007bff; /* Couleur lors du survol */
   }
+
+  .imageMovie{
+    width: 20%;
+  }
 }
 
 
