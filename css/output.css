@@ -1189,7 +1189,11 @@
   }
 
   .imageMovie{
-    width: 20%;
+    width: 80%;
+  }
+
+  .imageSerie{
+    width: 80%;
   }
 }
 

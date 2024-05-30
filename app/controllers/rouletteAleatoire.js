@@ -64,7 +64,7 @@ class RouletteAleatoire {
 
                 let movieImage = document.createElement("img");
                 movieImage.src = 'https://image.tmdb.org/t/p/w500' + this.options[i].poster_path;
-                movieImage.style.width = "40%";
+                movieImage.style.width = "70%";
                 movieImage.style.borderRadius = "20px";
                 movieImage.alt = this.options[i].name;
 
@@ -104,11 +104,8 @@ class RouletteAleatoire {
     }
 
     async init() {
-
         let movieGenres = document.getElementById("genres");
         let storedGenres = localStorage.getItem("listGenre");
-
-
         let selectedGenres = JSON.parse(storedGenres);
         let genreNames = selectedGenres.map(genre => genre.name).join(', ');
         movieGenres.textContent = genreNames;

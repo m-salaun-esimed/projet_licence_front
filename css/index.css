@@ -173,7 +173,7 @@ h1, h4 {
     margin: auto;
     position: relative;
     overflow-x: hidden;
-    width: 100%;
+    width: 80%;
 }
 .slider::before, .slider::after {
     background: linear-gradient(to right, white 0%, rgba(255, 255, 255, 0) 100%);
@@ -192,14 +192,13 @@ h1, h4 {
     top: 0;
 }
 .slider .slide-track {
-    -webkit-animation: scroll 40s linear infinite;
-    animation: scroll 40s linear infinite;
+    -webkit-animation: scroll 15s linear infinite;
+    animation: scroll 15s linear infinite;
     display: flex;
     width: calc(250px * 14);
 }
 .slider .slide {
-    height: 100%;
-    width: 100%;
+
 }
 
 .slide-track img{
