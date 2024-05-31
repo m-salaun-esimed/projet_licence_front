@@ -1139,6 +1139,14 @@
   #listFavorite .card{
     display: block;
   }
+
+  #listDejaVuPhone .card{
+    display: none;
+  }
+
+  #listDejaVu .card{
+    display: block;
+  }
 }
 
 
@@ -1210,6 +1218,14 @@
 
   #listFavoritePhone .card{
     display: block;
+  }
+
+  #listDejaVuPhone .card{
+    display: block;
+  }
+
+  #listDejaVu .card{
+    display: none;
   }
 }
 

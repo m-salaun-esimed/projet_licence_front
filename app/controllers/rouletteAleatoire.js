@@ -590,7 +590,6 @@ class RouletteAleatoire {
         const response = await this.favoriteModel.removeFavoriteMovie(sessionStorage.getItem("token"), idapi);
         console.log(response);
         alert("Le film a été supprimée avec succès de la liste.");
-        navigate("favori")
         console.log(idapi)
     }
 

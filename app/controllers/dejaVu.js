@@ -26,13 +26,18 @@ class DejaVu {
     async init() {
         try {
             let listDejaVu = document.getElementById("listDejaVu");
+            let listDejaVuPhone = document.getElementById("listDejaVuPhone");
+            const loadingSpinner = document.getElementById("loadingSpinner");
+
+            // Show the spinner
+            loadingSpinner.style.display = "flex";
+
             this.response = await this.dejaVuModel.getAllAlreadySeenMovie();
 
             let row = document.createElement("div");
             row.classList.add("row");
 
             for (const dejaVu of this.response) {
-                console.log(dejaVu.typecontenu);
                 if (dejaVu.typecontenu === 'film') {
                     this.responseInfo = await this.moviesModel.getMovieByIdMovieApi(dejaVu.idapi);
                 } else {
@@ -41,7 +46,7 @@ class DejaVu {
                 console.log(this.responseInfo);
 
                 let col = document.createElement("div");
-                col.classList.add("col-6", "col-sm-4", "col-md-3", "col-lg-2", "mb-2"); // Adjusted to make the cards smaller
+                col.classList.add("col-6", "col-sm-4", "col-md-3", "col-lg-2", "mb-2");
 
                 let card = document.createElement("div");
                 card.classList.add("card", "h-100");
@@ -51,7 +56,7 @@ class DejaVu {
                     <div class="card-content">
                         <div class="row">
                             <div>
-                                <img src="https://image.tmdb.org/t/p/w500${this.responseInfo[0].poster_path}" class="card-img rounded" alt="Image" style="width: 50%"> <!-- Adjusted the width to make the image smaller -->
+                                <img src="https://image.tmdb.org/t/p/w500${this.responseInfo[0].poster_path}" class="card-img rounded" alt="Image" style="width: 50%">
                             </div>
                         </div>    
                         <div class="row mt-2">
@@ -78,12 +83,52 @@ class DejaVu {
 
             listDejaVu.appendChild(row);
 
-            let loadingSpinner = document.getElementById("loadingSpinner");
+            // Second loop for listDejaVuPhone
+            for (const dejaVu of this.response) {
+                if (dejaVu.typecontenu === 'film') {
+                    this.responseInfo = await this.moviesModel.getMovieByIdMovieApi(dejaVu.idapi);
+                } else {
+                    this.responseInfo = await this.serieModel.getSerieByIdSerieApi(dejaVu.idapi);
+                }
+                console.log(this.responseInfo);
+
+                let rowPhone = document.createElement("div");
+                rowPhone.classList.add("row", "mb-2");
+
+                let cardPhone = document.createElement("div");
+                cardPhone.classList.add("card");
+                cardPhone.style.backgroundColor = "black";
+                cardPhone.innerHTML = `
+                <div class="row no-gutters">
+                    <div class="col-4">
+                        <img src="https://image.tmdb.org/t/p/w500${this.responseInfo[0].poster_path}" class="card-img" alt="Image" style="border-radius: 24px">
+                    </div>
+                    <div class="col-8">
+                        <div class="card-body d-flex align-items-center">
+                            <h5 class="card-title" style="color: white; flex-grow: 1;">${this.responseInfo[0].name}</h5>
+                            <div class="d-flex">
+                                <a class="navbar__link" onclick="dejaVu.removeDejaVu(${dejaVu.idapi}, '${dejaVu.typecontenu}')">
+                                    <img src="../images/eyeWhite.svg" alt="Favori">
+                                </a>
+                                <a class="navbar__link" onclick="dejaVu.showModalMovie(${dejaVu.idapi}, '${dejaVu.typecontenu}')">
+                                    <img src="../images/infoWhite.svg" alt="Favori">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+                rowPhone.appendChild(cardPhone);
+                listDejaVuPhone.appendChild(rowPhone);
+            }
+
             loadingSpinner.style.display = "none";
         } catch (error) {
             console.error("An error occurred while fetching and displaying already seen movies:", error);
         }
     }
+
 
 
 
