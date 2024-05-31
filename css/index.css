@@ -202,6 +202,7 @@ h1, h4 {
 
 }
 
+
 .slide-track img{
     width: 100%;
     height: 100%;
@@ -367,4 +368,15 @@ h1, h4 {
     to {
         transform: scaleX(1);
     }
+}
+
+.filtres {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.filtres.show {
+    display: block;
+    opacity: 1;
 }

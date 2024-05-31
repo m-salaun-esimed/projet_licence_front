@@ -10,6 +10,10 @@ class Favori {
         this.serieModel = new SerieModel()
         this.verifyAdmin();
         this.init()
+        const filtresElements = document.querySelectorAll('.filtres');
+        filtresElements.forEach(element => {
+            element.style.display = 'none';
+        });
     }
 
     async init() {
@@ -411,6 +415,23 @@ class Favori {
             console.log("test");
             loadingSpinner.style.display = "none";
         }
+    }
+
+    showFiltres() {
+        const filtresElements = document.querySelectorAll('.filtres');
+        filtresElements.forEach(element => {
+            if (element.classList.contains('show')) {
+                element.classList.remove('show');
+                setTimeout(() => {
+                    element.style.display = 'none';
+                }, 500); // Delay matches the CSS transition duration
+            } else {
+                element.style.display = 'block';
+                setTimeout(() => {
+                    element.classList.add('show');
+                }, 10); // Small delay to allow the display change to take effect
+            }
+        });
     }
 }
 export default() => window.favori = new Favori()
