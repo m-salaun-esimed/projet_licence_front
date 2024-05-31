@@ -20,6 +20,8 @@ class Favori {
         const listFavorite = document.getElementById("listFavorite");
         const listFavoritePhone = document.getElementById("listFavoritePhone");
         const loadingSpinner = document.getElementById("loadingSpinner");
+        document.getElementById("filtresErase").style.display = "none"
+        document.getElementById("filtre").style.display = "block"
 
         // Show the spinner
         loadingSpinner.style.display = "flex";
@@ -27,6 +29,8 @@ class Favori {
         try {
             listFavorite.innerHTML = '';
             listFavoritePhone.innerHTML = '';
+            document.getElementById("filtreEnCours").innerText = '';
+
             const responseIdUser = await this.userModel.getIdUser(sessionStorage.getItem("token"), localStorage.getItem("login"));
             this.listeDeFav = await this.favoriteModel.getAllFavorite(responseIdUser[0].id);
             console.log(this.listeDeFav);
@@ -190,6 +194,14 @@ class Favori {
     }
 
     async filreFilm(){
+        const filtresElements = document.querySelectorAll('.filtres');
+        filtresElements.forEach(element => {
+            element.style.display = 'none';
+        });
+        document.getElementById("filtreEnCours").innerText = "films";
+        document.getElementById("filtresErase").style.display = "block"
+        document.getElementById("filtre").style.display = "none"
+
         const listFavorite = document.getElementById("listFavorite");
         const listFavoritePhone = document.getElementById("listFavoritePhone");
         const loadingSpinner = document.getElementById("loadingSpinner");
@@ -304,6 +316,15 @@ class Favori {
     }
 
     async filreSerie(){
+        const filtresElements = document.querySelectorAll('.filtres');
+        document.getElementById("filtresErase").style.display = "block"
+        document.getElementById("filtre").style.display = "none"
+
+        filtresElements.forEach(element => {
+            element.style.display = 'none';
+        });
+        document.getElementById("filtreEnCours").innerText = "Séries";
+
         const listFavorite = document.getElementById("listFavorite");
         const listFavoritePhone = document.getElementById("listFavoritePhone");
         const loadingSpinner = document.getElementById("loadingSpinner");
