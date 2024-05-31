@@ -41,7 +41,8 @@ class Favori {
 
                 let card = document.createElement("div");
                 card.classList.add("card", "h-100");
-
+                card.style.backgroundColor = "black"
+                card.style.borderColor = "white"
                 card.innerHTML = `
             <div class="card-body text-center">
                 <div class="card-content">
@@ -53,13 +54,13 @@ class Favori {
                     <div class="row mt-2">
                         <div class="col-6">
                             <a class="navbar__link" onclick="rouletteAleatoire.removeFavorite(${favorite.idapi})">
-                                <img src="../images/trash-2.svg" alt="Favori">
+                                <img src="../images/trash-2-white.svg" alt="Favori">
                                 <span style="z-index: 9999">Supprimer de la liste</span>
                             </a>
                         </div>
                         <div class="col-6">
                             <a class="navbar__link" onclick="favori.showModal(${favorite.idapi})">
-                                <img src="../images/info.svg" alt="Favori">
+                                <img src="../images/infoWhite.svg" alt="Favori">
                                 <span style="z-index: 9999">Information</span>
                             </a>
                         </div>
