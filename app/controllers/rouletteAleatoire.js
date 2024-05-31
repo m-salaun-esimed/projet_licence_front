@@ -17,11 +17,6 @@ class RouletteAleatoire {
         this.ajouterAmiModel = new AmiModel()
         this.choix = [];
         this.verifyAdmin();
-        // const rechercheInputs = document.getElementById('recherche');
-        // rechercheInputs.addEventListener('input', this.autocomplete.bind(this))
-
-        // const rechercheInputsNavBar = document.getElementById('rechercheNavBar');
-        // rechercheInputsNavBar.addEventListener('input', this.autocompleteNavBar.bind(this))
         this.init();
         this.addOptionsList().then(options => {
             this.options = options;
@@ -34,7 +29,6 @@ class RouletteAleatoire {
             this.spinTimeTotal = 0;
             this.ctx = null;
             document.getElementById("spin").addEventListener("click", () => this.spin());
-            // document.getElementById("spinPersonnalisee").addEventListener("click", () => this.spinPersonnalisee());
 
             this.drawRouletteWheel();
             this.sideBar();
@@ -123,15 +117,11 @@ class RouletteAleatoire {
     }
 
     resetSettings() {
-       location.reload()
-
+        // location.reload()
         localStorage.removeItem("listGenre");
         localStorage.removeItem("type");
-
         navigate("formulaireRoulette");
     }
-
-
 
     drawRouletteWheel() {
         var canvas = document.getElementById("canvas");
@@ -299,6 +289,29 @@ class RouletteAleatoire {
         var noteMovie = document.querySelector(".noteMovie");
         var noteMovieMovietext = this.options[index].note;
         noteMovie.innerHTML = '<div>' + noteMovieMovietext + '/10</div>';
+
+        var imgElement = document.getElementById("imgMovie");
+        imgElement.src = "../images/star.svg";
+        const responseIdUser = await this.userModel.getIdUser(sessionStorage.getItem("token"), localStorage.getItem("login"));
+        const responseAllFav = await this.favoriteModel.getAllFavorite(responseIdUser[0].id);
+        for(let i = 0; i < responseAllFav.length; i++){
+            if ((responseAllFav[i].idapi === this.options[index].idapi) && ("film" === responseAllFav[i].typecontenu)){
+                imgElement.src = "../images/starRed.svg";
+            }
+        }
+
+        var alreadySeen = document.getElementById(`imgAlreadySeenMovie`);
+        alreadySeen.src = "../images/eye-off.svg";
+
+        const responseAllAlreadySeen = await this.dejaVuModel.getAllAlreadySeenMovie();
+
+        for( let i = 0; i < responseAllAlreadySeen.length; i++){
+            console.log(responseAllAlreadySeen[i].idapi)
+            if ((responseAllAlreadySeen[i].idapi === this.options[index].idapi) && ("serie" === responseAllAlreadySeen[i].typecontenu)){
+                alreadySeen = document.getElementById("imgSerie");
+                alreadySeen.src = "../images/eye.svg";
+            }
+        }
     }
 
 
@@ -358,7 +371,29 @@ class RouletteAleatoire {
         var noteMovie = document.getElementsByClassName("noteSerie")[0];
         var noteMovieMovietext = this.options[index].note;
         noteMovie.innerHTML = '<div>' + noteMovieMovietext + '/10</div>';
+        const responseIdUser = await this.userModel.getIdUser(sessionStorage.getItem("token"), localStorage.getItem("login"));
+        const responseAllFav = await this.favoriteModel.getAllFavorite(responseIdUser[0].id);
+        console.log(responseAllFav)
+        var imgElement = document.getElementById("imgSerie");
+        imgElement.src = "../images/star.svg";
+        for(let i = 0; i < responseAllFav.length; i++){
+            console.log(responseAllFav[i].idapi)
+            if ((responseAllFav[i].idapi === this.options[index].idapi) && ("serie" === responseAllFav[i].typecontenu)){
+                imgElement = document.getElementById("imgSerie");
+                imgElement.src = "../images/starRed.svg";
+            }
+        }
+        var alreadySeen = document.getElementById(`imgAlreadySeenSerie`);
+        alreadySeen.src = "../images/eye-off.svg";
 
+        const responseAllAlreadySeen = await this.dejaVuModel.getAllAlreadySeenMovie();
+        for( let i = 0; i < responseAllAlreadySeen.length; i++){
+            console.log(responseAllAlreadySeen[i].idapi)
+            if ((responseAllAlreadySeen[i].idapi === this.options[index].idapi) && ("serie" === responseAllAlreadySeen[i].typecontenu)){
+                alreadySeen = document.getElementById("imgSerie");
+                alreadySeen.src = "../images/eye.svg";
+            }
+        }
     }
 
     async showModal(random){
@@ -418,35 +453,6 @@ class RouletteAleatoire {
         var noteMovieMovietext = random.note;
         noteMovie.innerHTML = '<div>' + noteMovieMovietext + '/10</div>';
 
-        // var modalFooter = document.createElement('div');
-        // modalFooter.classList.add('modal-footer');
-        //
-        // var footerContent = `
-        // <div class="row text-center">
-        //     <div class="col-4">
-        //         <button type="button" class="btn rounded-circle" style="background-color: #22303C" title="Ajouter à ma liste"
-        //                 onclick="rouletteAleatoire.addFavoriteRecherche(${random.idapi})">
-        //             <img src="../images/plus-circle%20(1).svg" width="20" height="20" alt="Favori">
-        //         </button>
-        //     </div>
-        //     <div class="col-4">
-        //         <button type="button" class="btn rounded-circle" style="background-color: #22303C" title="Ajouter aux déjà vu"
-        //                 onclick="rouletteAleatoire.addDejaVuRecherche(${random.idapi})">
-        //             <img src="../images/eye-slash-fill.svg" width="20" height="20" alt="Déjà vu" id="imageModal">
-        //         </button>
-        //     </div>
-        //     <div class="col-4">
-        //         <button type="button" class="btn rounded-circle" style="background-color: #22303C" data-bs-dismiss="modal">
-        //             <img src="../images/x-circle.svg" width="20" height="20" alt="Fermer">
-        //         </button>
-        //     </div>
-        // </div>`;
-        //
-        // modalFooter.innerHTML = footerContent;
-        //
-        // var footerRecherche = document.getElementById('footerRecherche');
-        // footerRecherche.innerHTML = '';
-        // footerRecherche.appendChild(modalFooter);
     }
 
     easeOut(t, b, c, d) {
@@ -514,35 +520,25 @@ class RouletteAleatoire {
         }
     }
 
-    async addFriendsPage(){
-        try {
-            const response = await this.userModel.refreshToken(sessionStorage.getItem("token"));
-            console.log(response)
-            if (!response.token) {
-                throw new Error("La requête a échoué avec le statut : " + response.status);
-            }
+    async addFavorite(index, type) {
+        if (type === "serie"){
+            var imgElement = document.getElementById(`imgSerie`);
 
-            const token = response.token;
-            console.log(token);
-            sessionStorage.setItem("token", "Bearer " + token);
-            console.log("refresh");
-            navigate("ajouter_ami");
-        } catch (error) {
-            console.error("Une erreur s'est produite lors de la récupération du token :", error);
+        }else {
+            var imgElement = document.getElementById(`imgMovie`);
         }
-    }
-
-    async addFavorite(index) {
         try {
             const responseIdUser = await this.userModel.getIdUser(sessionStorage.getItem("token"), localStorage.getItem("login"));
             const responseAllFav = await this.favoriteModel.getAllFavorite(responseIdUser[0].id);
             console.log(responseAllFav)
             for(let i = 0; i < responseAllFav.length; i++){
                 console.log(responseAllFav[i].idapi)
-                if (responseAllFav[i].idapi === this.options[index].idapi){
+                console.log("aaaaaaaaa" + responseAllFav[i].typecontenu)
+                if ((responseAllFav[i].idapi === this.options[index].idapi) && (type === responseAllFav[i].typecontenu)){
                     console.log("reponse idapi : " + responseAllFav[i].idapi)
                     console.log("idapi modal : " + this.options[index].idapi)
-                    alert("Film déjà dans les favoris");
+                    await this.removeFavoriteModal(this.options[index].idapi)
+                    imgElement.src = "../images/star.svg";
                     return;
                 }
             }
@@ -554,51 +550,33 @@ class RouletteAleatoire {
             };
             const response = await this.favoriteModel.postFavoriteMovie(sessionStorage.getItem("token"), data);
             console.log(response);
-            alert("Le film a été ajouté avec succès à la liste.");
+
+            if (imgElement) {
+                imgElement.src = "../images/starRed.svg";
+            } else {
+                console.log("Element avec l'ID 'imgMovie' non trouvé.");
+            }
         } catch (error) {
             console.error("Erreur lors de l'ajout du film aux favoris :", error);
             alert("Une erreur est survenue lors de l'ajout du film aux favoris. Veuillez réessayer plus tard.");
         }
     }
 
-    // async addFavoriteRecherche(idapi) {
-    //     try {
-    //         const responseIdUser = await this.userModel.getIdUser(sessionStorage.getItem("token"), localStorage.getItem("login"));
-    //         const responseAllFav = await this.favoriteModel.getAllFavorite(responseIdUser[0].id);
-    //         console.log(responseAllFav)
-    //         for(let i = 0; i < responseAllFav.length; i++){
-    //             console.log(responseAllFav[i].idapi)
-    //             if (responseAllFav[i].idapi === this.options[index].idapi){
-    //                 console.log("reponse idapi : " + responseAllFav[i].idapi)
-    //                 console.log("idapi modal : " + this.options[index].idapi)
-    //                 alert("Film déjà dans les favoris");
-    //                 return;
-    //             }
-    //         }
-    //         console.log(this.options[index].id);
-    //         const data = {
-    //             idapi: this.options[index].idapi,
-    //             idUser: responseIdUser[0].id,
-    //             typecontenu: localStorage.getItem("type")
-    //         };
-    //         const response = await this.favoriteModel.postFavoriteMovie(sessionStorage.getItem("token"), data);
-    //         console.log(response);
-    //         alert("Le film a été ajouté avec succès à la liste.");
-    //     } catch (error) {
-    //         console.error("Erreur lors de l'ajout du film aux favoris :", error);
-    //         alert("Une erreur est survenue lors de l'ajout du film aux favoris. Veuillez réessayer plus tard.");
-    //     }
-    // }
+    async addDejaVu(index, type){
+        if (type === "serie"){
+            var alreadySeen = document.getElementById(`imgAlreadySeenSerie`);
 
-    async addDejaVu(index){
+        }else {
+            var alreadySeen = document.getElementById(`imgAlreadySeenMovie`);
+        }
         try {
             const responseAllFav = await this.dejaVuModel.getAllAlreadySeenMovie();
             for( let i = 0; i < responseAllFav.length; i++){
                 console.log(responseAllFav[i].idapi)
-                if (responseAllFav[i].idapi === this.options[index].idapi){
-                    console.log("reponse idapi : " + responseAllFav[i].idapi)
-                    console.log("idapi modal : " + this.options[index].idapi)
-                    alert("Film déjà dans les déjà vu");
+                if ((responseAllFav[i].idapi === this.options[index].idapi) && (type === responseAllFav[i].typecontenu)){
+                    console.log("tessttsfc")
+                    await this.dejaVuModel.removeDejaVuMovie(sessionStorage.getItem("token"),this.options[index].idapi, type)
+                    alreadySeen.src = "../images/eye-off.svg";
                     return;
                 }
             }
@@ -608,11 +586,11 @@ class RouletteAleatoire {
             };
             const response = await this.dejaVuModel.postAlreadySeenMovie(sessionStorage.getItem("token"), data);
             console.log(response);
-            alert("Le film a été ajouté avec succès aux déjà vu.");
+            alreadySeen.src = "../images/eye.svg";
             location.reload();
         } catch (error) {
-            console.error("Erreur lors de l'ajout du film aux favoris :", error);
-            alert("Une erreur est survenue lors de l'ajout du film aux favoris. Veuillez réessayer plus tard.");
+            console.error("Erreur lors de l'ajout du film aux deja vu :", error);
+            alert("Une erreur est survenue lors de l'ajout du film aux deja vu. Veuillez réessayer plus tard.");
         }
     }
 
@@ -625,37 +603,8 @@ class RouletteAleatoire {
         console.log(idapi)
     }
 
-
-    renderAutocompleteResults(suggestions) {
-        const autocompleteList = document.querySelector('.autocomplete-results');
-        autocompleteList.innerHTML = '';
-
-        const maxSuggestions = 5;
-        const displayedSuggestions = suggestions.slice(0, maxSuggestions);
-
-        displayedSuggestions.forEach(suggestion => {
-            const listItem = document.createElement('li');
-            listItem.classList = "m-2";
-            listItem.textContent = suggestion.name;
-            listItem.addEventListener('click', () => {
-                document.getElementById('recherche').value = "";
-                this.clearAutocompleteResults();
-                this.addFilmToChoice(suggestion);
-
-            });
-            autocompleteList.appendChild(listItem);
-        });
-
-        if (suggestions.length > maxSuggestions) {
-            const seeMoreButton = document.createElement('button');
-            seeMoreButton.textContent = 'Voir plus';
-            seeMoreButton.classList = "btn btn-primary m-3";
-            seeMoreButton.addEventListener('click', () => {
-                console.log('Afficher plus de suggestions...');
-                navigate("recherche")
-            });
-            autocompleteList.appendChild(seeMoreButton);
-        }
+    async removeFavoriteModal(idapi){
+        await this.favoriteModel.removeFavoriteMovie(sessionStorage.getItem("token"), idapi);
     }
 
     addFilmToChoice(film) {
@@ -681,49 +630,12 @@ class RouletteAleatoire {
         });
     }
 
-
-
-
     clearAutocompleteResults() {
         const autocompleteList = document.querySelector('.autocomplete-results');
         autocompleteList.innerHTML = '';
 
         const autocompleteListNavBar = document.querySelector('.autocomplete-results-navBar');
         autocompleteListNavBar.innerHTML = '';
-    }
-
-    async autocomplete(event) {
-        const recherche = event.target.value.trim();
-
-        if (recherche.length === 0) {
-            this.clearAutocompleteResults();
-            return;
-        }
-
-        try {
-            const suggestions = await this.moviesModel.getCompletion(sessionStorage.getItem("token"), recherche);
-            console.log(suggestions);
-            this.renderAutocompleteResults(suggestions);
-        } catch (error) {
-            console.error(error);
-        }
-    }
-
-    async autocompleteNavBar(event){
-        const recherche = event.target.value.trim();
-
-        if (recherche.length === 0) {
-            this.clearAutocompleteResults();
-            return;
-        }
-
-        try {
-            const suggestions = await this.moviesModel.getCompletion(sessionStorage.getItem("token"), recherche);
-            console.log(suggestions);
-            this.renderAutocompleteResultsNavBar(suggestions, recherche);
-        } catch (error) {
-            console.error(error);
-        }
     }
 
     renderAutocompleteResultsNavBar(suggestions, recherche) {

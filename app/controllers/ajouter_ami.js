@@ -102,13 +102,10 @@ class AjouterAmiController {
                         const responsesAdd = await this.ajouterAmiModel.ajouter(sessionStorage.getItem("token"), data);
                         console.log(responsesAdd)
                         if (responsesAdd.status === 422) {
-                            document.getElementById('recherche').value = '';
-                            document.getElementById("erreur").style.display = "block";
+                            alert("Erreur");
                         }
                         else {
-                            document.getElementById('recherche').value = '';
-                            document.getElementById("erreur").style.display = "none";
-                            document.getElementById("success").style.display = "block";
+                            alert("Demande d'ami envoyée!");
                         }
                         return;
                     }
