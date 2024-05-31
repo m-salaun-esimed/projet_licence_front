@@ -477,7 +477,16 @@ class RouletteAleatoire {
             console.log(token);
             sessionStorage.setItem("token", "Bearer " + token);
             console.log("refresh");
-            navigate("favori");
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                const modalInstance = bootstrap.Modal.getInstance(modal);
+                if (modalInstance) {
+                    modalInstance.hide();
+                }
+            });
+            setTimeout(() => {
+                navigate("favori");
+            }, 300);
         } catch (error) {
             console.error("Une erreur s'est produite lors de la récupération du token :", error);
         }
@@ -501,24 +510,6 @@ class RouletteAleatoire {
         }
     }
 
-
-    async alreadyseenPage(){
-        try {
-            const response = await this.userModel.refreshToken(sessionStorage.getItem("token"));
-            console.log(response)
-            if (!response.token) {
-                throw new Error("La requête a échoué avec le statut : " + response.status);
-            }
-
-            const token = response.token;
-            console.log(token);
-            sessionStorage.setItem("token", "Bearer " + token);
-            console.log("refresh");
-            navigate("dejavu");
-        } catch (error) {
-            console.error("Une erreur s'est produite lors de la récupération du token :", error);
-        }
-    }
 
     async addFavorite(index, type) {
         if (type === "serie"){
@@ -691,18 +682,81 @@ class RouletteAleatoire {
     }
 
     friendsPage(){
-        navigate("amis")
+        const modals = document.querySelectorAll('.modal');
+        modals.forEach(modal => {
+            const modalInstance = bootstrap.Modal.getInstance(modal);
+            if (modalInstance) {
+                modalInstance.hide();
+            }
+        });
+        setTimeout(() => {
+            navigate("amis")
+        }, 300);
     }
 
     actualitePage(){
-        navigate("actualitePage")
+        const modals = document.querySelectorAll('.modal');
+        modals.forEach(modal => {
+            const modalInstance = bootstrap.Modal.getInstance(modal);
+            if (modalInstance) {
+                modalInstance.hide();
+            }
+        });
+        setTimeout(() => {
+            navigate("actualitePage")
+        }, 300);
     }
 
     addFriendsNotificationsPage(){
-        navigate("addFriendsNotifications");
+        const modals = document.querySelectorAll('.modal');
+        modals.forEach(modal => {
+            const modalInstance = bootstrap.Modal.getInstance(modal);
+            if (modalInstance) {
+                modalInstance.hide();
+            }
+        });
+        setTimeout(() => {
+            navigate("addFriendsNotifications");
+        }, 300);
     }
     ajouter_ami(){
-        navigate("ajouter_ami");
+        const modals = document.querySelectorAll('.modal');
+        modals.forEach(modal => {
+            const modalInstance = bootstrap.Modal.getInstance(modal);
+            if (modalInstance) {
+                modalInstance.hide();
+            }
+        });
+        setTimeout(() => {
+            navigate("ajouter_ami");
+        }, 300);
+    }
+
+    async alreadyseenPage(){
+        try {
+            const response = await this.userModel.refreshToken(sessionStorage.getItem("token"));
+            console.log(response)
+            if (!response.token) {
+                throw new Error("La requête a échoué avec le statut : " + response.status);
+            }
+
+            const token = response.token;
+            console.log(token);
+            sessionStorage.setItem("token", "Bearer " + token);
+            console.log("refresh");
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                const modalInstance = bootstrap.Modal.getInstance(modal);
+                if (modalInstance) {
+                    modalInstance.hide();
+                }
+            });
+            setTimeout(() => {
+                navigate("dejavu");
+            }, 300);
+        } catch (error) {
+            console.error("Une erreur s'est produite lors de la récupération du token :", error);
+        }
     }
 }
 

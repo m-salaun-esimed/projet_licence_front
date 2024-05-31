@@ -1131,6 +1131,14 @@
     list-style-type: none; /* Supprime les tirets devant les éléments de liste */
     padding: 0; /* Supprime le padding par défaut de la liste */
   }
+
+  #listFavoritePhone .card{
+    display: none;
+  }
+
+  #listFavorite .card{
+    display: block;
+  }
 }
 
 
@@ -1194,6 +1202,14 @@
 
   .imageSerie{
     width: 80%;
+  }
+
+  #listFavorite .card{
+    display: none;
+  }
+
+  #listFavoritePhone .card{
+    display: block;
   }
 }
 
