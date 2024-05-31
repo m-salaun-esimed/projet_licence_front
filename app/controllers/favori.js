@@ -118,6 +118,7 @@ class Favori {
 
                 rowPhone.appendChild(cardPhone);
                 listFavoritePhone.appendChild(rowPhone);
+                cardPhone.onclick = () => favori.showModal(favorite.idapi);
             }
 
         } catch (error) {
