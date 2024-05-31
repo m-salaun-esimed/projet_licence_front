@@ -50,7 +50,8 @@ class DejaVu {
 
                 let card = document.createElement("div");
                 card.classList.add("card", "h-100");
-
+                card.style.borderColor = "white"
+                card.style.backgroundColor = "black"
                 card.innerHTML = `
                 <div class="card-body text-center">
                     <div class="card-content">
@@ -62,13 +63,13 @@ class DejaVu {
                         <div class="row mt-2">
                             <div class="col-6">
                                 <a class="navbar__link" onclick="dejaVu.removeDejaVu(${dejaVu.idapi}, '${dejaVu.typecontenu}')">
-                                    <img src="../images/eye-off.svg" alt="Favori">
+                                    <img src="../images/eyeWhite.svg" alt="Favori">
                                     <span style="z-index: 9999">Supprimer des déjà vu</span>
                                 </a>
                             </div>
                             <div class="col-6">
                                 <a class="navbar__link" onclick="dejaVu.showModalMovie(${dejaVu.idapi}, '${dejaVu.typecontenu}')">
-                                    <img src="../images/info.svg" alt="Favori">
+                                    <img src="../images/infoWhite.svg" alt="Favori">
                                     <span style="z-index: 9999">Information</span>
                                 </a>
                             </div>
