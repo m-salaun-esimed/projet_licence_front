@@ -341,7 +341,7 @@ class RouletteAleatoire {
         console.log(response);
 
         if (response && response.flatrate) {
-            const platformsData = response.flatrate.slice(0, 3); // Sélectionner les 3 premières plateformes
+            const platformsData = response.flatrate.slice(0, 3);
 
             let platformsHTML = '<div class="row">';
             platformsData.forEach(platform => {

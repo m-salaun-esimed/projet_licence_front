@@ -153,9 +153,12 @@ class DejaVu {
             console.log(typecontenu)
             if (typecontenu === 'film'){
                 this.responseInfo = await this.moviesModel.getMovieByIdMovieApi(idapi)
+                this.responsePlatform = await this.moviesModel.getPlatforms(idapi, sessionStorage.getItem("token"))
             }
             else {
                 this.responseInfo = await this.serieModel.getSerieByIdSerieApi(idapi)
+                this.responsePlatform = await this.serieModel.getPlatforms(idapi, sessionStorage.getItem("token"))
+
             }
             console.log(this.responseInfo)
         var text = this.responseInfo[0].name;
@@ -184,7 +187,33 @@ class DejaVu {
 
         var modalFooter = document.querySelector('.modal-footer');
         modalFooter.innerHTML = '';
+        if (this.responsePlatform && this.responsePlatform.flatrate) {
+            const platformsData = this.responsePlatform.flatrate.slice(0, 3);
 
+            let platformsHTML = '<div class="row">';
+            platformsData.forEach(platform => {
+                platformsHTML += `
+            <div class="col-md-4 mt-1">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-title">${platform.provider_name}</p>
+                        <img src="https://image.tmdb.org/t/p/w500/${platform.logo_path}" alt="${platform.provider_name} Logo" class="card-img-top" style="width: 20%;">
+                    </div>
+                </div>
+            </div>`;
+            });
+            platformsHTML += '</div>';
+
+            const platformsElement = document.querySelector('.platforms');
+            platformsElement.innerHTML = platformsHTML;
+        }
+        else {
+            let platformsHTML = '';
+
+            const platformsElement = document.querySelector('.platforms');
+            platformsElement.innerHTML = platformsHTML;
+            console.error("La réponse de l'API n'est pas valide ou les données des plateformes sont vides.");
+        }
         modalFooter.appendChild(viewedButton);
     }
 }
