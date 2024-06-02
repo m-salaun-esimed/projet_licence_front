@@ -93,11 +93,11 @@ export default class UserRoute extends Api {
             return data;
     }
 
-    async deleteUser(email){
+    async deleteUser(displayname){
         try {
             let events = `user`;
             const headers = new Headers();
-            headers.append('login', email);
+            headers.append('displayname', displayname);
             headers.append('Authorization', sessionStorage.getItem("token"));
             const response = await fetch(`${this.apiServer}/${events}`, { method: 'DELETE', headers });
             const data = await response.json();

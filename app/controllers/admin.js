@@ -190,7 +190,7 @@ class AdminController {
                     '                    <h2>Supprimer un utilisateur</h2>\n' +
                     '                    <form>\n' +
                     '                        <div class="form-group">\n' +
-                    '                            <input type="email" class="form-control" id="email" placeholder="Adresse e-mail de l\'utilisateur">\n' +
+                    '                            <input type="text" class="form-control" id="displayname" placeholder="Login de l\'utilisateur">\n' +
                     '                        </div>\n' +
                     '                        <div class="row mt-3">\n' +
                     '                            <div class="col d-flex justify-content-center">\n' +
@@ -209,8 +209,8 @@ class AdminController {
 
     async deleteUser() {
         try {
-            const email = document.getElementById('email').value;
-            const response = await this.userModel.deleteUser(email);
+            const displayname = document.getElementById('displayname').value;
+            const response = await this.userModel.deleteUser(displayname);
             console.log(response)
             alert(response.message)
         } catch (error) {

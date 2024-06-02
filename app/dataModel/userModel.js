@@ -90,9 +90,9 @@ export default class userModel {
         }
     }
 
-    async deleteUser(email){
+    async deleteUser(displayname){
         try {
-            return await this.api.deleteUser(email)
+            return await this.api.deleteUser(displayname)
         }catch (e){
             throw e;
         }
