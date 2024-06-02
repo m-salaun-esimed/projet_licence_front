@@ -15,8 +15,11 @@ export default class UserRoute extends Api {
 
     createAccount(data){
         console.log("UserRoute : authenticate")
-        let routeAuthenticate = "createAccount"
-        return fetch(`${this.apiServer}/${this.routesUrl}/${routeAuthenticate}`, { method: 'POST', headers: { 'Content-Type': 'application/json' },
+        let routeAuthenticate = "createAccount";
+        const headers = new Headers();
+        headers.append('authorization',  sessionStorage.getItem("token"));
+
+        return fetch(`${this.apiServer}/${this.routesUrl}/${routeAuthenticate}`, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `${sessionStorage.getItem("token")}`},
             body: JSON.stringify(data) })
     }
 
