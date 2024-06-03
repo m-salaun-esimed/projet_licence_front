@@ -25,12 +25,10 @@ class CreationCompteController extends BaseController {
                 if (password === password2){
                     try {
                         const response = await this.userModel.createAccount(displayName, login, password);
-                        if (response.status === 200) {
+                        if (response.ok) {
                             console.log("Creation Compte réussie");
                             document.getElementById("erreur").style.display = "none";
-
                             navigate("index")
-
                         } else {
                             console.log("Échec Creation Compte");
                             if (response.status === 400) {
