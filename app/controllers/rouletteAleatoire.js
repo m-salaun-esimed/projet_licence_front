@@ -465,51 +465,6 @@ class RouletteAleatoire {
         location.reload();
     }
 
-    async favoriPage() {
-        try {
-            const response = await this.userModel.refreshToken(sessionStorage.getItem("token"));
-            console.log(response)
-            if (!response.token) {
-                throw new Error("La requête a échoué avec le statut : " + response.status);
-            }
-
-            const token = response.token;
-            console.log(token);
-            sessionStorage.setItem("token", "Bearer " + token);
-            console.log("refresh");
-            const modals = document.querySelectorAll('.modal');
-            modals.forEach(modal => {
-                const modalInstance = bootstrap.Modal.getInstance(modal);
-                if (modalInstance) {
-                    modalInstance.hide();
-                }
-            });
-            setTimeout(() => {
-                navigate("favori");
-            }, 300);
-        } catch (error) {
-            console.error("Une erreur s'est produite lors de la récupération du token :", error);
-        }
-    }
-
-    async adminPage(){
-        try {
-            const response = await this.userModel.refreshToken(sessionStorage.getItem("token"));
-            console.log(response)
-            if (!response.token) {
-                throw new Error("La requête a échoué avec le statut : " + response.status);
-            }
-
-            const token = response.token;
-            console.log(token);
-            sessionStorage.setItem("token", "Bearer " + token);
-            console.log("refresh");
-            navigate("admin");
-        } catch (error) {
-            console.error("Une erreur s'est produite lors de la récupération du token :", error);
-        }
-    }
-
 
     async addFavorite(index, type) {
         if (type === "serie"){
@@ -677,6 +632,24 @@ class RouletteAleatoire {
         this.showModal(random)
     }
 
+    async adminPage(){
+        try {
+            const response = await this.userModel.refreshToken(sessionStorage.getItem("token"));
+            console.log(response)
+            if (!response.token) {
+                throw new Error("La requête a échoué avec le statut : " + response.status);
+            }
+
+            const token = response.token;
+            console.log(token);
+            sessionStorage.setItem("token", "Bearer " + token);
+            console.log("refresh");
+            navigate("admin");
+        } catch (error) {
+            console.error("Une erreur s'est produite lors de la récupération du token :", error);
+        }
+    }
+
     redirectionHomePage(){
         navigate("rouletteAleatoire")
     }
@@ -753,6 +726,33 @@ class RouletteAleatoire {
             });
             setTimeout(() => {
                 navigate("dejavu");
+            }, 300);
+        } catch (error) {
+            console.error("Une erreur s'est produite lors de la récupération du token :", error);
+        }
+    }
+
+    async favoriPage() {
+        try {
+            const response = await this.userModel.refreshToken(sessionStorage.getItem("token"));
+            console.log(response)
+            if (!response.token) {
+                throw new Error("La requête a échoué avec le statut : " + response.status);
+            }
+
+            const token = response.token;
+            console.log(token);
+            sessionStorage.setItem("token", "Bearer " + token);
+            console.log("refresh");
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                const modalInstance = bootstrap.Modal.getInstance(modal);
+                if (modalInstance) {
+                    modalInstance.hide();
+                }
+            });
+            setTimeout(() => {
+                navigate("favori");
             }, 300);
         } catch (error) {
             console.error("Une erreur s'est produite lors de la récupération du token :", error);
