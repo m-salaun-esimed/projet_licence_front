@@ -443,7 +443,17 @@ class RouletteAleatoire {
             const response = await this.dejaVuModel.postAlreadySeenMovie(sessionStorage.getItem("token"), data);
             console.log(response);
             alreadySeen.src = "../images/eye.svg";
-            location.reload();
+
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                const modalInstance = bootstrap.Modal.getInstance(modal);
+                if (modalInstance) {
+                    modalInstance.hide();
+                }
+            });
+            setTimeout(() => {
+                this.refreshRoulette();
+            }, 300);
         } catch (error) {
             console.error("Erreur lors de l'ajout du film aux deja vu :", error);
             alert("Une erreur est survenue lors de l'ajout du film aux deja vu. Veuillez réessayer plus tard.");
@@ -461,29 +471,6 @@ class RouletteAleatoire {
 
     async removeFavoriteModal(idapi){
         await this.favoriteModel.removeFavoriteMovie(sessionStorage.getItem("token"), idapi);
-    }
-
-    addFilmToChoice(film) {
-        this.choix.push(film);
-        console.log(this.choix);
-
-        const dynamicContenu = document.getElementById("dynamicContenu");
-        dynamicContenu.innerHTML = "";
-
-        this.choix.forEach(choix => {
-            const filmContainer = document.createElement("div");
-            filmContainer.classList.add("film-container");
-
-            const img = document.createElement("img");
-            img.src = 'https://image.tmdb.org/t/p/w500' + choix.poster_path;
-
-            const paragraph = document.createElement("p");
-            paragraph.textContent = choix.name;
-
-            filmContainer.appendChild(img);
-            filmContainer.appendChild(paragraph);
-            dynamicContenu.appendChild(filmContainer);
-        });
     }
 
     clearAutocompleteResults() {
