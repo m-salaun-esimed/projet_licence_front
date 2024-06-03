@@ -401,7 +401,7 @@ class DejaVu {
                     </div>    
                     <div class="row mt-2">
                         <div class="col-6">
-                            <a class="navbar__link" onclick="rouletteAleatoire.removeFavorite(${dejaVu.idapi})">
+                            <a class="navbar__link" onclick="dejaVu.removeDejaVu(${dejaVu.idapi}, 'film')">
                                 <img src="../images/trash-2-white.svg" alt="Favori">
                                 <span style="z-index: 9999">Supprimer de la liste</span>
                             </a>
