@@ -14,7 +14,6 @@ class RouletteAleatoire {
         this.userModel = new UserModel()
         this.dejaVuModel = new DejaVuModel()
         this.serieModel = new SerieModel()
-        this.ajouterAmiModel = new AmiModel()
         this.choix = [];
         this.verifyAdmin();
         this.init();
@@ -22,16 +21,7 @@ class RouletteAleatoire {
             this.options = options;
             console.log(this.options)
             this.addMovieList();
-            this.startAngle = 0;
-            this.arc = Math.PI / (this.options.length / 2);
-            this.spinTimeout = null;
-            this.spinTime = 0;
-            this.spinTimeTotal = 0;
-            this.ctx = null;
             document.getElementById("spin").addEventListener("click", () => this.spin());
-
-            this.drawRouletteWheel();
-            this.sideBar();
         }).catch(error => {
             console.error(error);
         });
@@ -51,6 +41,7 @@ class RouletteAleatoire {
 
     addMovieList() {
         let filmList = document.getElementsByClassName("slide-track")[0];
+        filmList.textContent = ""
         for (let y = 0; y < 2; y ++){
             for (let i = 0; i < this.options.length; i++) {
                 let slideDiv = document.createElement("div");
@@ -105,17 +96,6 @@ class RouletteAleatoire {
         movieGenres.textContent = genreNames;
     }
 
-    sideBar() {
-        const sidebar = document.getElementById('sidebar');
-        const toggleButton = document.getElementById('toggleButton');
-        const content = document.querySelector('.content');
-
-        toggleButton.addEventListener('click', () => {
-            sidebar.classList.toggle('closed');
-            content.classList.toggle('expanded');
-        });
-    }
-
     resetSettings() {
         // location.reload()
         localStorage.removeItem("listGenre");
@@ -123,91 +103,21 @@ class RouletteAleatoire {
         navigate("formulaireRoulette");
     }
 
-    drawRouletteWheel() {
-        var canvas = document.getElementById("canvas");
-        if (canvas.getContext) {
-            var outsideRadius = 200;
-            var textRadius = 160;
-            var insideRadius = 125;
-
-            this.ctx = canvas.getContext("2d");
-            this.ctx.clearRect(0, 0, 500, 500);
-            this.ctx.font = 'bold 10px Helvetica, Arial';
-            this.ctx.fillStyle = "#ECECEC";
-            for (var i = 0; i < this.options.length; i++) {
-                var angle = this.startAngle + i * this.arc;
-                this.ctx.beginPath();
-                this.ctx.arc(250, 250, outsideRadius, angle, angle + this.arc, false);
-                this.ctx.arc(250, 250, insideRadius, angle + this.arc, angle, true);
-                this.ctx.stroke();
-                this.ctx.fill();
-
-                this.ctx.save();
-                this.ctx.shadowOffsetX = -1;
-                this.ctx.shadowOffsetY = -1;
-                this.ctx.shadowBlur = 0;
-                this.ctx.shadowColor = "rgb(220,220,220)";
-                this.ctx.fillStyle = "black";
-                this.ctx.translate(250 + Math.cos(angle + this.arc / 2) * textRadius,
-                    250 + Math.sin(angle + this.arc / 2) * textRadius);
-                this.ctx.rotate(angle + this.arc / 2 + Math.PI / 2);
-                var text = this.options[i].name;
-                this.ctx.fillText(text, -this.ctx.measureText(text).width / 2, 0);
-                this.ctx.restore();
-            }
-
-            //Arrow
-            this.ctx.fillStyle = "black";
-            this.ctx.beginPath();
-            this.ctx.moveTo(250 - 4, 250 - (outsideRadius + 5));
-            this.ctx.lineTo(250 + 4, 250 - (outsideRadius + 5));
-            this.ctx.lineTo(250 + 4, 250 - (outsideRadius - 5));
-            this.ctx.lineTo(250 + 9, 250 - (outsideRadius - 5));
-            this.ctx.lineTo(250 + 0, 250 - (outsideRadius - 13));
-            this.ctx.lineTo(250 - 9, 250 - (outsideRadius - 5));
-            this.ctx.lineTo(250 - 4, 250 - (outsideRadius - 5));
-            this.ctx.lineTo(250 - 4, 250 - (outsideRadius + 5));
-            this.ctx.fill();
-        }
-    }
-
     spin() {
         document.getElementById("spin").disabled = true;
-        this.spinAngleStart = Math.random() * 10 + 10;
-        this.spinTime = 0;
-        this.spinTimeTotal = Math.random() * 3 + 4 * 1000;
-        this.rotateWheel();
-    }
 
-    rotateWheel() {
-        this.spinTime += 150;
-        if (this.spinTime >= this.spinTimeTotal) {
-            this.stopRotateWheel();
-            return;
-        }
-        var spinAngle = this.spinAngleStart - this.easeOut(this.spinTime, 0, this.spinAngleStart, this.spinTimeTotal);
-        this.startAngle += (spinAngle * Math.PI / 180);
-        this.drawRouletteWheel();
-        this.spinTimeout = setTimeout(() => this.rotateWheel(), 30);
-    }
-
-    stopRotateWheel() {
-        clearTimeout(this.spinTimeout);
-        var degrees = this.startAngle * 180 / Math.PI + 90;
-        var arcd = this.arc * 180 / Math.PI;
-        var index = Math.floor((360 - degrees % 360) / arcd);
-        this.index = index;
-        this.ctx.save();
-        this.ctx.font = 'bold 10px Helvetica, Arial';
-        if (localStorage.getItem("type") === "film"){
-            this.showModalMovie(index)
-        }else {
-            this.showModalSerie(index)
+        // Generate a random number between 0 and 4
+        const index = Math.floor(Math.random() * 5);
+        console.log("spin index " + index)
+        if (localStorage.getItem("type") === "film") {
+            this.showModalMovie(index);
+        } else {
+            this.showModalSerie(index);
         }
         document.getElementById("spin").disabled = false;
-
-        this.ctx.restore();
     }
+
+
 
     async showModalMovie(index){
         this.index = index;
@@ -455,16 +365,16 @@ class RouletteAleatoire {
 
     }
 
-    easeOut(t, b, c, d) {
-        var ts = (t /= d) * t;
-        var tc = ts * t;
-        return b + c * (tc + -3 * ts + 3 * t);
-    }
-
     refreshRoulette(){
-        location.reload();
+        // location.reload();
+        this.addOptionsList().then(options => {
+            this.options = options;
+            console.log(this.options)
+            this.addMovieList();
+        }).catch(error => {
+            console.error(error);
+        });
     }
-
 
     async addFavorite(index, type) {
         if (type === "serie"){
@@ -616,20 +526,6 @@ class RouletteAleatoire {
             autocompleteList.appendChild(seeMoreButton);
         }
 
-    }
-
-    spinPersonnalisee(){
-        if (this.choix.length === 0) {
-            console.log("Aucun film disponible.");
-            return;
-        }
-
-        const randomIndex = Math.floor(Math.random() * this.choix.length);
-        const random = this.choix[randomIndex];
-
-        console.log("Film choisi aléatoirement :", random);
-        console.log(random.type)
-        this.showModal(random)
     }
 
     async adminPage(){
