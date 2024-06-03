@@ -95,12 +95,38 @@
             <span class="visually-hidden">Loading...</span>
         </div>
     </div>
+    <div class="row mt-3 m-3">
+        <div class="col-2" id="filtre">
+            <button class="btn btn-outline-primary" style="border-radius: 24px" onclick="dejaVu.showFiltres()">
+                <img src="../images/filter.svg" alt="">
+            </button>
+        </div>
+        <div class="col-2 filtres">
+            <button class="btn btn-outline-primary" style="border-radius: 24px"><img src="../images/searchWhite.svg" alt=""></button>
+        </div>
+        <div class="col-2" id="filtresErase">
+            <button class="btn btn-outline-primary" style="border-radius: 24px" onclick="dejaVu.init()"><img src="../images/x-lg.svg"
+                                                                                                             alt=""></button>
+        </div>
+        <div class="col-2 filtres">
+            <button class="btn btn-outline-light" style="border-radius: 24px" onclick="dejaVu.filreFilm()">Films</button>
+        </div>
+        <div class="col-2 filtres">
+            <button class="btn btn-outline-light" style="border-radius: 24px" onclick="dejaVu.filreSerie()">Séries</button>
+        </div>
+        <div class="col-2">
+            <h3 id="filtreEnCours" style="color: white"></h3>
+        </div>
+    </div>
     <div id="listDejaVu" class="m-3">
 
     </div>
     <div id="listDejaVuPhone" class="m-3">
 
     </div>
+
+<!--    <div id="listFavorite" class="m-3"></div>-->
+<!--    <div id="listFavoritePhone" class="m-3"></div>-->
 
     <div class="modal fade" id="modalMovie" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">

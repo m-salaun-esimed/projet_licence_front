@@ -24,7 +24,16 @@ class DejaVu {
         }
     }
     async init() {
+        const listFavorite = document.getElementById("listDejaVu");
+        const listFavoritePhone = document.getElementById("listDejaVuPhone");
+        document.getElementById("filtresErase").style.display = "none"
+        document.getElementById("filtre").style.display = "block"
         try {
+
+            listFavorite.innerHTML = '';
+            listFavoritePhone.innerHTML = '';
+            document.getElementById("filtreEnCours").innerText = '';
+
             let listDejaVu = document.getElementById("listDejaVu");
             let listDejaVuPhone = document.getElementById("listDejaVuPhone");
             const loadingSpinner = document.getElementById("loadingSpinner");
@@ -342,6 +351,267 @@ class DejaVu {
         } catch (error) {
             console.error("Une erreur s'est produite lors de la récupération du token :", error);
         }
+    }
+
+    async filreFilm(){
+        const filtresElements = document.querySelectorAll('.filtres');
+        filtresElements.forEach(element => {
+            element.style.display = 'none';
+        });
+        document.getElementById("filtreEnCours").innerText = "films";
+        document.getElementById("filtresErase").style.display = "block"
+        document.getElementById("filtre").style.display = "none"
+
+        const listFavorite = document.getElementById("listDejaVu");
+        const listFavoritePhone = document.getElementById("listDejaVuPhone");
+        const loadingSpinner = document.getElementById("loadingSpinner");
+
+        // Show the spinner
+        loadingSpinner.style.display = "flex";
+
+        try {
+            listFavorite.innerHTML = '';
+            listFavoritePhone.innerHTML = '';
+            this.liste = await this.dejaVuModel.getAllAlreadySeenMovie();
+            console.log(this.listeDeFav);
+
+            let row = document.createElement("div");
+            row.classList.add("row");
+
+            for (const dejaVu of this.liste) {
+                if (dejaVu.typecontenu === 'film') {
+                    this.responseInfo = await this.moviesModel.getMovieByIdMovieApi(dejaVu.idapi);
+
+                    console.log(this.responseInfo);
+
+                    let col = document.createElement("div");
+                    col.classList.add("col-6", "col-sm-4", "col-md-3", "col-lg-2", "mb-2"); // Adjusted to make the cards smaller
+
+                    let card = document.createElement("div");
+                    card.classList.add("card", "h-100");
+                    card.style.backgroundColor = "black"
+                    card.style.borderColor = "white"
+                    card.innerHTML = `
+            <div class="card-body text-center">
+                <div class="card-content">
+                    <div class="row">
+                        <div>
+                            <img src="https://image.tmdb.org/t/p/w500${this.responseInfo[0].poster_path}" class="card-img rounded" alt="Image" style="width: 70%"><!-- Adjusted the width to make the image smaller -->
+                        </div>
+                    </div>    
+                    <div class="row mt-2">
+                        <div class="col-6">
+                            <a class="navbar__link" onclick="rouletteAleatoire.removeFavorite(${dejaVu.idapi})">
+                                <img src="../images/trash-2-white.svg" alt="Favori">
+                                <span style="z-index: 9999">Supprimer de la liste</span>
+                            </a>
+                        </div>
+                        <div class="col-6">
+                            <a class="navbar__link" onclick="dejaVu.showModalMovie(${dejaVu.idapi}, 'film')">
+                                <img src="../images/infoWhite.svg" alt="Favori">
+                                <span style="z-index: 9999">Information</span>
+                            </a>
+                        </div>
+                    </div>            
+                </div>
+            </div>
+            `;
+
+                    col.appendChild(card);
+                    row.appendChild(col);
+                }}
+
+            listFavorite.appendChild(row);
+
+            // Second loop for listFavoritePhone
+            for (const dejaVu of this.listeDeFav) {
+                if (dejaVu.typecontenu === 'film') {
+                    this.responseInfo = await this.moviesModel.getMovieByIdMovieApi(dejaVu.idapi);
+                    console.log(this.responseInfo);
+
+                    let rowPhone = document.createElement("div");
+                    rowPhone.classList.add("row", "mb-2");
+
+                    let cardPhone = document.createElement("div");
+                    cardPhone.classList.add("card");
+                    cardPhone.style.backgroundColor = "black"
+                    cardPhone.innerHTML = `
+            <div class="row no-gutters">
+                <div class="col-4">
+                    <img src="https://image.tmdb.org/t/p/w500${this.responseInfo[0].poster_path}" class="card-img" alt="Image" style="border-radius: 24px">
+                </div>
+                <div class="col-8">
+                    <div class="card-body">
+                        <h5 class="card-title" style="color: white">${this.responseInfo[0].name}</h5>
+                        <div class="row mt-2">
+                            <div class="col-6">
+                                <a class="navbar__link" onclick="dejaVu.removeDejaVu(${dejaVu.idapi}, 'film')">
+                                    <img src="../images/trash-2-white.svg" alt="Favori">
+                                    <span style="z-index: 9999">Supprimer de la liste</span>
+                                </a>
+                            </div>
+                            <div class="col-6">
+                                <a class="navbar__link" onclick="dejaVu.showModalMovie(${dejaVu.idapi}, 'film')">
+                                    <img src="../images/infoWhite.svg" alt="Favori">
+                                    <span style="z-index: 9999">Information</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            `;
+
+                    rowPhone.appendChild(cardPhone);
+                    listFavoritePhone.appendChild(rowPhone);
+                }}
+
+        } catch (error) {
+            console.error("An error occurred while fetching favorites:", error);
+        } finally {
+            console.log("test");
+            loadingSpinner.style.display = "none";
+        }
+    }
+
+    async filreSerie(){
+        const filtresElements = document.querySelectorAll('.filtres');
+        document.getElementById("filtresErase").style.display = "block"
+        document.getElementById("filtre").style.display = "none"
+
+        filtresElements.forEach(element => {
+            element.style.display = 'none';
+        });
+        document.getElementById("filtreEnCours").innerText = "Séries";
+
+        const listFavorite = document.getElementById("listDejaVu");
+        const listFavoritePhone = document.getElementById("listDejaVuPhone");
+        const loadingSpinner = document.getElementById("loadingSpinner");
+
+        // Show the spinner
+        loadingSpinner.style.display = "flex";
+
+        try {
+            listFavorite.innerHTML = '';
+            listFavoritePhone.innerHTML = '';
+            const responseIdUser = await this.userModel.getIdUser(sessionStorage.getItem("token"), localStorage.getItem("login"));
+            this.listeDeFav = await this.dejaVuModel.getAllAlreadySeenMovie();
+            console.log(this.listeDeFav);
+
+            let row = document.createElement("div");
+            row.classList.add("row");
+
+            for (const dejaVu of this.listeDeFav) {
+                if (dejaVu.typecontenu === 'serie') {
+                    this.responseInfo = await this.serieModel.getSerieByIdSerieApi(dejaVu.idapi);
+
+                    console.log(this.responseInfo);
+
+                    let col = document.createElement("div");
+                    col.classList.add("col-6", "col-sm-4", "col-md-3", "col-lg-2", "mb-2"); // Adjusted to make the cards smaller
+
+                    let card = document.createElement("div");
+                    card.classList.add("card", "h-100");
+                    card.style.backgroundColor = "black"
+                    card.style.borderColor = "white"
+                    card.innerHTML = `
+            <div class="card-body text-center">
+                <div class="card-content">
+                    <div class="row">
+                        <div>
+                            <img src="https://image.tmdb.org/t/p/w500${this.responseInfo[0].poster_path}" class="card-img rounded" alt="Image" style="width: 70%"><!-- Adjusted the width to make the image smaller -->
+                        </div>
+                    </div>    
+                    <div class="row mt-2">
+                        <div class="col-6">
+                            <a class="navbar__link" onclick="dejaVu.removeDejaVu(${dejaVu.idapi},'serie')">
+                                <img src="../images/trash-2-white.svg" alt="Favori">
+                                <span style="z-index: 9999">Supprimer de la liste</span>
+                            </a>
+                        </div>
+                        <div class="col-6">
+                            <a class="navbar__link" onclick="dejaVu.showModalMovie(${dejaVu.idapi}, 'serie')">
+                                <img src="../images/infoWhite.svg" alt="Favori">
+                                <span style="z-index: 9999">Information</span>
+                            </a>
+                        </div>
+                    </div>            
+                </div>
+            </div>
+            `;
+
+                    col.appendChild(card);
+                    row.appendChild(col);
+                }}
+
+            listFavorite.appendChild(row);
+
+            // Second loop for listFavoritePhone
+            for (const dejaVu of this.listeDeFav) {
+                if (dejaVu.typecontenu === 'serie') {
+                    this.responseInfo = await this.serieModel.getSerieByIdSerieApi(dejaVu.idapi);
+                    console.log(this.responseInfo);
+
+                    let rowPhone = document.createElement("div");
+                    rowPhone.classList.add("row", "mb-2");
+
+                    let cardPhone = document.createElement("div");
+                    cardPhone.classList.add("card");
+                    cardPhone.style.backgroundColor = "black"
+                    cardPhone.innerHTML = `
+            <div class="row no-gutters">
+                <div class="col-4">
+                    <img src="https://image.tmdb.org/t/p/w500${this.responseInfo[0].poster_path}" class="card-img" alt="Image" style="border-radius: 24px">
+                </div>
+                <div class="col-8">
+                    <div class="card-body">
+                        <h5 class="card-title" style="color: white">${this.responseInfo[0].name}</h5>
+                        <div class="row mt-2">
+                            <div class="col-6">
+                                <a class="navbar__link" onclick="dejaVu.removeDejaVu(${dejaVu.idapi}, 'serie')">
+                                    <img src="../images/trash-2-white.svg" alt="Favori">
+                                    <span style="z-index: 9999">Supprimer de la liste</span>
+                                </a>
+                            </div>
+                            <div class="col-6">
+                                <a class="navbar__link" onclick="dejaVu.showModalMovie(${dejaVu.idapi}, 'serie')">
+                                    <img src="../images/infoWhite.svg" alt="Favori">
+                                    <span style="z-index: 9999">Information</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            `;
+
+                    rowPhone.appendChild(cardPhone);
+                    listFavoritePhone.appendChild(rowPhone);
+                }}
+
+        } catch (error) {
+            console.error("An error occurred while fetching favorites:", error);
+        } finally {
+            console.log("test");
+            loadingSpinner.style.display = "none";
+        }
+    }
+
+    showFiltres() {
+        const filtresElements = document.querySelectorAll('.filtres');
+        filtresElements.forEach(element => {
+            if (element.classList.contains('show')) {
+                element.classList.remove('show');
+                setTimeout(() => {
+                    element.style.display = 'none';
+                }, 500); // Delay matches the CSS transition duration
+            } else {
+                element.style.display = 'block';
+                setTimeout(() => {
+                    element.classList.add('show');
+                }, 10); // Small delay to allow the display change to take effect
+            }
+        });
     }
 }
 
