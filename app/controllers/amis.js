@@ -117,14 +117,8 @@ class AmiController {
                         </div>
                     </div>
                     <div class="row mt-2">
-                        <div class="col-6">
-                            <a class="navbar__link" onclick="rouletteAleatoire.removeFavorite(${favorite.idapi})">
-                                <img src="../images/trash-2-white.svg" alt="Favori">
-                                <span style="z-index: 9999">Supprimer de la liste</span>
-                            </a>
-                        </div>
-                        <div class="col-6">
-                            <a class="navbar__link" onclick="favori.showModal(${favorite.idapi})">
+                        <div class="col-12">
+                            <a class="navbar__link" onclick="amiController.showModal(${favorite.idapi})">
                                 <img src="../images/infoWhite.svg" alt="Favori">
                                 <span style="z-index: 9999">Information</span>
                             </a>
@@ -164,14 +158,9 @@ class AmiController {
                     <div class="card-body">
                         <h5 class="card-title" style="color: white">${this.responseInfo[0].name}</h5>
                         <div class="row mt-2">
-                            <div class="col-6">
-                                <a class="navbar__link" onclick="rouletteAleatoire.removeFavorite(${favorite.idapi})">
-                                    <img src="../images/trash-2-white.svg" alt="Favori">
-                                    <span style="z-index: 9999">Supprimer de la liste</span>
-                                </a>
-                            </div>
-                            <div class="col-6">
-                                <a class="navbar__link" onclick="favori.showModal(${favorite.idapi})">
+                 
+                            <div class="col-12">
+                                <a class="navbar__link" onclick="amiController.showModal(${favorite.idapi})">
                                     <img src="../images/infoWhite.svg" alt="Favori">
                                     <span style="z-index: 9999">Information</span>
                                 </a>
@@ -203,6 +192,77 @@ class AmiController {
     eraseFavoris(){
         document.getElementById("bodyFriendsFavoris").style.display = "none";
         document.getElementById("bodyFriends").style.display = "block";
+    }
+
+    async showModal(idapi){
+        for(let i = 0 ; i < this.listeDeFav.length ; i++){
+            if (this.listeDeFav[i].idapi === idapi){
+                if (this.listeDeFav[i].typecontenu === "film"){
+                    this.responseInfo = await this.moviesModel.getMovieByIdMovieApi(idapi)
+                    this.responsePlatform = await this.moviesModel.getPlatforms(idapi, sessionStorage.getItem("token"))
+                }
+                else {
+                    this.responseInfo = await this.serieModel.getSerieByIdSerieApi(idapi)
+                    this.responsePlatform = await this.serieModel.getPlatforms(idapi, sessionStorage.getItem("token"))
+                }
+            }
+        }
+        var text = this.responseInfo[0].name;
+        var modal = new bootstrap.Modal(document.getElementById('modalMovie'));
+        modal.show();
+        var infoMovie = document.querySelector('.nameMovie');
+        infoMovie.innerText = text;
+        var descriptionMovie = document.querySelector('.descriptionMovie');
+        var descriptionMovietext = this.responseInfo[0].overview;
+        descriptionMovie.innerText = descriptionMovietext;
+
+        var imageMovie = document.querySelector('.imageMovie');
+        if (imageMovie) {
+            var imgElement = document.createElement('img');
+            imgElement.src = 'https://image.tmdb.org/t/p/w500' + this.responseInfo[0].poster_path;
+            imgElement.classList.add('img-fluid');
+            imageMovie.innerHTML = '';
+            imageMovie.appendChild(imgElement);
+        } else {
+            console.error("Element .imageMovie non trouvé");
+        }
+
+        var noteMovie = document.getElementsByClassName("noteMovie")[0];
+        var noteMovieMovietext = this.responseInfo[0].note;
+        noteMovie.innerHTML = '<div>' + noteMovieMovietext + '/10</div>';
+
+        var modalFooter = document.querySelector('.modal-footer');
+        modalFooter.innerHTML = '';
+
+        if (this.responsePlatform && this.responsePlatform.flatrate) {
+            const platformsData = this.responsePlatform.flatrate.slice(0, 3);
+
+            let platformsHTML = '<div class="row">';
+            platformsData.forEach(platform => {
+                platformsHTML += `
+            <div class="col-md-4 mt-1">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-title">${platform.provider_name}</p>
+                        <img src="https://image.tmdb.org/t/p/w500/${platform.logo_path}" alt="${platform.provider_name} Logo" class="card-img-top" style="width: 20%;">
+                    </div>
+                </div>
+            </div>`;
+            });
+            platformsHTML += '</div>'; // Fermeture de la div row
+
+            const platformsElement = document.querySelector('.platforms');
+            platformsElement.innerHTML = platformsHTML;
+        }
+        else {
+            let platformsHTML = '';
+
+            const platformsElement = document.querySelector('.platforms');
+            platformsElement.innerHTML = platformsHTML;
+            console.error("La réponse de l'API n'est pas valide ou les données des plateformes sont vides.");
+        }
+
+        modalFooter.appendChild(viewedButton);
     }
 }
 
