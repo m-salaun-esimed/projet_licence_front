@@ -18,4 +18,8 @@ export default class FavoriteModel {
     async getAllFavorite(idUser, type){
         return await this.api.getAllFavoriteApi(idUser, type);
     }
+
+    async afficherFavorisUser(idUser){
+        return await this.api.getAllFavoriteApiByUserId(idUser);
+    }
 }

@@ -59,4 +59,20 @@ export default class FavoriteRoute extends Api {
             throw e;
         }
     }
+
+    async getAllFavoriteApiByUserId(idUser){
+        const token = sessionStorage.getItem("token")
+        try {
+            const headers = new Headers();
+            headers.append('iduser', idUser);
+            headers.append('Authorization', token);
+            let events = `favorite/user`
+            const response = await fetch(`${this.apiServer}/${events}`, { method: 'GET', headers });
+            const data = await response.json();
+            return data;
+        } catch (e) {
+            console.error(e);
+            throw e;
+        }
+    }
 }

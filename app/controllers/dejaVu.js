@@ -66,7 +66,7 @@ class DejaVu {
                     <div class="card-content">
                         <div class="row">
                             <div>
-                                <img src="https://image.tmdb.org/t/p/w500${this.responseInfo[0].poster_path}" class="card-img rounded" alt="Image" style="width: 50%">
+                                <img src="https://image.tmdb.org/t/p/w500${this.responseInfo[0].poster_path}" class="card-img rounded" alt="Image" style="width: 70%">
                             </div>
                         </div>    
                         <div class="row mt-2">
