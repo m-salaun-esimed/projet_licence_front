@@ -3,6 +3,8 @@ import UserModel from "../dataModel/userModel.js";
 import FavoriteModel from "../dataModel/favoriteModel.js";
 import MoviesModel from "../dataModel/moviesModel.js";
 import SerieModel from "../dataModel/serieModel.js";
+import DejaVuModel from "../dataModel/dejaVuModel.js";
+
 class AmiController {
     constructor() {
         this.ajouterAmiModel = new AmiModel()
@@ -10,6 +12,7 @@ class AmiController {
         this.favoriteModel = new FavoriteModel();
         this.moviesModel = new MoviesModel()
         this.serieModel = new SerieModel()
+        this.dejaVuModel = new DejaVuModel()
         this.afficherLesAmis()
         this.init();
         this.verifyAdmin();
@@ -50,14 +53,17 @@ class AmiController {
                     <div class="col-6 d-flex align-items-center">
                         <h5 class="card-title mb-0">${friend.displayname}</h5>
                     </div>
-                      <div class="col-3 d-flex justify-content-end align-items-center">
+                     <div class="col-2 d-flex justify-content-end align-items-center">
                         <a class="btn btn-outline-primary" onclick="amiController.afficherFavorisUser(${friend.id}, '${friend.displayname}')">
-
                             <img src="/images/star.svg" alt="">
                         </a>
                     </div> 
-                     
-                    <div class="col-3 d-flex justify-content-end align-items-center">
+                      <div class="col-2 d-flex justify-content-end align-items-center">
+                        <a class="btn btn-outline-primary" onclick="amiController.afficherAlreadySeensUser(${friend.id}, '${friend.displayname}')">
+                            <img src="/images/eye.svg" alt="">
+                        </a>
+                    </div> 
+                    <div class="col-2 d-flex justify-content-end align-items-center">
                         <button class="btn btn-outline-danger" onclick="amiController.deleteFriend(${friend.id})">
                             <img src="/images/trash-2.svg" alt="">
                         </button>
@@ -77,6 +83,8 @@ class AmiController {
         document.getElementById("userDisplayName").innerText = `${displayname}`
         const listFavorite = document.getElementById("listFavorite");
         const listFavoritePhone = document.getElementById("listFavoritePhone");
+        let listDejaVu = document.getElementById("listDejaVu");
+        let listDejaVuPhone = document.getElementById("listDejaVuPhone");
 
         document.getElementById("bodyFriends").style.display = "none";
         document.getElementById("bodyFriendsFavoris").style.display = "block";
@@ -87,6 +95,8 @@ class AmiController {
         try {
             listFavorite.innerHTML = '';
             listFavoritePhone.innerHTML = '';
+            listDejaVu.innerHTML = '';
+            listDejaVuPhone.innerHTML = '';
             this.listeDeFav =  await this.favoriteModel.afficherFavorisUser(id);
             console.log(this.listeDeFav);
 
@@ -263,6 +273,125 @@ class AmiController {
         }
 
         modalFooter.appendChild(viewedButton);
+    }
+
+    async afficherAlreadySeensUser(id, displayname){
+        let listDejaVu = document.getElementById("listDejaVu");
+        let listDejaVuPhone = document.getElementById("listDejaVuPhone");
+        const listFavorite = document.getElementById("listFavorite");
+        const listFavoritePhone = document.getElementById("listFavoritePhone");
+
+        document.getElementById("userDisplayName").innerText = `${displayname}`;
+        document.getElementById("bodyFriends").style.display = "none";
+        document.getElementById("bodyFriendsFavoris").style.display = "block";
+
+        const loadingSpinner = document.getElementById("loadingSpinner");
+        loadingSpinner.style.display = "flex";
+        try {
+            listFavorite.innerHTML = '';
+            listFavoritePhone.innerHTML = '';
+            listDejaVu.innerHTML = '';
+            listDejaVuPhone.innerHTML = '';
+            const loadingSpinner = document.getElementById("loadingSpinner");
+            loadingSpinner.style.display = "flex";
+
+            this.response = await this.dejaVuModel.getAllAlreadySeenMovieId(id);
+            console.log(this.response)
+
+            let row = document.createElement("div");
+            row.classList.add("row");
+
+            for (const dejaVu of this.response) {
+                if (dejaVu.typecontenu === 'film') {
+                    this.responseInfo = await this.moviesModel.getMovieByIdMovieApi(dejaVu.idapi);
+                } else {
+                    this.responseInfo = await this.serieModel.getSerieByIdSerieApi(dejaVu.idapi);
+                }
+                console.log(this.responseInfo);
+
+                let col = document.createElement("div");
+                col.classList.add("col-6", "col-sm-4", "col-md-3", "col-lg-2", "mb-2");
+
+                let card = document.createElement("div");
+                card.classList.add("card", "h-100");
+                card.style.borderColor = "white"
+                card.style.backgroundColor = "black"
+                card.innerHTML = `
+                <div class="card-body text-center">
+                    <div class="card-content">
+                        <div class="row">
+                            <div>
+                                <img src="https://image.tmdb.org/t/p/w500${this.responseInfo[0].poster_path}" class="card-img rounded" alt="Image" style="width: 70%">
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-6">
+                                <a class="navbar__link" onclick="dejaVu.removeDejaVu(${dejaVu.idapi}, '${dejaVu.typecontenu}')">
+                                    <img src="../images/eyeWhite.svg" alt="Favori">
+                                    <span style="z-index: 9999">Supprimer des déjà vu</span>
+                                </a>
+                            </div>
+                            <div class="col-6">
+                                <a class="navbar__link" onclick="dejaVu.showModalMovie(${dejaVu.idapi}, '${dejaVu.typecontenu}')">
+                                    <img src="../images/infoWhite.svg" alt="Favori">
+                                    <span style="z-index: 9999">Information</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+                col.appendChild(card);
+                row.appendChild(col);
+            }
+
+            listDejaVu.appendChild(row);
+
+            // Second loop for listDejaVuPhone
+            for (const dejaVu of this.response) {
+                if (dejaVu.typecontenu === 'film') {
+                    this.responseInfo = await this.moviesModel.getMovieByIdMovieApi(dejaVu.idapi);
+                } else {
+                    this.responseInfo = await this.serieModel.getSerieByIdSerieApi(dejaVu.idapi);
+                }
+                console.log(this.responseInfo);
+
+                let rowPhone = document.createElement("div");
+                rowPhone.classList.add("row", "mb-2");
+
+                let cardPhone = document.createElement("div");
+                cardPhone.classList.add("card");
+                cardPhone.style.backgroundColor = "black";
+                cardPhone.innerHTML = `
+                <div class="row no-gutters">
+                    <div class="col-4">
+                        <img src="https://image.tmdb.org/t/p/w500${this.responseInfo[0].poster_path}" class="card-img" alt="Image" style="border-radius: 24px">
+                    </div>
+                    <div class="col-8">
+                        <div class="card-body d-flex align-items-center">
+                            <h5 class="card-title" style="color: white; flex-grow: 1;">${this.responseInfo[0].name}</h5>
+                            <div class="d-flex">
+                                <a class="navbar__link" onclick="dejaVu.removeDejaVu(${dejaVu.idapi}, '${dejaVu.typecontenu}')">
+                                    <img src="../images/eyeWhite.svg" alt="Favori">
+                                </a>
+                                <a class="navbar__link" onclick="dejaVu.showModalMovie(${dejaVu.idapi}, '${dejaVu.typecontenu}')">
+                                    <img src="../images/infoWhite.svg" alt="Favori">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+                rowPhone.appendChild(cardPhone);
+                listDejaVuPhone.appendChild(rowPhone);
+            }
+
+            loadingSpinner.style.display = "none";
+        } catch (error) {
+            console.error("An error occurred while fetching and displaying already seen movies:", error);
+        }
     }
 }
 

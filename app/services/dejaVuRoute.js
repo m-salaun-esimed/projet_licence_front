@@ -37,6 +37,22 @@ export default class DejaVuRoute extends Api {
         }
     }
 
+    async getAllAlreadySeenMovieId(id){
+        const token = sessionStorage.getItem("token")
+        try {
+            const headers = new Headers();
+            headers.append('Authorization', token);
+            headers.append('iduser', id);
+            let events = `alreadySeenMovie/user`
+            const response = await fetch(`${this.apiServer}/${events}`, { method: 'GET', headers });
+            const data = await response.json();
+            return data;
+        } catch (e) {
+            console.error(e);
+            throw e;
+        }
+    }
+
     async removeAlreadySeenMovie(token, idApi, typecontenu){
         const data = {
             idapi : idApi,

@@ -23,6 +23,14 @@ export default class DejaVuModel {
         }
     }
 
+    async getAllAlreadySeenMovieId(id){
+        try {
+            return await this.api.getAllAlreadySeenMovieId(id);
+        } catch (error) {
+            console.error("Erreur lors de la vérification de l'event", error);
+        }
+    }
+
     async removeDejaVuMovie(token, movieidapi, typecontenu){
         try {
             return await this.api.removeAlreadySeenMovie(token, movieidapi, typecontenu);
