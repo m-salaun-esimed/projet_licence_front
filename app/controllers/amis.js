@@ -80,6 +80,8 @@ class AmiController {
     }
 
     async afficherFavorisUser(id, displayname){
+        document.getElementById("nomFiltre").innerText = ''
+        document.getElementById("nomFiltre").innerText = 'favoris'
         document.getElementById("userDisplayName").innerText = `${displayname}`
         const listFavorite = document.getElementById("listFavorite");
         const listFavoritePhone = document.getElementById("listFavoritePhone");
@@ -276,6 +278,9 @@ class AmiController {
     }
 
     async afficherAlreadySeensUser(id, displayname){
+        document.getElementById("nomFiltre").innerText = ''
+        document.getElementById("nomFiltre").innerText = 'déjà vu'
+
         let listDejaVu = document.getElementById("listDejaVu");
         let listDejaVuPhone = document.getElementById("listDejaVuPhone");
         const listFavorite = document.getElementById("listFavorite");
@@ -324,20 +329,6 @@ class AmiController {
                                 <img src="https://image.tmdb.org/t/p/w500${this.responseInfo[0].poster_path}" class="card-img rounded" alt="Image" style="width: 70%">
                             </div>
                         </div>
-                        <div class="row mt-2">
-                            <div class="col-6">
-                                <a class="navbar__link" onclick="dejaVu.removeDejaVu(${dejaVu.idapi}, '${dejaVu.typecontenu}')">
-                                    <img src="../images/eyeWhite.svg" alt="Favori">
-                                    <span style="z-index: 9999">Supprimer des déjà vu</span>
-                                </a>
-                            </div>
-                            <div class="col-6">
-                                <a class="navbar__link" onclick="dejaVu.showModalMovie(${dejaVu.idapi}, '${dejaVu.typecontenu}')">
-                                    <img src="../images/infoWhite.svg" alt="Favori">
-                                    <span style="z-index: 9999">Information</span>
-                                </a>
-                            </div>
-                        </div>
                     </div>
                 </div>
             `;
@@ -367,19 +358,6 @@ class AmiController {
                 <div class="row no-gutters">
                     <div class="col-4">
                         <img src="https://image.tmdb.org/t/p/w500${this.responseInfo[0].poster_path}" class="card-img" alt="Image" style="border-radius: 24px">
-                    </div>
-                    <div class="col-8">
-                        <div class="card-body d-flex align-items-center">
-                            <h5 class="card-title" style="color: white; flex-grow: 1;">${this.responseInfo[0].name}</h5>
-                            <div class="d-flex">
-                                <a class="navbar__link" onclick="dejaVu.removeDejaVu(${dejaVu.idapi}, '${dejaVu.typecontenu}')">
-                                    <img src="../images/eyeWhite.svg" alt="Favori">
-                                </a>
-                                <a class="navbar__link" onclick="dejaVu.showModalMovie(${dejaVu.idapi}, '${dejaVu.typecontenu}')">
-                                    <img src="../images/infoWhite.svg" alt="Favori">
-                                </a>
-                            </div>
-                        </div>
                     </div>
                 </div>
             `;
