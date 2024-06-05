@@ -4,155 +4,127 @@
         background-color: #dc3545;
     }
 </style>
-<!--    <div class="roulette">-->
-<!--            <nav class="navbar navbar-dark bg-body-tertiary" style="background-color: #081118">-->
-<!--                <div class="container-fluid">-->
-<!--                    <a class="navbar-brand m-3" style="color: #318CE7">LA ROULETTE A FILM</a>-->
-<!--                    <div class="m-3">-->
-<!--                        <div class="input-group">-->
-<!--                            <input type="text" name="recherche" id="rechercheNavBar" class="form-control" placeholder="Recherche" autocomplete="off">-->
-<!--                            <span class="input-group-text">-->
-<!--                                <img src="/images/search%20(1).svg" alt="Image" style="max-height: 100%;">-->
-<!--                            </span>-->
+
+<!--<div class="modal fade" id="modalMovie" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">-->
+<!--    <div class="modal-dialog modal-lg modal-fullscreen-sm-down">-->
+<!--        <div class="modal-content">-->
+<!--            <div class="modal-body m-3">-->
+<!--                <div class="row">-->
+<!--                    <div class="col-md-4">-->
+<!--                        <div class="text-center">-->
+<!--                            <p class="imageMovie"></p>-->
 <!--                        </div>-->
-<!--                        <ul class="autocomplete-results-navBar mt-2"></ul>-->
-
 <!--                    </div>-->
-<!--                    <div class="ms-auto">-->
-<!--                        <button class="btn m-3" onclick="rouletteAleatoire.addFriendsPage()">-->
-<!--                            <img class="m-3"  src="/images/person.svg" alt="" onclick="rouletteAleatoire.addFriendsPage()">-->
-<!--                            <span id="notification" class="badge badge-danger rounded-circle ml-2"></span>-->
-<!--                        </button>-->
-<!--                        <button class="btn rounded" style="background: #318CE7 ; color: black" onclick="rouletteAleatoire.favoriPage()">-->
-<!--                            <img src="/images/list-ul.svg" alt="Image" style="width: 20px; margin-right: 5px;">-->
-<!--                            Liste-->
-<!--                        </button>-->
-<!--                        <button class="btn rounded" style="background: #318CE7 ; color: black" onclick="rouletteAleatoire.alreadyseenPage()">-->
-<!--                            <img src="/images/eye-slash-fill.svg" alt="Image" style="width: 20px; margin-right: 5px;">-->
-<!--                            Déjà vu !-->
-<!--                        </button>-->
-
-<!--                        <img src="/images/gear.svg"  class="m-3 " alt="" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">-->
-<!--                        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel" style="background-color: #22303C">-->
-<!--                            <div class="offcanvas-header">-->
-<!--                                <h5 class="offcanvas-title" id="offcanvasRightLabel" style="color: white">Paramètres</h5>-->
-<!--                                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>-->
-<!--                            </div>-->
-<!--                            <div class="offcanvas-body">-->
-<!--                                <div class="col-12">-->
-<!--                                    <button type="button" class="btn btn-outline-danger mt-3" onclick="rouletteAleatoire.refreshRoulette()">CHANGER LA ROULETTE</button>-->
+<!--                    <div class="col-md-8">-->
+<!--                        <div class="text-center">-->
+<!--                            <div class="row">-->
+<!--                                <div class="col-10">-->
+<!--                                    <h1 class="nameMovie" style="color: black"></h1>-->
 <!--                                </div>-->
-<!--                                <div class="col-12"><button type="button" class="btn btn-outline-danger mt-3" data-bs-toggle="modal" data-bs-target="#exampleModalSetting">REINITIALISER PARAMETRE</button>-->
-<!--                                </div>-->
-<!--                                <div class="col-12"><button type="button" class="btn btn-outline-danger mt-3" data-bs-toggle="modal" data-bs-target="#exampleModal">DECONNEXION</button>-->
+<!--                                <div class="col-2">-->
+<!--                                    <p>Note : <div class="noteMovie" style="color: red"></div></p>-->
 <!--                                </div>-->
 <!--                            </div>-->
 <!--                        </div>-->
+<!--                        <hr>-->
+<!--                        <h2 style="color: black">Synopsis</h2>-->
+<!--                        <div class="descriptionMovie text-center"></div>-->
 <!--                    </div>-->
 <!--                </div>-->
-<!--            </nav>-->
-<!--        <h4 class="mt-3 text-center" style="color:white;">Films présents dans la roulette</h4>-->
-
-<!--        <div class="row mt-3">-->
-<!--                <div class="slider">-->
-<!--                    <div class="slide-track">-->
+<!--                <div class="row">-->
+<!--                    <div class="col-12 text-center">-->
+<!--                        <p class="platforms" style="color: black"></p>-->
 <!--                    </div>-->
 <!--                </div>-->
-<!--        </div>-->
-<!--        <div class="row m-2">-->
-<!--            <div class="col-2 text-center align-self-center" style="color: black">-->
-<!--                <h1>Genres</h1>-->
-<!--                <hr>-->
-<!--                <h2 id="genres" style="color: white"></h2>-->
 <!--            </div>-->
-<!--            <div class="col-8 text-center align-self-center">-->
-<!--                <canvas id="canvas" width="500" height="500"></canvas>-->
-<!--            </div>-->
-<!--            <div class="col-2 text-center align-self-center" style="color: black">-->
-<!--                <input type="button" value="LANCER" id='spin' class="text-center btn rounded m-3" style="background: #318CE7;"/>-->
-<!--&lt;!&ndash;                linear-gradient(145deg, #00e18c, #00e36a);&ndash;&gt;-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <hr>-->
-<!--        <div class="container">-->
-<!--            <div class="row">-->
-<!--                <div class="col">-->
-<!--                    <h4 class="text-center">Créez votre propre roulette !</h4>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="row m-3">-->
-<!--                <div class="col-6">-->
-<!--                    <div class="row">-->
-<!--                        <div class="col">-->
-<!--                            <div class="input-group m-3">-->
-<!--                                <input type="text" name="recherche" id="recherche" class="form-control" placeholder="Rechercher film ou serie" autocomplete="off">-->
-<!--                                <span class="input-group-text">-->
-<!--                                <img src="/images/search%20(1).svg" alt="Image" style="max-height: 100%;">-->
-<!--                            </span>-->
-<!--                            </div>-->
-<!--                            <ul class="autocomplete-results mt-2"></ul>-->
-<!--                        </div>-->
+<!--            <div class="modal-footer">-->
+<!--                <div class="row text-center">-->
+<!--                    <div class="col-4">-->
+<!--                        <a class="navbar__link" onclick="rouletteAleatoire.addFavorite(rouletteAleatoire.index, 'film')">-->
+<!--                            <img src="../images/star.svg" id="imgMovie">-->
+<!--                            <span style="z-index: 9999">Favori</span>-->
+<!--                        </a>-->
 <!--                    </div>-->
-
-
-<!--                    <div id="dynamicContenu" class="mt-3" style="color:white;"></div>-->
-<!--                </div>-->
-<!--                <div class="col-6 text-center align-self-center" >-->
-<!--                    <input type="button" value="LANCER" id='spinPersonnalisee' class="text-center btn rounded m-3" style="background: #318CE7" onclick="rouletteAleatoire.spinPersonnalisee()"/>-->
+<!--                    <div class="col-4">-->
+<!--                        <a class="navbar__link" onclick="rouletteAleatoire.addDejaVu(rouletteAleatoire.index, 'film')">-->
+<!--                            <img src="../images/eye-off.svg" id="imgAlreadySeenMovie">-->
+<!--                            <span style="z-index: 9999">Déjà vu</span>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                    <div class="col-4" id="closeModalMovie">-->
+<!--                        <a class="navbar__link" data-bs-dismiss="modal">-->
+<!--                            <img src="../images/x-circle.svg">-->
+<!--                            <span style="z-index: 9999">Fermer</span>-->
+<!--                        </a>-->
+<!--                    </div>-->
 <!--                </div>-->
 <!--            </div>-->
 <!--        </div>-->
 <!--    </div>-->
+<!--</div>-->
 
-
-<div class="modal fade" id="modalMovie" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="text-center">
-                            <p class="imageMovie"></p>
-                        </div>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="text-center">
-                            <div class="row">
-                                <div class="col-2">
-                                    <p> Note : <div class="noteMovie" style="color: red"></div></p>
-                                </div>
-                                <div class="col-10">
-                                    <h1 class="nameMovie" style="color: black"></h1>
-                                </div>
-                            </div>
-                        </div>
-                        <hr>
-                        <h2 style="color: black">Synopsis</h2>
-                        <div class="descriptionMovie text-center"></div>
+<div class="modal fade" id="modalMovie" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index: 999999">
+<div class="modal-dialog modal-fullscreen">
+    <div class="modal-content">
+        <div class="modal-body m-3">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="text-center">
+                        <p class="imageMovie" style="width: 60%"></p>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-12 text-center">
-                        <p class="platforms" style="color: black"></p>
+                <div class="col-md-8">
+                    <div class="text-center">
+                        <div class="row">
+                            <div class="col-10">
+                                <h1 class="nameMovie" style="color: black"></h1>
+                            </div>
+                            <div class="col-2">
+                                <p>Note : <div class="noteMovie" style="color: red"></div></p>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <h2 style="color: black">Synopsis</h2>
+                    <div class="descriptionMovie text-center"></div>
+                    <div>
+                        <a href="" id="urlBandeAnnonce">Voir la bande-annonce</a>
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
-                <div class="row text-center">
-                    <div class="col-4">
-                        <a class="navbar__link" onclick="rouletteAleatoire.addFavorite(rouletteAleatoire.index, 'film')"><img src="../images/star.svg" id="imgMovie"><span style="z-index: 9999">Favori</span></a>
-                    </div>
-                    <div class="col-4">
-                        <a class="navbar__link" onclick="rouletteAleatoire.addDejaVu(rouletteAleatoire.index, 'film')"><img src="../images/eye-off.svg" id="imgAlreadySeenMovie"><span style="z-index: 9999">Déjà vu</span></a>
-                    </div>
-                    <div class="col-4">
-                        <a class="navbar__link" data-bs-dismiss="modal"><img src="../images/x-circle.svg"><span style="z-index: 9999">Fermer</span></a>
-                    </div>
+            <div class="row">
+                <div class="col-12 text-center">
+                    <p class="platforms" style="color: black"></p>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="row text-center">
+                <div class="col-4">
+                    <a class="navbar__link" onclick="rouletteAleatoire.addFavorite(rouletteAleatoire.index, 'film')">
+                        <img src="../images/star.svg" id="imgMovie">
+                        <span style="z-index: 9999">Favori</span>
+                    </a>
+                </div>
+                <div class="col-4">
+                    <a class="navbar__link" onclick="rouletteAleatoire.addDejaVu(rouletteAleatoire.index, 'film')">
+                        <img src="../images/eye-off.svg" id="imgAlreadySeenMovie">
+                        <span style="z-index: 9999">Déjà vu</span>
+                    </a>
+                </div>
+                <div class="col-4" id="closeModalMovie">
+                    <a class="navbar__link" data-bs-dismiss="modal">
+                        <img src="../images/x-circle.svg">
+                        <span style="z-index: 9999">Fermer</span>
+                    </a>
                 </div>
             </div>
         </div>
     </div>
 </div>
+</div>
+
+
 
 <div class="modal fade" id="modalSerie" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -182,6 +154,9 @@
                         <hr>
                         <h2 style="color: black">Synopsis</h2>
                         <div class="descriptionSerie text-center">
+                        </div>
+                        <div>
+                            <a href="" id="urlBandeAnnonceSerie">Voir la bande-annonce</a>
                         </div>
                     </div>
                 </div>

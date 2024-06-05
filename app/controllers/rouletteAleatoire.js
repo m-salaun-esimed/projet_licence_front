@@ -133,6 +133,11 @@ class RouletteAleatoire {
 
         var imageMovie = document.querySelector('.imageMovie');
         if (imageMovie) {
+            console.log("this.options[index].urltrailer  : " + this.options[index].urltrailer);
+            if (this.options[index].urltrailer) {
+                var urlBandeAnnonce = document.getElementById("urlBandeAnnonce");
+                urlBandeAnnonce.setAttribute("href", this.options[index].urltrailer);
+            }
             var imgElement = document.createElement('img');
             imgElement.src = 'https://image.tmdb.org/t/p/w500' + this.options[index].poster_path;
             imgElement.classList.add('img-fluid');
@@ -238,6 +243,14 @@ class RouletteAleatoire {
 
         var imageMovie = document.querySelector('.imageSerie');
         if (imageMovie) {
+            var urlBandeAnnonce = document.getElementById("urlBandeAnnonceSerie");
+            if (this.options[index].urltrailer) {
+                urlBandeAnnonce.setAttribute("href", this.options[index].urltrailer);
+                urlBandeAnnonce.style.display = "block"
+            }
+            else {
+                urlBandeAnnonce.style.display = "none"
+            }
             var imgElement = document.createElement('img');
             imgElement.src = 'https://image.tmdb.org/t/p/w500' + this.options[index].poster_path;
             imgElement.classList.add('img-fluid');
