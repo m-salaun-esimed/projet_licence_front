@@ -134,9 +134,14 @@ class RouletteAleatoire {
         var imageMovie = document.querySelector('.imageMovie');
         if (imageMovie) {
             console.log("this.options[index].urltrailer  : " + this.options[index].urltrailer);
+            var urlBandeAnnonce = document.getElementById("urlBandeAnnonce");
+
             if (this.options[index].urltrailer) {
-                var urlBandeAnnonce = document.getElementById("urlBandeAnnonce");
                 urlBandeAnnonce.setAttribute("href", this.options[index].urltrailer);
+                urlBandeAnnonce.style.display = "block"
+            }
+            else {
+                urlBandeAnnonce.style.display = "none"
             }
             var imgElement = document.createElement('img');
             imgElement.src = 'https://image.tmdb.org/t/p/w500' + this.options[index].poster_path;
