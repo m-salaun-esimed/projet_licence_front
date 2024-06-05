@@ -13,57 +13,69 @@ class CreationCompteController extends BaseController {
         navigate("index")
     }
 
-    async creationCompte(){
-        let displayName = document.getElementById("pseudo").value;
-        let login = document.getElementById("login").value;
-        let password = document.getElementById("password").value;
-        let password2 = document.getElementById("password2").value;
-        if (displayName !== "" && login !== "" && password !== "" && password2 !== "") {
-            const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            let verifierSiEmailEstValide =  regexEmail.test(login);
-            if (verifierSiEmailEstValide){
-                if (password === password2){
-                    try {
-                        const response = await this.userModel.createAccount(displayName, login, password);
-                        if (response.ok) {
-                            console.log("Creation Compte réussie");
-                            document.getElementById("erreur").style.display = "none";
-                            navigate("index")
-                        } else {
-                            console.log("Échec Creation Compte");
-                            if (response.status === 400) {
-                                const errorData = await response.json();
-                                console.error("Erreur API:", errorData.error);
+    async creationCompte() {
+        const displayName = document.getElementById("pseudo").value.trim();
+        const login = document.getElementById("login").value.trim();
+        const password = document.getElementById("password").value.trim();
+        const password2 = document.getElementById("password2").value.trim();
 
-                                const errorDiv = document.getElementById("erreur");
-                                errorDiv.textContent = ""
-                                errorDiv.textContent = errorData.error;
-                                errorDiv.style.display = "block";
-                            }
-                        }
-                    }catch (e){
-                        throw e;
-                    }
-                }
-                else{
-                    const errorDiv = document.getElementById("erreur");
-                    errorDiv.textContent = ""
-                    errorDiv.textContent = "Mot de passe non identique";
-                    errorDiv.style.display = "block";
-                }
-            }else{
-                const errorDiv = document.getElementById("erreur");
-                errorDiv.textContent = ""
-                errorDiv.textContent = "login non comforme : format adresse mail";
-                errorDiv.style.display = "block";
+        // Validate required fields
+        if (!displayName || !login || !password || !password2) {
+            this.displayError("Veuillez remplir tout les champs");
+            return;
+        }
+
+        // Validate email format
+        const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!regexEmail.test(login)) {
+            this.displayError("email non comforme : format adresse mail");
+            return;
+        }
+
+        // Validate password match
+        if (password !== password2) {
+            this.displayError("Mot de passe non identique");
+            return;
+        }
+
+        try {
+            const response = await this.userModel.createAccount(displayName, login, password);
+            if (response.ok) {
+                document.getElementById("erreur").style.display = "none";
+                alert("Création du compte réussite !")
+            } else {
+                console.log("Échec Creation Compte");
+                const errorData = await response.json();
+                console.error("Erreur API:", errorData.error);
+                this.handleAPIError(errorData.error);
             }
-        }else{
-            console.log("vide");
-            const errorDiv = document.getElementById("erreur");
-            errorDiv.textContent = ""
-            errorDiv.textContent = "Veuillez remplir tout les champs";
-            errorDiv.style.display = "block";
+        } catch (error) {
+            console.error("Une erreur est survenue:", error);
+        }
+    }
 
+    displayError(errorMessage) {
+        const errorDiv = document.getElementById("erreur");
+        errorDiv.textContent = errorMessage;
+        errorDiv.style.display = "block";
+    }
+
+    handleAPIError(apiErrorMessage) {
+        this.displayError(`${apiErrorMessage}`);
+    }
+
+    togglePasswordVisibility(inputId, iconId) {
+        const passwordInput = document.getElementById(inputId);
+        const eyeIcon = document.getElementById(iconId);
+
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            eyeIcon.src = "../images/eyeWhite.svg";
+            eyeIcon.alt = "Hide password";
+        } else {
+            passwordInput.type = "password";
+            eyeIcon.src = "../images/eye-off-white.svg";
+            eyeIcon.alt = "Show password";
         }
     }
 }

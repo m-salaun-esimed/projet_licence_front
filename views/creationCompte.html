@@ -29,30 +29,13 @@
         margin-top: 20px;
     }
 
-    .sign-group {
-        margin-top: 60px;
-        display: flex;
-        gap: 5px;
-    }
-
-    .sign-group a {
-        color: #ffffff;
-        text-decoration: none;
-    }
-
-    .sign-group h4 {
-        margin: 0;
-        color: #c2c1c1;
-        font-weight: 400;
-    }
-
     .login-form-card {
         background-color: rgba(0, 0, 0, 0.801);
         padding: 20px;
         border-radius: 10px;
         box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
         width: 100%;
-        max-width: 400px; /* Limitez la largeur maximale */
+        max-width: 100%;
         background-color: #081118;
     }
 
@@ -61,115 +44,101 @@
         flex-direction: column;
     }
 
-    .login-form input {
+    .form-group {
+        position: relative;
+        margin-bottom: 20px;
+    }
+
+    .form-group input {
+        width: 100%;
         padding: 17px 20px;
-        margin: 10px 0;
+        padding-right: 40px; /* Add padding to accommodate the button */
         border-radius: 5px;
         border: none;
         background-color: rgb(70, 70, 70);
-        color: #ffffff;
+        /*color: #ffffff;*/
+        outline: none;
     }
 
-    p a {
-        color: #4b37ff;
-        text-decoration: none;
+    .form-group label {
+        position: absolute;
+        top: 50%;
+        left: 20px;
+        transform: translateY(-50%);
+        color: #aaa;
+        transition: all 0.3s ease;
+        pointer-events: none;
+        /*background: white;*/
+        padding: 0 5px;
     }
 
-    p {
-        font-size: 14px;
-        color: #c2c1c1;
+    .form-group input:focus + label,
+    .form-group input:not(:placeholder-shown) + label {
+        top: 0;
+        left: 20px;
+        font-size: 12px;
+        color: black;
+        transform: translateY(-10%) scale(0.8);
+    }
+
+    .btn-eye {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        cursor: pointer;
+        outline: none;
+    }
+
+    .btn-eye img {
+        width: 20px;
+        height: 20px;
     }
 </style>
-<div class="container">
-    <div class="login-form-card">
-        <form action="" class="login-form">
-            <h1>Création d'un compte</h1>
-            <input type="text" class="form-control" id="pseudo" placeholder="Votre pseudo">
-            <input type="email" class="form-control" id="login" placeholder="Votre login (adresse mail)">
-            <div class="row mt-3">
-                <div class="col-6">
-                    <input type="password"  class="form-control" placeholder="Enter mot de passe" id="password">
-                </div>
-                <div class="col-6">
-                    <input type="password" class="form-control" id="password2" placeholder="Verifier votre mot de passe">
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col d-flex justify-content-center">
-                    <button type="button" class="btn-primary" onclick="creationCompteController.pageConnexion()">Connexion</button>
-                </div>
-                <div class="col d-flex justify-content-center">
-                    <button type="button" class="btn-primary" onclick="creationCompteController.creationCompte()">Créer compte</button>
-                </div>
-            </div>
-        </form>
 
-        <div class="alert alert-danger mt-3" role="alert" id="erreur">
-
+<div class="login-form-card">
+    <form action="" class="login-form">
+        <h1>Création d'un compte</h1>
+        <div class="form-group">
+            <input type="text" class="form-control" id="pseudo" placeholder=" " required>
+            <label for="pseudo">Votre nom d'utilisateur</label>
         </div>
-<!--        <div class="notification text-center">-->
-<!--            <div class="notification_body">-->
-<!--                <img src="../images/check-circle.svg" alt="Success" class="notification_icon">-->
-<!--                Compte créé avec succès!&#128640;-->
-<!--            </div>-->
-<!--            <div class="notification_progress"></div>-->
-<!--        </div>-->
+        <div class="form-group">
+            <input type="email" class="form-control" id="login" placeholder=" " required>
+            <label for="login">Votre adresse mail</label>
+        </div>
+        <div class="row mt-3">
+            <div class="col-6">
+                <div class="form-group">
+                    <input type="password" class="form-control" id="password" placeholder=" " required>
+                    <label for="password">Enter mot de passe</label>
+                    <button type="button" class="btn-eye" onclick="creationCompteController.togglePasswordVisibility('password', 'eyeIcon1')">
+                        <img src="../images/eye-off-white.svg" alt="Show password" id="eyeIcon1">
+                    </button>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group">
+                    <input type="password" class="form-control" id="password2" placeholder=" " required>
+                    <label for="password2">Verifier votre mot de passe</label>
+                    <button type="button" class="btn-eye" onclick="creationCompteController.togglePasswordVisibility('password2', 'eyeIcon2')">
+                        <img src="../images/eye-off-white.svg" alt="Show password" id="eyeIcon2">
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col d-flex justify-content-center">
+                <button type="button" class="btn-primary" onclick="creationCompteController.pageConnexion()">Connexion</button>
+            </div>
+            <div class="col d-flex justify-content-center">
+                <button type="button" class="btn-primary" onclick="creationCompteController.creationCompte()">Créer compte</button>
+            </div>
+        </div>
+    </form>
+
+    <div class="alert alert-danger mt-3" role="alert" id="erreur">
     </div>
 </div>
-
-
-<!--<div class="background-container">-->
-<!--<div class="container">-->
-<!--    <div class="row justify-content-center">-->
-<!--        <div class="col-md-6">-->
-<!--            <div class="card shadow mt-5">-->
-<!--                <div class="card-body">-->
-<!--                    <h3 class="mt-3">Création d'un compte </h3>-->
-<!--                    <form>-->
-<!--                        <div class="form-group">-->
-<!--                            <input type="text" class="form-control" id="pseudo" placeholder="Votre pseudo">-->
-<!--                        </div>-->
-<!--                        <div class="form-group input-group mt-3">-->
-<!--                            <div class="input-group-prepend">-->
-<!--                                <span class="input-group-text">-->
-<!--                                    <img src="../images/box-arrow-in-right.svg" alt="Login Image" height="20">-->
-<!--                                </span>-->
-<!--                            </div>-->
-<!--                            <input type="email" class="form-control" id="login" placeholder="Votre login (adresse mail)">-->
-<!--                        </div>-->
-<!--                        <div class="row mt-3">-->
-<!--                            <label>Le mot de passe doit contenir au moins 8 caractères, dont une majuscule, une minuscule, un chiffre et un caractère spécial.</label>-->
-
-<!--                            <div class="col-6">-->
-<!--                                <input type="password"  class="form-control" placeholder="Enter mot de passe" id="password">-->
-<!--                            </div>-->
-<!--                            <div class="col-6">-->
-<!--                                <input type="password" class="form-control" id="password2" placeholder="Verifier votre mot de passe">-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="row mt-3">-->
-<!--                            <div class="col d-flex justify-content-center">-->
-<!--                                <button type="button" class="btn btn-outline-primary" onclick="creationCompteController.pageConnexion()">Page connexion</button>-->
-<!--                            </div>-->
-<!--                            <div class="col d-flex justify-content-center">-->
-<!--                                <button type="button" class="btn btn-outline-primary" onclick="creationCompteController.creationCompte()">Créer un compte</button>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </form>-->
-
-<!--                    <div class="alert alert-danger mt-3" role="alert" id="erreur">-->
-
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    <div class="notification text-center">-->
-<!--        <div class="notification_body">-->
-<!--            <img src="../images/check-circle.svg" alt="Success" class="notification_icon">-->
-<!--            Compte créé avec succès!&#128640;-->
-<!--        </div>-->
-<!--        <div class="notification_progress"></div>-->
-<!--    </div>-->
-<!--</div>-->
-<!--</div>-->

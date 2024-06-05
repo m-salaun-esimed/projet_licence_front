@@ -75,8 +75,20 @@ class IndexController extends BaseController {
         navigate("creationCompte")
     }
 
+    togglePasswordVisibility(inputId, iconId) {
+        const passwordInput = document.getElementById(inputId);
+        const eyeIcon = document.getElementById(iconId);
 
-
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            eyeIcon.src = "../images/eyeWhite.svg";
+            eyeIcon.alt = "Hide password";
+        } else {
+            passwordInput.type = "password";
+            eyeIcon.src = "../images/eye-off-white.svg";
+            eyeIcon.alt = "Show password";
+        }
+    }
 }
 
 export default() => window.indexController = new IndexController()

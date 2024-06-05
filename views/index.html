@@ -1,47 +1,4 @@
-<!--        <div class="row justify-content-center">-->
-<!--            <div class="col-md-6">-->
-<!--                <div class="card shadow mt-5">-->
-<!--                    <h1 class="text-center mt-3">La Roulette à Film</h1>-->
-<!--                    <div class="card-body">-->
-<!--                        <h3 class="mb-4">Connexion</h3>-->
-<!--                        <form>-->
-<!--                            <div class="form-group input-group">-->
-<!--                                <div class="input-group-prepend">-->
-<!--                                    <span class="input-group-text">-->
-<!--                                        <img src="../images/box-arrow-in-right.svg" alt="Login Image" height="20">-->
-<!--                                    </span>-->
-<!--                                </div>-->
-<!--                                <input type="text" class="form-control" id="login" placeholder="Votre login (adresse mail)">-->
-<!--                            </div>-->
-<!--                            <div class="form-group input-group mt-3">-->
-<!--                                <input type="password" class="form-control" id="password" placeholder="Votre mot de passe">-->
-<!--                                <div class="input-group-prepend">-->
-<!--                                    <span class="input-group-text">-->
-<!--                                        <img src="../images/lock.svg" alt="Password Image" height="20">-->
-<!--                                    </span>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div class="row mt-4">-->
-<!--                                <div class="col d-flex justify-content-center">-->
-<!--                                    <button type="button" class="btn btn-outline-primary" onclick="indexController.authenticate()">Se connecter</button>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div class="row mt-4">-->
-<!--                                <div class="col d-flex justify-content-center">-->
-<!--                                    <button type="button" class="btn btn-outline-primary" onclick="indexController.creationCompte()">Créer un compte</button>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </form>-->
-<!--                        <div class="alert alert-danger mt-4" role="alert" id="danger">-->
-<!--                            Veuillez remplir tous les champs.-->
-<!--                        </div>-->
-<!--                        <div class="alert alert-danger mt-4" role="alert" id="erreur">-->
-<!--                            Erreur lors de l'authentification du à un mauvais mot de passe ou login.-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
+
 <style>
     body {
         margin: 0;
@@ -50,7 +7,6 @@
         background-size: cover;
         background-position: center;
         height: 100vh;
-
         backdrop-filter: brightness(0.7) grayscale(0.7);
         font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
         Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
@@ -126,13 +82,51 @@
         font-size: 14px;
         color: #c2c1c1;
     }
+
+    .form-group {
+        position: relative;
+        margin-bottom: 20px;
+    }
+
+    .form-group input {
+        width: 100%;
+        padding: 17px 20px;
+        padding-right: 40px; /* Add padding to accommodate the button */
+        border-radius: 5px;
+        border: none;
+        background-color: rgb(70, 70, 70);
+        /*color: #ffffff;*/
+        outline: none;
+    }
+
+    .btn-eye {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        cursor: pointer;
+        outline: none;
+    }
+
+    .btn-eye img {
+        width: 20px;
+        height: 20px;
+    }
 </style>
     <div class="container">
         <div class="login-form-card">
             <form action="" class="login-form">
                 <h1>Connexion</h1>
                 <input type="text" class="form-control" id="login" placeholder="Votre login (adresse mail)">
-                <input type="password" class="form-control" id="password" placeholder="Votre mot de passe">
+                <div class="form-group">
+                    <input type="password" class="form-control" id="password" placeholder="Enter mot de passe" required>
+                    <button type="button" class="btn-eye" onclick="indexController.togglePasswordVisibility('password', 'eyeIcon1')">
+                        <img src="../images/eye-off-white.svg" alt="Show password" id="eyeIcon1">
+                    </button>
+                </div>
+
                 <button type="button" class="btn-primary" onclick="indexController.authenticate()">Se connecter</button>
             </form>
 
@@ -144,7 +138,7 @@
                 Veuillez remplir tous les champs.
             </div>
             <div class="alert alert-danger mt-4" role="alert" id="erreur">
-                Erreur lors de l'authentification du à un mauvais mot de passe ou login.
+                Erreur lors de l'authentification dû à un mauvais mot de passe ou login.
             </div>
         </div>
     </div>
