@@ -380,3 +380,20 @@ h1, h4 {
     display: block;
     opacity: 1;
 }
+
+.modal-content{
+    background-color: black;
+}
+
+.modal-body{
+    color: white;
+}
+
+.imageSerie{
+    width: 60%;
+}
+
+
+.imageMovie{
+    width: 60%;
+}
