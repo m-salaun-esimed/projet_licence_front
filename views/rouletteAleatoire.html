@@ -63,10 +63,10 @@
 <!--    </div>-->
 <!--</div>-->
 
-<div class="modal fade" id="modalMovie" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index: 999999">
+<div class="modal fade" id="modalMovie" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index: 999999;">
 <div class="modal-dialog modal-fullscreen">
-    <div class="modal-content">
-        <div class="modal-body m-3">
+    <div class="modal-content" style="background-color: black;">
+        <div class="modal-body m-3" style="color: white">
             <div class="row">
                 <div class="col-md-4">
                     <div class="text-center">
@@ -77,7 +77,7 @@
                     <div class="text-center">
                         <div class="row">
                             <div class="col-10">
-                                <h1 class="nameMovie" style="color: black"></h1>
+                                <h1 class="nameMovie" style="color: white"></h1>
                             </div>
                             <div class="col-2">
                                 <p>Note : <div class="noteMovie" style="color: red"></div></p>
@@ -94,7 +94,7 @@
             </div>
             <div class="row">
                 <div class="col-12 text-center">
-                    <p class="platforms" style="color: black"></p>
+                    <p class="platforms"></p>
                 </div>
             </div>
         </div>
@@ -102,19 +102,19 @@
             <div class="row text-center">
                 <div class="col-4">
                     <a class="navbar__link" onclick="rouletteAleatoire.addFavorite(rouletteAleatoire.index, 'film')">
-                        <img src="../images/star.svg" id="imgMovie">
+                        <img src="../images/starWhite.svg" id="imgMovie">
                         <span style="z-index: 9999">Favori</span>
                     </a>
                 </div>
                 <div class="col-4">
                     <a class="navbar__link" onclick="rouletteAleatoire.addDejaVu(rouletteAleatoire.index, 'film')">
-                        <img src="../images/eye-off.svg" id="imgAlreadySeenMovie">
+                        <img src="../images/eye-off-white.svg" id="imgAlreadySeenMovie">
                         <span style="z-index: 9999">Déjà vu</span>
                     </a>
                 </div>
                 <div class="col-4" id="closeModalMovie">
                     <a class="navbar__link" data-bs-dismiss="modal">
-                        <img src="../images/x-circle.svg">
+                        <img src="../images/x-circle-white.svg">
                         <span style="z-index: 9999">Fermer</span>
                     </a>
                 </div>
@@ -126,14 +126,14 @@
 
 
 
-<div class="modal fade" id="modalSerie" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content" id="test2">
-            <div class="modal-body">
+<div class="modal fade" id="modalSerie" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index: 999999;">
+    <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content" id="test2"  style="background-color: black;">
+            <div class="modal-body" style="color: white;">
                 <div class="row">
                     <div class="col-md-4">
                         <div class="text-center">
-                            <p class="imageSerie"></p>
+                            <p class="imageSerie" style="width: 60%"></p>
                         </div>
                     </div>
                     <div class="col-md-8">
@@ -144,7 +144,7 @@
                                 </div>
 
                                 <div class="col-7">
-                                    <h1 class="nameSerie" style="color: black"></h1>
+                                    <h1 class="nameSerie" style="color: white"></h1>
                                 </div>
                             </div>
                         </div>
@@ -169,13 +169,13 @@
             <div class="modal-footer">
                 <div class="row text-center">
                     <div class="col-4">
-                        <a class="navbar__link" onclick="rouletteAleatoire.addFavorite(rouletteAleatoire.index, 'serie')"><img src="../images/star.svg" id="imgSerie"><span style="z-index: 9999">Favori</span></a>
+                        <a class="navbar__link" onclick="rouletteAleatoire.addFavorite(rouletteAleatoire.index, 'serie')"><img src="../images/starWhite.svg" id="imgSerie"><span style="z-index: 9999">Favori</span></a>
                     </div>
                     <div class="col-4">
-                        <a class="navbar__link" onclick="rouletteAleatoire.addDejaVu(rouletteAleatoire.index, 'serie')"><img src="../images/eye-off.svg" id="imgAlreadySeenSerie"><span style="z-index: 9999">Déjà vu</span></a>
+                        <a class="navbar__link" onclick="rouletteAleatoire.addDejaVu(rouletteAleatoire.index, 'serie')"><img src="../images/eye-off-white.svg" id="imgAlreadySeenSerie"><span style="z-index: 9999">Déjà vu</span></a>
                     </div>
                     <div class="col-4">
-                        <a class="navbar__link" data-bs-dismiss="modal"><img src="../images/x-circle.svg"><span style="z-index: 9999">Fermer</span></a>
+                        <a class="navbar__link" data-bs-dismiss="modal"><img src="../images/x-circle-white.svg"><span style="z-index: 9999">Fermer</span></a>
                     </div>
                 </div>
             </div>

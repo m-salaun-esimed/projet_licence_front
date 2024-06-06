@@ -135,13 +135,12 @@ class RouletteAleatoire {
         if (imageMovie) {
             console.log("this.options[index].urltrailer  : " + this.options[index].urltrailer);
             var urlBandeAnnonce = document.getElementById("urlBandeAnnonce");
-
             if (this.options[index].urltrailer) {
                 urlBandeAnnonce.setAttribute("href", this.options[index].urltrailer);
-                urlBandeAnnonce.style.display = "block"
+                urlBandeAnnonce.style.display = "block";
             }
             else {
-                urlBandeAnnonce.style.display = "none"
+                urlBandeAnnonce.style.display = "none";
             }
             var imgElement = document.createElement('img');
             imgElement.src = 'https://image.tmdb.org/t/p/w500' + this.options[index].poster_path;
@@ -211,7 +210,7 @@ class RouletteAleatoire {
         noteMovie.innerHTML = '<div>' + noteMovieMovietext + '/10</div>';
 
         var imgElement = document.getElementById("imgMovie");
-        imgElement.src = "../images/star.svg";
+        imgElement.src = "../images/starWhite.svg";
         const responseIdUser = await this.userModel.getIdUser(sessionStorage.getItem("token"), localStorage.getItem("login"));
         const responseAllFav = await this.favoriteModel.getAllFavorite(responseIdUser[0].id);
         for(let i = 0; i < responseAllFav.length; i++){
@@ -221,7 +220,7 @@ class RouletteAleatoire {
         }
 
         var alreadySeen = document.getElementById(`imgAlreadySeenMovie`);
-        alreadySeen.src = "../images/eye-off.svg";
+        alreadySeen.src = "../images/eye-off-white.svg";
 
         const responseAllAlreadySeen = await this.dejaVuModel.getAllAlreadySeenMovie();
 
@@ -229,7 +228,7 @@ class RouletteAleatoire {
             console.log(responseAllAlreadySeen[i].idapi)
             if ((responseAllAlreadySeen[i].idapi === this.options[index].idapi) && ("serie" === responseAllAlreadySeen[i].typecontenu)){
                 alreadySeen = document.getElementById("imgSerie");
-                alreadySeen.src = "../images/eye.svg";
+                alreadySeen.src = "../images/eyeWhite.svg";
             }
         }
     }
@@ -303,7 +302,7 @@ class RouletteAleatoire {
         const responseAllFav = await this.favoriteModel.getAllFavorite(responseIdUser[0].id);
         console.log(responseAllFav)
         var imgElement = document.getElementById("imgSerie");
-        imgElement.src = "../images/star.svg";
+        imgElement.src = "../images/starWhite.svg";
         for(let i = 0; i < responseAllFav.length; i++){
             console.log(responseAllFav[i].idapi)
             if ((responseAllFav[i].idapi === this.options[index].idapi) && ("serie" === responseAllFav[i].typecontenu)){
@@ -312,14 +311,14 @@ class RouletteAleatoire {
             }
         }
         var alreadySeen = document.getElementById(`imgAlreadySeenSerie`);
-        alreadySeen.src = "../images/eye-off.svg";
+        alreadySeen.src = "../images/eye-off-white.svg";
 
         const responseAllAlreadySeen = await this.dejaVuModel.getAllAlreadySeenMovie();
         for( let i = 0; i < responseAllAlreadySeen.length; i++){
             console.log(responseAllAlreadySeen[i].idapi)
             if ((responseAllAlreadySeen[i].idapi === this.options[index].idapi) && ("serie" === responseAllAlreadySeen[i].typecontenu)){
                 alreadySeen = document.getElementById("imgSerie");
-                alreadySeen.src = "../images/eye.svg";
+                alreadySeen.src = "../images/eyeWhite.svg";
             }
         }
     }
@@ -412,7 +411,7 @@ class RouletteAleatoire {
                     console.log("reponse idapi : " + responseAllFav[i].idapi)
                     console.log("idapi modal : " + this.options[index].idapi)
                     await this.removeFavoriteModal(this.options[index].idapi)
-                    imgElement.src = "../images/star.svg";
+                    imgElement.src = "../images/starWhite.svg";
                     return;
                 }
             }
@@ -460,7 +459,7 @@ class RouletteAleatoire {
             };
             const response = await this.dejaVuModel.postAlreadySeenMovie(sessionStorage.getItem("token"), data);
             console.log(response);
-            alreadySeen.src = "../images/eye.svg";
+            alreadySeen.src = "../images/eyeWhite.svg";
 
             const modals = document.querySelectorAll('.modal');
             modals.forEach(modal => {
