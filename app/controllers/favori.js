@@ -340,14 +340,14 @@ class Favori {
                         let platformsHTML = '<div class="row">';
                         platformsData.forEach(platform => {
                             platformsHTML += `
-            <div class="col-md-4 mt-1">
-                <div class="card">
-                    <div class="card-body">
-                        <p class="card-title">${platform.provider_name}</p>
-                        <img src="https://image.tmdb.org/t/p/w500/${platform.logo_path}" alt="${platform.provider_name} Logo" class="card-img-top" style="width: 20%;">
-                    </div>
-                </div>
-            </div>`;
+                        <div class="col-md-4 mt-1">
+                            <div class="card">
+                                <div class="card-body">
+                                    <p class="card-title">${platform.provider_name}</p>
+                                    <img src="https://image.tmdb.org/t/p/w500/${platform.logo_path}" alt="${platform.provider_name} Logo" class="card-img-top" style="width: 20%;">
+                                </div>
+                            </div>
+                        </div>`;
                         });
                         platformsHTML += '</div>'; // Fermeture de la div row
 
@@ -372,7 +372,7 @@ class Favori {
                     }
 
                     document.getElementById("addfavorite").onclick = () => {
-                        this.addFavorite(idapi, this.listeDeFav[i].idapi);
+                        this.addFavorite(idapi, this.listeDeFav[i].typecontenu);
                     };
                     modalFooter.appendChild(viewedButton);
                 }
