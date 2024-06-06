@@ -11,8 +11,8 @@ export default class FavoriteModel {
         return await this.api.postFavoriteMovie(token, data);
     }
 
-    async removeFavoriteMovie(token, idapi){
-        return await this.api.removeFavoriteMovie(token, idapi);
+    async removeFavoriteMovie(token, idapi, type){
+        return await this.api.removeFavoriteMovie(token, idapi, type);
     }
 
     async getAllFavorite(idUser, type){

@@ -10,10 +10,14 @@ class Favori {
         this.serieModel = new SerieModel()
         this.verifyAdmin();
         this.init()
+        this.recherche = ""
+        const rechercheInput = document.getElementById('recherche');
+        rechercheInput.addEventListener('input', this.autocomplete.bind(this));
         const filtresElements = document.querySelectorAll('.filtres');
         filtresElements.forEach(element => {
             element.style.display = 'none';
         });
+        this.searchVisible = false;
     }
 
     async init() {
@@ -22,8 +26,6 @@ class Favori {
         const loadingSpinner = document.getElementById("loadingSpinner");
         document.getElementById("filtresErase").style.display = "none"
         document.getElementById("filtre").style.display = "block"
-
-        // Show the spinner
         loadingSpinner.style.display = "flex";
 
         try {
@@ -63,7 +65,7 @@ class Favori {
                     </div>    
                     <div class="row mt-2">
                     <div class="col-6">
-                        <a class="navbar__link" onclick="favori.confirmRemoval(${favorite.idapi})">
+                        <a class="navbar__link" onclick="favori.confirmRemoval(${favorite.idapi}, '${favorite.typecontenu}')">
                             <img src="../images/trash-2-white.svg" alt="Favori">
                             <span style="z-index: 9999">Supprimer de la liste</span>
                         </a>
@@ -110,7 +112,7 @@ class Favori {
                         <h5 class="card-title" style="color: white">${this.responseInfo[0].name}</h5>
                         <div class="row mt-2">
                             <div class="col-6">
-                                <a class="navbar__link" onclick="favori.confirmRemoval(${favorite.idapi})">
+                                <a class="navbar__link" onclick="favori.confirmRemoval(${favorite.idapi}, '${favorite.typecontenu}')">
                                     <img src="../images/trash-2-white.svg" alt="Favori">
                                     <span style="z-index: 9999">Supprimer de la liste</span>
                                 </a>
@@ -139,9 +141,68 @@ class Favori {
         }
     }
 
-    async confirmRemoval(idapi) {
+    toggleSearch() {
+        const searchDiv = document.getElementById("recherche-container");
+        if (this.searchVisible) {
+            searchDiv.style.display = "none";
+        } else {
+            searchDiv.style.display = "block";
+        }
+        this.searchVisible = !this.searchVisible;
+    }
+
+    async autocomplete(event) {
+        this.recherche = event.target.value.trim();
+
+        if (this.recherche.length === 0) {
+            this.clearAutocompleteResults();
+            return;
+        }
+
+        try {
+            this.suggestions = await this.moviesModel.getCompletion(sessionStorage.getItem("token"), this.recherche);
+            console.log(this.suggestions);
+            this.renderAutocompleteResults(this.suggestions);
+
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    clearAutocompleteResults() {
+        const autocompleteList = document.querySelector('.autocomplete-results');
+        autocompleteList.innerHTML = '';
+    }
+
+    renderAutocompleteResults(suggestions) {
+        const autocompleteList = document.querySelector('.autocomplete-results');
+        autocompleteList.innerHTML = '';
+        const displayedSuggestions = suggestions.slice(0);
+        displayedSuggestions.forEach(suggestion => {
+            const listItem = document.createElement('li');
+            listItem.classList = "m-2 d-flex align-items-center";
+            const img = document.createElement('img');
+            img.src = 'https://image.tmdb.org/t/p/w500' + suggestion.poster_path;
+            img.alt = suggestion.name;
+            img.classList = "img-thumbnail me-2";
+            img.style.width = '50px';
+            const text = document.createElement('span');
+            text.textContent = suggestion.name;
+            listItem.addEventListener('click', () => {
+                this.clearAutocompleteResults();
+                // console.log(suggestion.type)
+                // document.getElementById('recherche').value = suggestion.name;
+                this.showModal(suggestion.idapi, suggestion);
+            });
+            listItem.appendChild(img);
+            listItem.appendChild(text);
+            autocompleteList.appendChild(listItem);
+        });
+    }
+
+    async confirmRemoval(idapi, type) {
         if (confirm("Êtes-vous sûr de vouloir supprimer ce favori ?")) {
-            await rouletteAleatoire.removeFavorite(idapi);
+            await rouletteAleatoire.removeFavorite(idapi, type);
         }
     }
 
@@ -157,52 +218,47 @@ class Favori {
         }
     }
 
-    async showModal(idapi){
-        for(let i = 0 ; i < this.listeDeFav.length ; i++){
-            if (this.listeDeFav[i].idapi === idapi){
-                if (this.listeDeFav[i].typecontenu === "film"){
-                    this.responseInfo = await this.moviesModel.getMovieByIdMovieApi(idapi)
-                    this.responsePlatform = await this.moviesModel.getPlatforms(idapi, sessionStorage.getItem("token"))
-                }
-                else {
-                    this.responseInfo = await this.serieModel.getSerieByIdSerieApi(idapi)
-                    this.responsePlatform = await this.serieModel.getPlatforms(idapi, sessionStorage.getItem("token"))
-                }
+    async showModal(idapi, suggestion){
+        if (suggestion){
+            if (suggestion.type === "movie"){
+                this.responsePlatform = await this.moviesModel.getPlatforms(idapi, sessionStorage.getItem("token"))
             }
-        }
-        var text = this.responseInfo[0].name;
-        var modal = new bootstrap.Modal(document.getElementById('modalMovie'));
-        modal.show();
-        var infoMovie = document.querySelector('.nameMovie');
-        infoMovie.innerText = text;
-        var descriptionMovie = document.querySelector('.descriptionMovie');
-        var descriptionMovietext = this.responseInfo[0].overview;
-        descriptionMovie.innerText = descriptionMovietext;
+            else{
+                this.responsePlatform = await this.serieModel.getPlatforms(idapi, sessionStorage.getItem("token"))
+            }
+            var text = suggestion.name;
+            var modal = new bootstrap.Modal(document.getElementById('modalMovie'));
+            modal.show();
+            var infoMovie = document.querySelector('.nameMovie');
+            infoMovie.innerText = text;
+            var descriptionMovie = document.querySelector('.descriptionMovie');
+            var descriptionMovietext = suggestion.overview;
+            descriptionMovie.innerText = descriptionMovietext;
 
-        var imageMovie = document.querySelector('.imageMovie');
-        if (imageMovie) {
-            var imgElement = document.createElement('img');
-            imgElement.src = 'https://image.tmdb.org/t/p/w500' + this.responseInfo[0].poster_path;
-            imgElement.classList.add('img-fluid');
-            imageMovie.innerHTML = '';
-            imageMovie.appendChild(imgElement);
-        } else {
-            console.error("Element .imageMovie non trouvé");
-        }
+            var imageMovie = document.querySelector('.imageMovie');
+            if (imageMovie) {
+                var imgElement = document.createElement('img');
+                imgElement.src = 'https://image.tmdb.org/t/p/w500' + suggestion.poster_path;
+                imgElement.classList.add('img-fluid');
+                imageMovie.innerHTML = '';
+                imageMovie.appendChild(imgElement);
+            } else {
+                console.error("Element .imageMovie non trouvé");
+            }
 
-        var noteMovie = document.getElementsByClassName("noteMovie")[0];
-        var noteMovieMovietext = this.responseInfo[0].note;
-        noteMovie.innerHTML = '<div>' + noteMovieMovietext + '/10</div>';
+            var noteMovie = document.getElementsByClassName("noteMovie")[0];
+            var noteMovieMovietext = suggestion.note;
+            noteMovie.innerHTML = '<div>' + noteMovieMovietext + '/10</div>';
 
-        var modalFooter = document.querySelector('.modal-footer');
-        modalFooter.innerHTML = '';
+            var modalFooter = document.querySelector('.modal-footer');
+            modalFooter.innerHTML = '';
 
-        if (this.responsePlatform && this.responsePlatform.flatrate) {
-            const platformsData = this.responsePlatform.flatrate.slice(0, 3);
+            if (this.responsePlatform && this.responsePlatform.flatrate) {
+                const platformsData = this.responsePlatform.flatrate.slice(0, 3);
 
-            let platformsHTML = '<div class="row">';
-            platformsData.forEach(platform => {
-                platformsHTML += `
+                let platformsHTML = '<div class="row">';
+                platformsData.forEach(platform => {
+                    platformsHTML += `
             <div class="col-md-4 mt-1">
                 <div class="card">
                     <div class="card-body">
@@ -211,21 +267,163 @@ class Favori {
                     </div>
                 </div>
             </div>`;
-            });
-            platformsHTML += '</div>'; // Fermeture de la div row
+                });
+                platformsHTML += '</div>';
 
-            const platformsElement = document.querySelector('.platforms');
-            platformsElement.innerHTML = platformsHTML;
+                const platformsElement = document.querySelector('.platforms');
+                platformsElement.innerHTML = platformsHTML;
+            }
+            else {
+                let platformsHTML = '';
+
+                const platformsElement = document.querySelector('.platforms');
+                platformsElement.innerHTML = platformsHTML;
+                console.error("La réponse de l'API n'est pas valide ou les données des plateformes sont vides.");
+            }
+
+
+            var imgElement = document.getElementById("imgFav");
+            imgElement.src = "../images/starWhite.svg";
+            for(let i = 0; i < this.listeDeFav.length; i++){
+                console.log("test " + this.listeDeFav[i].idapi)
+                if ((this.listeDeFav[i].idapi === idapi)){
+                    imgElement.src = "../images/starRed.svg";
+                }
+            }
+            console.log("suggestion.type : " + suggestion.type)
+            document.getElementById("addfavorite").onclick = () => {
+                this.addFavorite(suggestion.idapi, suggestion.type);
+            };
+
+            modalFooter.appendChild(viewedButton);
+        }else{
+            for(let i = 0 ; i < this.listeDeFav.length ; i++){
+                if (this.listeDeFav[i].idapi === idapi){
+                    if (this.listeDeFav[i].typecontenu === "film"){
+                        this.responseInfo = await this.moviesModel.getMovieByIdMovieApi(idapi)
+                        this.responsePlatform = await this.moviesModel.getPlatforms(idapi, sessionStorage.getItem("token"))
+                    }
+                    else {
+                        this.responseInfo = await this.serieModel.getSerieByIdSerieApi(idapi)
+                        this.responsePlatform = await this.serieModel.getPlatforms(idapi, sessionStorage.getItem("token"))
+                    }
+                    var text = this.responseInfo[0].name;
+                    var modal = new bootstrap.Modal(document.getElementById('modalMovie'));
+                    modal.show();
+                    var infoMovie = document.querySelector('.nameMovie');
+                    infoMovie.innerText = text;
+                    var descriptionMovie = document.querySelector('.descriptionMovie');
+                    var descriptionMovietext = this.responseInfo[0].overview;
+                    descriptionMovie.innerText = descriptionMovietext;
+
+                    var imageMovie = document.querySelector('.imageMovie');
+                    if (imageMovie) {
+                        var imgElement = document.createElement('img');
+                        imgElement.src = 'https://image.tmdb.org/t/p/w500' + this.responseInfo[0].poster_path;
+                        imgElement.classList.add('img-fluid');
+                        imageMovie.innerHTML = '';
+                        imageMovie.appendChild(imgElement);
+                    } else {
+                        console.error("Element .imageMovie non trouvé");
+                    }
+
+                    var noteMovie = document.getElementsByClassName("noteMovie")[0];
+                    var noteMovieMovietext = this.responseInfo[0].note;
+                    noteMovie.innerHTML = '<div>' + noteMovieMovietext + '/10</div>';
+
+                    var modalFooter = document.querySelector('.modal-footer');
+                    modalFooter.innerHTML = '';
+
+                    if (this.responsePlatform && this.responsePlatform.flatrate) {
+                        const platformsData = this.responsePlatform.flatrate.slice(0, 3);
+
+                        let platformsHTML = '<div class="row">';
+                        platformsData.forEach(platform => {
+                            platformsHTML += `
+            <div class="col-md-4 mt-1">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-title">${platform.provider_name}</p>
+                        <img src="https://image.tmdb.org/t/p/w500/${platform.logo_path}" alt="${platform.provider_name} Logo" class="card-img-top" style="width: 20%;">
+                    </div>
+                </div>
+            </div>`;
+                        });
+                        platformsHTML += '</div>'; // Fermeture de la div row
+
+                        const platformsElement = document.querySelector('.platforms');
+                        platformsElement.innerHTML = platformsHTML;
+                    }
+                    else {
+                        let platformsHTML = '';
+
+                        const platformsElement = document.querySelector('.platforms');
+                        platformsElement.innerHTML = platformsHTML;
+                        console.error("La réponse de l'API n'est pas valide ou les données des plateformes sont vides.");
+                    }
+
+                    var imgElement = document.getElementById("imgFav");
+                    imgElement.src = "../images/starWhite.svg";
+                    for(let i = 0; i < this.listeDeFav.length; i++){
+                        console.log(this.listeDeFav[i].idapi)
+                        if ((this.listeDeFav[i].idapi === idapi)){
+                            imgElement.src = "../images/starRed.svg";
+                        }
+                    }
+
+                    document.getElementById("addfavorite").onclick = () => {
+                        this.addFavorite(idapi, this.listeDeFav[i].idapi);
+                    };
+                    modalFooter.appendChild(viewedButton);
+                }
+            }
         }
-        else {
-            let platformsHTML = '';
+    }
 
-            const platformsElement = document.querySelector('.platforms');
-            platformsElement.innerHTML = platformsHTML;
-            console.error("La réponse de l'API n'est pas valide ou les données des plateformes sont vides.");
+    async addFavorite(idapi, type) {
+        var imgElement = document.getElementById(`imgFav`);
+
+        try {
+            const responseIdUser = await this.userModel.getIdUser(sessionStorage.getItem("token"), localStorage.getItem("login"));
+            for(let i = 0; i < this.listeDeFav.length; i++){
+                if ((this.listeDeFav[i].idapi === idapi) && (type === this.listeDeFav[i].typecontenu)){
+                    await this.removeFavoriteModal(this.listeDeFav[i].idapi, type)
+                    imgElement.src = "../images/starWhite.svg";
+
+                    setTimeout(() => {
+                        this.init()
+                    }, 300);
+                    return;
+                }
+            }
+
+            if (type === "movie"){
+                type = "film";
+            }
+            const data = {
+                idapi: idapi,
+                idUser: responseIdUser[0].id,
+                typecontenu: type
+            };
+            const response = await this.favoriteModel.postFavoriteMovie(sessionStorage.getItem("token"), data);
+            console.log(response);
+
+            if (imgElement) {
+                imgElement.src = "../images/starRed.svg";
+            } else {
+                console.log("Element avec l'ID 'imgMovie' non trouvé.");
+            }
+            const responseinit =await this.init()
+            console.log(responseinit);
+
+        } catch (error) {
+            console.error("Erreur lors de l'ajout du film aux favoris :", error);
+            alert("Une erreur est survenue lors de l'ajout du film aux favoris. Veuillez réessayer plus tard.");
         }
+    }
 
-        modalFooter.appendChild(viewedButton);
+    async removeFavoriteModal(idapi, type){
+        await this.favoriteModel.removeFavoriteMovie(sessionStorage.getItem("token"), idapi, type);
     }
 
     async filreFilm(){

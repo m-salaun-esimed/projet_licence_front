@@ -271,8 +271,6 @@ h1, h4 {
     z-index: 9999;
     left: 0;
     right: 0;
-    margin-left: 35%;
-    margin-right: 35%;
 }
 .autocomplete-results-navBar li {
     padding: 10px;

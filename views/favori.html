@@ -105,7 +105,9 @@
             </button>
         </div>
         <div class="col-2 filtres">
-            <button class="btn btn-outline-primary" style="border-radius: 24px"><img src="../images/searchWhite.svg" alt=""></button>
+            <button id="searchButton" class="btn btn-outline-primary" style="border-radius: 24px" onclick="favori.toggleSearch()">
+                <img src="../images/searchWhite.svg" alt="">
+            </button>
         </div>
         <div class="col-2" id="filtresErase">
             <button class="btn btn-outline-primary" style="border-radius: 24px" onclick="favori.init()"><img src="../images/x-lg.svg"
@@ -119,6 +121,16 @@
         </div>
         <div class="col-2">
             <h3 id="filtreEnCours" style="color: white"></h3>
+        </div>
+    </div>
+    <div class="row m-2 justify-content-center" id="recherche-container" style="display: none;">
+        <div class="col-6 d-flex justify-content-center">
+            <input type="text" class="form-control" placeholder="Rechercher" id="recherche">
+        </div>
+    </div>
+    <div class="row m-2 ">
+        <div class="col-12">
+            <ul class="autocomplete-results mt-3"></ul>
         </div>
     </div>
     <div id="listFavorite" class="m-3"></div>
@@ -162,6 +174,9 @@
                 </div>
                 <div class="modal-footer">
                     <div class="row text-center">
+                        <div class="col-4">
+                            <a class="navbar__link" id="addfavorite"><img src="../images/starWhite.svg" id="imgFav"><span style="z-index: 9999">Favori</span></a>
+                        </div>
                         <div class="col-4">
                             <a class="navbar__link" data-bs-dismiss="modal"><img src="../images/x-circle-white.svg"><span style="z-index: 9999">Fermer</span></a>
                         </div>

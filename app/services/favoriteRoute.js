@@ -23,9 +23,10 @@ export default class FavoriteRoute extends Api {
     }
 
 
-    async removeFavoriteMovie(token, idapi) {
+    async removeFavoriteMovie(token, idapi, type) {
         const data = {
-            idapi : idapi
+            idapi : idapi,
+            type : type
         }
         console.log("token " + token + "movieidapi " + JSON.stringify(data))
         try {

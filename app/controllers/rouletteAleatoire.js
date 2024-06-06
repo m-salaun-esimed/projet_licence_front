@@ -299,6 +299,7 @@ class RouletteAleatoire {
         var noteMovieMovietext = this.options[index].note;
         noteMovie.innerHTML = '<div>' + noteMovieMovietext + '/10</div>';
         const responseIdUser = await this.userModel.getIdUser(sessionStorage.getItem("token"), localStorage.getItem("login"));
+
         const responseAllFav = await this.favoriteModel.getAllFavorite(responseIdUser[0].id);
         console.log(responseAllFav)
         var imgElement = document.getElementById("imgSerie");
@@ -310,9 +311,9 @@ class RouletteAleatoire {
                 imgElement.src = "../images/starRed.svg";
             }
         }
+
         var alreadySeen = document.getElementById(`imgAlreadySeenSerie`);
         alreadySeen.src = "../images/eye-off-white.svg";
-
         const responseAllAlreadySeen = await this.dejaVuModel.getAllAlreadySeenMovie();
         for( let i = 0; i < responseAllAlreadySeen.length; i++){
             console.log(responseAllAlreadySeen[i].idapi)
@@ -410,7 +411,7 @@ class RouletteAleatoire {
                 if ((responseAllFav[i].idapi === this.options[index].idapi) && (type === responseAllFav[i].typecontenu)){
                     console.log("reponse idapi : " + responseAllFav[i].idapi)
                     console.log("idapi modal : " + this.options[index].idapi)
-                    await this.removeFavoriteModal(this.options[index].idapi)
+                    await this.removeFavoriteModal(this.options[index].idapi, localStorage.getItem("type"))
                     imgElement.src = "../images/starWhite.svg";
                     return;
                 }
@@ -477,17 +478,17 @@ class RouletteAleatoire {
         }
     }
 
-    async removeFavorite(idapi){
+    async removeFavorite(idapi, type){
         console.log("removeFavorite " + idapi)
-        const response = await this.favoriteModel.removeFavoriteMovie(sessionStorage.getItem("token"), idapi);
+        const response = await this.favoriteModel.removeFavoriteMovie(sessionStorage.getItem("token"), idapi, type);
         console.log(response);
         alert("Le film a été supprimée avec succès de la liste.");
         navigate("favori")
         console.log(idapi)
     }
 
-    async removeFavoriteModal(idapi){
-        await this.favoriteModel.removeFavoriteMovie(sessionStorage.getItem("token"), idapi);
+    async removeFavoriteModal(idapi, type){
+        await this.favoriteModel.removeFavoriteMovie(sessionStorage.getItem("token"), idapi, type);
     }
 
     clearAutocompleteResults() {
