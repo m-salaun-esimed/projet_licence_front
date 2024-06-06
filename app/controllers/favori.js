@@ -62,12 +62,12 @@ class Favori {
                         </div>
                     </div>    
                     <div class="row mt-2">
-                        <div class="col-6">
-                            <a class="navbar__link" onclick="rouletteAleatoire.removeFavorite(${favorite.idapi})">
-                                <img src="../images/trash-2-white.svg" alt="Favori">
-                                <span style="z-index: 9999">Supprimer de la liste</span>
-                            </a>
-                        </div>
+                    <div class="col-6">
+                        <a class="navbar__link" onclick="favori.confirmRemoval(${favorite.idapi})">
+                            <img src="../images/trash-2-white.svg" alt="Favori">
+                            <span style="z-index: 9999">Supprimer de la liste</span>
+                        </a>
+                    </div>
                         <div class="col-6">
                             <a class="navbar__link" onclick="favori.showModal(${favorite.idapi})">
                                 <img src="../images/infoWhite.svg" alt="Favori">
@@ -110,7 +110,7 @@ class Favori {
                         <h5 class="card-title" style="color: white">${this.responseInfo[0].name}</h5>
                         <div class="row mt-2">
                             <div class="col-6">
-                                <a class="navbar__link" onclick="rouletteAleatoire.removeFavorite(${favorite.idapi})">
+                                <a class="navbar__link" onclick="favori.confirmRemoval(${favorite.idapi})">
                                     <img src="../images/trash-2-white.svg" alt="Favori">
                                     <span style="z-index: 9999">Supprimer de la liste</span>
                                 </a>
@@ -139,6 +139,11 @@ class Favori {
         }
     }
 
+    async confirmRemoval(idapi) {
+        if (confirm("Êtes-vous sûr de vouloir supprimer ce favori ?")) {
+            await rouletteAleatoire.removeFavorite(idapi);
+        }
+    }
 
     async verifyAdmin(){
         const responseIdUser = await this.userModel.getIdUser(sessionStorage.getItem("token"), localStorage.getItem("login"))

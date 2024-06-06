@@ -71,8 +71,8 @@ class DejaVu {
                         </div>    
                         <div class="row mt-2">
                             <div class="col-6">
-                                <a class="navbar__link" onclick="dejaVu.removeDejaVu(${dejaVu.idapi}, '${dejaVu.typecontenu}')">
-                                    <img src="../images/eyeWhite.svg" alt="Favori">
+                                <a class="navbar__link" onclick="dejaVu.confirmRemoval(${dejaVu.idapi}, '${dejaVu.typecontenu}')">
+                                    <img src="../images/trash-2-white.svg" alt="Favori">
                                     <span style="z-index: 9999">Supprimer des déjà vu</span>
                                 </a>
                             </div>
@@ -117,8 +117,9 @@ class DejaVu {
                         <div class="card-body d-flex align-items-center">
                             <h5 class="card-title" style="color: white; flex-grow: 1;">${this.responseInfo[0].name}</h5>
                             <div class="d-flex">
-                                <a class="navbar__link" onclick="dejaVu.removeDejaVu(${dejaVu.idapi}, '${dejaVu.typecontenu}')">
-                                    <img src="../images/eyeWhite.svg" alt="Favori">
+                                <a class="navbar__link" onclick="dejaVu.confirmRemoval(${dejaVu.idapi}, '${dejaVu.typecontenu}')">
+                                    <img src="../images/trash-2-white.svg" alt="Favori">
+                                    <span style="z-index: 9999">Supprimer de la liste</span>
                                 </a>
                                 <a class="navbar__link" onclick="dejaVu.showModalMovie(${dejaVu.idapi}, '${dejaVu.typecontenu}')">
                                     <img src="../images/infoWhite.svg" alt="Favori">
@@ -139,7 +140,11 @@ class DejaVu {
         }
     }
 
-
+    confirmRemoval(idapi, type) {
+        if (confirm("Êtes-vous sûr de vouloir supprimer des déjà vu ?")) {
+            dejaVu.removeDejaVu(idapi, type);
+        }
+    }
 
 
     async removeDejaVu(movieidapi, typecontenu) {

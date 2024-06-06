@@ -80,6 +80,8 @@ class AjouterAmiController {
         autocompleteList.innerHTML = '';
     }
 
+
+
     async ajouter() {
         const displayName = document.getElementById("recherche").value;
 

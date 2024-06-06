@@ -64,20 +64,26 @@ class AmiController {
                         </a>
                     </div> 
                     <div class="col-2 d-flex justify-content-end align-items-center">
-                        <button class="btn btn-outline-danger" onclick="amiController.deleteFriend(${friend.id})">
+                        <button class="btn btn-outline-danger" onclick="amiController.confirmRemoval(${friend.id})">
                             <img src="/images/trash-2.svg" alt="">
                         </button>
                     </div> 
                 </div>
             </div>
         `;
-
                 friendsContainer.appendChild(card);
             }
         } catch (error) {
             console.error(error);
         }
     }
+
+    async confirmRemoval(iduser) {
+        if (confirm("Êtes-vous sûr de vouloir supprimer cet ami ?")) {
+            await amiController.deleteFriend(iduser);
+        }
+    }
+
 
     async afficherFavorisUser(id, displayname){
         document.getElementById("nomFiltre").innerText = ''
