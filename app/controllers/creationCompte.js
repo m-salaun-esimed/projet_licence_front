@@ -24,6 +24,10 @@ class CreationCompteController extends BaseController {
             this.displayError("Veuillez remplir tout les champs");
             return;
         }
+        if (displayName.length > 12){
+            alert("Nom d'utilisateur trop long maximun 12 caractères")
+            return;
+        }
 
         // Validate email format
         const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -39,10 +43,10 @@ class CreationCompteController extends BaseController {
         }
 
         try {
-            const response = await this.userModel.createAccount(displayName, login, password);
+            const response = await this.userModel.createAccount(displayName, login.toLowerCase(), password);
             if (response.ok) {
                 document.getElementById("erreur").style.display = "none";
-                alert("Création du compte réussite !")
+                alert("Création du compte réussi !")
             } else {
                 console.log("Échec Creation Compte");
                 const errorData = await response.json();

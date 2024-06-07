@@ -499,40 +499,6 @@ class RouletteAleatoire {
         autocompleteListNavBar.innerHTML = '';
     }
 
-    renderAutocompleteResultsNavBar(suggestions, recherche) {
-        const autocompleteList = document.querySelector('.autocomplete-results-navBar');
-        autocompleteList.innerHTML = '';
-
-        const maxSuggestions = 5;
-        const displayedSuggestions = suggestions.slice(0, maxSuggestions);
-
-        displayedSuggestions.forEach(suggestion => {
-            const listItem = document.createElement('li');
-            listItem.classList = "m-2";
-            listItem.textContent = suggestion.name;
-            listItem.addEventListener('click', () => {
-                document.getElementById('recherche').value = "";
-                this.clearAutocompleteResults();
-                this.showModal(suggestion)
-            });
-            autocompleteList.appendChild(listItem);
-        });
-
-        if (suggestions.length > maxSuggestions) {
-            const seeMoreButton = document.createElement('button');
-            seeMoreButton.textContent = 'Voir plus';
-            seeMoreButton.classList = "btn btn-primary m-3";
-            seeMoreButton.addEventListener('click', () => {
-                console.log('Afficher plus de suggestions...');
-                sessionStorage.setItem("rechercheNavBar", JSON.stringify(suggestions)); // Utilisation de JSON.stringify pour stocker un tableau dans sessionStorage
-                sessionStorage.setItem("recherche", recherche)
-                navigate("recherche");
-            });
-            autocompleteList.appendChild(seeMoreButton);
-        }
-
-    }
-
     async adminPage(){
         try {
             const response = await this.userModel.refreshToken(sessionStorage.getItem("token"));
@@ -636,7 +602,6 @@ class RouletteAleatoire {
     async favoriPage() {
         try {
             const response = await this.userModel.refreshToken(sessionStorage.getItem("token"));
-            console.log(response)
             if (!response.token) {
                 throw new Error("La requête a échoué avec le statut : " + response.status);
             }

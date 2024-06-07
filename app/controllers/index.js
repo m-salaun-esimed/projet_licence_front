@@ -39,7 +39,7 @@ class IndexController extends BaseController {
             console.log(`login, password : ${login}, ${password}`);
 
             try {
-                const response = await this.userModel.authenticate(login, password);
+                const response = await this.userModel.authenticate(login.toLowerCase(), password);
 
                 if (response.status === 200) {
                     console.log("Authentification réussie");
