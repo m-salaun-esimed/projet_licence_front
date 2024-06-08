@@ -49,7 +49,7 @@ class RouletteAleatoire {
 
                 let movieImage = document.createElement("img");
                 movieImage.src = 'https://image.tmdb.org/t/p/w500' + this.options[i].poster_path;
-                movieImage.style.width = "70%";
+                // movieImage.style.width = "70%";
                 movieImage.style.borderRadius = "20px";
                 movieImage.alt = this.options[i].name;
 
