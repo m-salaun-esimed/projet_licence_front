@@ -14,7 +14,7 @@ class RouletteAleatoire {
         this.userModel = new UserModel()
         this.dejaVuModel = new DejaVuModel()
         this.serieModel = new SerieModel()
-        this.choix = [];
+        document.getElementById("erreurRoulette").style.display  = "none"
         this.verifyAdmin();
         this.init();
         this.addOptionsList().then(options => {
@@ -81,8 +81,10 @@ class RouletteAleatoire {
             else {
                 response = await this.serieModel.get5RandomSeries(categoryids, token);
             }
+            document.getElementById("erreurRoulette").style.display  = "none"
             return response;
         } catch (error) {
+            document.getElementById("erreurRoulette").style.display  = "block"
             console.error(error);
             return [];
         }
