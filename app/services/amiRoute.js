@@ -1,6 +1,6 @@
 import Api from "./api.js";
 
-export default class AjouterAmiRoute extends Api {
+export default class AmiRoute extends Api {
     constructor() {
         super();
     }

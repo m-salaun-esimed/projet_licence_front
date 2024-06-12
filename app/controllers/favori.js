@@ -177,7 +177,7 @@ class Favori {
     renderAutocompleteResults(suggestions) {
         const autocompleteList = document.querySelector('.autocomplete-results');
         autocompleteList.innerHTML = '';
-        const displayedSuggestions = suggestions.slice(0);
+        const displayedSuggestions = suggestions.slice(0, 10);
         displayedSuggestions.forEach(suggestion => {
             const listItem = document.createElement('li');
             listItem.classList = "m-2 d-flex align-items-center";

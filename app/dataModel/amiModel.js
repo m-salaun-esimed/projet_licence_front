@@ -1,8 +1,8 @@
-import AjouterAmiRoute from "../services/ajouterAmiRoute.js";
+import AmiRoute from "../services/amiRoute.js";
 
 export default class AmiModel {
     constructor() {
-        this.api = new AjouterAmiRoute();
+        this.api = new AmiRoute();
     }
 
     async getSuggestions(token, recherche){

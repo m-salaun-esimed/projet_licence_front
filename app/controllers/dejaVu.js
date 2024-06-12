@@ -26,10 +26,9 @@ class DejaVu {
     async init() {
         const listFavorite = document.getElementById("listDejaVu");
         const listFavoritePhone = document.getElementById("listDejaVuPhone");
-        document.getElementById("filtresErase").style.display = "none"
-        document.getElementById("filtre").style.display = "block"
+        document.getElementById("filtresErase").style.display = "none";
+        document.getElementById("filtre").style.display = "block";
         try {
-
             listFavorite.innerHTML = '';
             listFavoritePhone.innerHTML = '';
             document.getElementById("filtreEnCours").innerText = '';
@@ -59,8 +58,8 @@ class DejaVu {
 
                 let card = document.createElement("div");
                 card.classList.add("card", "h-100");
-                card.style.borderColor = "white"
-                card.style.backgroundColor = "black"
+                card.style.borderColor = "white";
+                card.style.backgroundColor = "black";
                 card.innerHTML = `
                 <div class="card-body text-center">
                     <div class="card-content">
@@ -68,7 +67,8 @@ class DejaVu {
                             <div>
                                 <img src="https://image.tmdb.org/t/p/w500${this.responseInfo[0].poster_path}" class="card-img rounded" alt="Image" style="width: 70%">
                             </div>
-                        </div>    
+                        </div>
+                        <h5 class="card-title mt-2" style="color: white;">${this.responseInfo[0].name}</h5>
                         <div class="row mt-2">
                             <div class="col-6">
                                 <a class="navbar__link" onclick="dejaVu.confirmRemoval(${dejaVu.idapi}, '${dejaVu.typecontenu}')">
@@ -114,16 +114,20 @@ class DejaVu {
                         <img src="https://image.tmdb.org/t/p/w500${this.responseInfo[0].poster_path}" class="card-img" alt="Image" style="border-radius: 24px">
                     </div>
                     <div class="col-8">
-                        <div class="card-body d-flex align-items-center">
+                        <div class="card-body">
                             <h5 class="card-title" style="color: white; flex-grow: 1;">${this.responseInfo[0].name}</h5>
-                            <div class="d-flex">
+                             <div class="row mt-2">
+                                <div class="col-6">
                                 <a class="navbar__link" onclick="dejaVu.confirmRemoval(${dejaVu.idapi}, '${dejaVu.typecontenu}')">
                                     <img src="../images/trash-2-white.svg" alt="Favori">
                                     <span style="z-index: 9999">Supprimer de la liste</span>
                                 </a>
-                                <a class="navbar__link" onclick="dejaVu.showModalMovie(${dejaVu.idapi}, '${dejaVu.typecontenu}')">
+                                </div>
+                                <div class="col-6">
+                                   <a class="navbar__link" onclick="dejaVu.showModalMovie(${dejaVu.idapi}, '${dejaVu.typecontenu}')">
                                     <img src="../images/infoWhite.svg" alt="Favori">
-                                </a>
+                                    </a>
+                                </div>  
                             </div>
                         </div>
                     </div>
@@ -139,6 +143,7 @@ class DejaVu {
             console.error("An error occurred while fetching and displaying already seen movies:", error);
         }
     }
+
 
     confirmRemoval(idapi, type) {
         if (confirm("Êtes-vous sûr de vouloir supprimer des déjà vu ?")) {
