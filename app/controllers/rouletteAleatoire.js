@@ -629,3 +629,5 @@ class RouletteAleatoire {
 }
 
 export default () => window.rouletteAleatoire = new RouletteAleatoire();
+
+

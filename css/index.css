@@ -198,44 +198,12 @@ h1, h4 {
     width: calc(250px * 14);
 }
 
-.slider .slide {
-
-}
-
-
 .slide-track img{
     width: 100%;
     height: 100%;
     border-radius: 15px;
     object-fit: cover;
 }
-
-/*.slider {*/
-/*    margin: auto;*/
-/*    position: relative;*/
-/*    overflow-x: hidden;*/
-/*    width: 100%;*/
-/*}*/
-
-/*.slide-track{*/
-/*    display: grid;*/
-/*    grid-auto-flow: column;*/
-/*    grid-auto-columns: 300px;*/
-/*    justify-items: stretch;*/
-/*    animation: slide 20s linear infinite;*/
-/*}*/
-
-/*.slide-track img{*/
-/*    width: 100%;*/
-/*    height: 100%;*/
-/*    border-radius: 15px;*/
-/*    object-fit: cover;*/
-/*}*/
-/*@keyframes slide {*/
-/*  to {*/
-/*      translate: calc(-4 * 250px);*/
-/*  }*/
-/*}*/
 
 .roulette{
     overflow-x: hidden;
@@ -394,4 +362,26 @@ h1, h4 {
 
 .imageMovie{
     width: 60%;
+}
+
+.carousel-container {
+    width: 80%;
+    overflow: hidden;
+    border: 2px solid #ccc;
+    background-color: #fff;
+}
+
+.carousel {
+    display: flex;
+    transition: transform 0.3s ease;
+}
+
+.carousel-item {
+    min-width: 200px;
+    margin: 20px;
+    background-color: #007bff;
+    color: white;
+    font-size: 24px;
+    text-align: center;
+    line-height: 100px;
 }
