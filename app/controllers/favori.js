@@ -155,6 +155,8 @@ class Favori {
         this.recherche = event.target.value.trim();
 
         if (this.recherche.length === 0) {
+            document.getElementById("listFavorite").style.opacity = "1";
+            document.getElementById("listFavoritePhone").style.opacity = "1";
             this.clearAutocompleteResults();
             return;
         }
@@ -163,7 +165,8 @@ class Favori {
             this.suggestions = await this.moviesModel.getCompletion(sessionStorage.getItem("token"), this.recherche);
             console.log(this.suggestions);
             this.renderAutocompleteResults(this.suggestions);
-
+            document.getElementById("listFavorite").style.opacity = "0.2";
+            document.getElementById("listFavoritePhone").style.opacity = "0.2";
         } catch (error) {
             console.error(error);
         }
@@ -171,13 +174,15 @@ class Favori {
 
     clearAutocompleteResults() {
         const autocompleteList = document.querySelector('.autocomplete-results');
+        document.getElementById("listFavorite").style.opacity = "1"
+        document.getElementById("listFavoritePhone").style.opacity = "1"
         autocompleteList.innerHTML = '';
     }
 
     renderAutocompleteResults(suggestions) {
         const autocompleteList = document.querySelector('.autocomplete-results');
         autocompleteList.innerHTML = '';
-        const displayedSuggestions = suggestions.slice(0, 10);
+        const displayedSuggestions = suggestions.slice(0, 25);
         displayedSuggestions.forEach(suggestion => {
             const listItem = document.createElement('li');
             listItem.classList = "m-2 d-flex align-items-center";
@@ -190,8 +195,6 @@ class Favori {
             text.textContent = suggestion.name;
             listItem.addEventListener('click', () => {
                 this.clearAutocompleteResults();
-                // console.log(suggestion.type)
-                // document.getElementById('recherche').value = suggestion.name;
                 this.showModal(suggestion.idapi, suggestion);
             });
             listItem.appendChild(img);

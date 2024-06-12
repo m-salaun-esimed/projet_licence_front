@@ -49,7 +49,7 @@ class AjouterAmiController {
         const autocompleteList = document.querySelector('.autocomplete-results');
         autocompleteList.innerHTML = '';
 
-        const maxSuggestions = 5;
+        const maxSuggestions = 20;
         const displayedSuggestions = suggestions.slice(0, maxSuggestions);
 
         displayedSuggestions.forEach(suggestion => {
@@ -62,16 +62,6 @@ class AjouterAmiController {
             });
             autocompleteList.appendChild(listItem);
         });
-
-        if (suggestions.length > maxSuggestions) {
-            const seeMoreButton = document.createElement('button');
-            seeMoreButton.textContent = 'Voir plus';
-            seeMoreButton.classList = "btn btn-primary mt-2";
-            seeMoreButton.addEventListener('click', () => {
-                console.log('Afficher plus de suggestions...');
-            });
-            autocompleteList.appendChild(seeMoreButton);
-        }
     }
 
 

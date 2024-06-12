@@ -1,5 +1,3 @@
-<style>
-</style>
 <nav class="navbar">
     <ul class="navbar__menu">
         <li class="navbar__item" style="">
@@ -94,15 +92,16 @@
         <div class="row w-100">
             <div class="col-12 text-center mt-3">
                 <div class="input-group">
-                <span class="input-group-text">
-                    <img src="/images/search%20(1).svg" alt="Image" style="max-height: 100%;">
-                </span>
                     <input type="text" name="recherche" id="recherche" class="form-control" placeholder="Rechercher un ami" autocomplete="off">
                     <button class="btn btn-outline-primary" onclick="ajouterAmiController.ajouter()">
                         <img src="/images/user-plus.svg" alt="">
                     </button>
                 </div>
-                <ul class="autocomplete-results mt-2"></ul>
+                <div class="row m-2 ">
+                    <div class="col-12">
+                        <ul class="autocomplete-results mt-3"></ul>
+                    </div>
+                </div>
                 <div class="alert alert-danger mt-3 d-none" role="alert" id="erreur">
                     Vous ne pouvez pas vous ajouter vous-même.
                 </div>
