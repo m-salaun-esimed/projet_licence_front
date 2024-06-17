@@ -36,10 +36,9 @@ class FormulaireController extends BaseController {
 
     async getMovieGenres(){
         const response = await this.categorieModel.getAllCategorieMovie(sessionStorage.getItem("token"));
-        console.log("getMovieGenres  " + response[0].id)
+        console.log("getMovieGenres  " + response[0].id);
 
-        const maxPerRow = 6;
-
+        const maxPerRow = 8;
         const container = document.getElementById('checkboxContainer');
 
         let row;
@@ -52,24 +51,28 @@ class FormulaireController extends BaseController {
 
             const col = document.createElement('div');
             col.classList.add('col');
-            const label = document.createElement('label');
-            label.classList.add('type');
-            label.innerHTML = `
-            ${genre.name}
-            <br>
-            <input type="checkbox" name="genre" value="${genre.id},${genre.name}">
-        `;
-            col.appendChild(label);
+
+            const box = document.createElement('div');
+            box.classList.add('box');
+            box.dataset.id = genre.id;
+            box.dataset.name = genre.name;
+            box.innerHTML = genre.name;
+
+            // Add click event listener to the box
+            box.addEventListener('click', function() {
+                this.classList.toggle('selected');
+            });
+
+            col.appendChild(box);
             row.appendChild(col);
         });
     }
 
     async getSerieGenres(){
         const response = await this.categorieModel.getAllCategorieSerie(sessionStorage.getItem("token"));
-        console.log("getSerieGenres  " + response[0].id)
+        console.log("getSerieGenres " + response[0].id);
 
-        const maxPerRow = 6;
-
+        const maxPerRow = 8;
         const container = document.getElementById('checkboxContainer');
 
         let row;
@@ -82,39 +85,39 @@ class FormulaireController extends BaseController {
 
             const col = document.createElement('div');
             col.classList.add('col');
-            const label = document.createElement('label');
-            label.classList.add('type');
-            label.innerHTML = `
-            ${genre.name}
-            <br>
-            <input type="checkbox" name="genre" value="${genre.id},${genre.name}">
-        `;
-            col.appendChild(label);
+
+            const box = document.createElement('div');
+            box.classList.add('box');
+            box.dataset.id = genre.id;
+            box.dataset.name = genre.name;
+            box.innerHTML = genre.name;
+
+            // Add click event listener to the box
+            box.addEventListener('click', function() {
+                this.classList.toggle('selected');
+            });
+
+            col.appendChild(box);
             row.appendChild(col);
         });
     }
 
     traiterFormulaireCategorie(){
-        const checkboxes = document.querySelectorAll('input[type="checkbox"][name="genre"]');
+        const selectedBoxes = document.querySelectorAll('.box.selected');
         const selectedGenres = [];
 
-        checkboxes.forEach(checkbox => {
-            if (checkbox.checked) {
-                const genreValues = checkbox.value.split(',');
-                selectedGenres.push({
-                    id: genreValues[0],
-                    name: genreValues[1]
-                });
-            }
+        selectedBoxes.forEach(box => {
+            selectedGenres.push({
+                id: box.dataset.id,
+                name: box.dataset.name
+            });
         });
 
-        if (selectedGenres.length === 0){
+        if (selectedGenres.length === 0) {
             alert("Veuillez choisir au moins un genre");
-        }
-        else if(selectedGenres.length > 3){
-            alert("Maximun 3 categories")
-        }
-        else {
+        } else if (selectedGenres.length > 3) {
+            alert("Maximun 3 categories");
+        } else {
             localStorage.setItem("listGenre", JSON.stringify(selectedGenres));
             navigate("rouletteAleatoire");
         }
@@ -122,7 +125,6 @@ class FormulaireController extends BaseController {
         console.log("Genres sélectionnés :", selectedGenres);
         return selectedGenres;
     }
-
 
     deconnexion(){
         console.log("deconnexion")

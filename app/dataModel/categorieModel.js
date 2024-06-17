@@ -8,7 +8,6 @@ export default class CategorieModel {
     }
 
     async getAllCategorieMovie(token){
-        //const response = await this.userModel.verifyToken(token)
             try {
                 const response = await this.api.getAllCategorieMovie(token);
                 console.log(response);

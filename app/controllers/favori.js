@@ -222,6 +222,8 @@ class Favori {
     }
 
     async showModal(idapi, suggestion){
+        console.log("suggestionc :");
+        console.log(suggestion)
         if (suggestion){
             if (suggestion.type === "movie"){
                 this.responsePlatform = await this.moviesModel.getPlatforms(idapi, sessionStorage.getItem("token"))
@@ -295,7 +297,7 @@ class Favori {
             }
             console.log("suggestion.type : " + suggestion.type)
             document.getElementById("addfavorite").onclick = () => {
-                this.addFavorite(suggestion.idapi, suggestion.type);
+                this.addFavorite(idapi, suggestion.type);
             };
 
             modalFooter.appendChild(viewedButton);
@@ -390,10 +392,10 @@ class Favori {
             const responseIdUser = await this.userModel.getIdUser(sessionStorage.getItem("token"), localStorage.getItem("login"));
             for(let i = 0; i < this.listeDeFav.length; i++){
                 if ((this.listeDeFav[i].idapi === idapi) && (type === this.listeDeFav[i].typecontenu)){
-                    await this.removeFavoriteModal(this.listeDeFav[i].idapi, type)
+                    await this.removeFavoriteModal(idapi, type)
                     imgElement.src = "../images/starWhite.svg";
-
                     setTimeout(() => {
+                        this.closeAllModals();
                         this.init()
                     }, 300);
                     return;
@@ -410,6 +412,7 @@ class Favori {
             };
             const response = await this.favoriteModel.postFavoriteMovie(sessionStorage.getItem("token"), data);
             console.log(response);
+            this.closeAllModals();
 
             if (imgElement) {
                 imgElement.src = "../images/starRed.svg";
@@ -423,6 +426,19 @@ class Favori {
             console.error("Erreur lors de l'ajout du film aux favoris :", error);
             alert("Une erreur est survenue lors de l'ajout du film aux favoris. Veuillez réessayer plus tard.");
         }
+    }
+
+    closeAllModals() {
+        const modals = document.querySelectorAll('.modal.show');
+        modals.forEach(modal => {
+            const modalInstance = bootstrap.Modal.getInstance(modal);
+            if (modalInstance) {
+                modalInstance.hide();
+            } else {
+                modal.classList.remove('show');
+                modal.style.display = 'none';
+            }
+        });
     }
 
     async removeFavoriteModal(idapi, type){

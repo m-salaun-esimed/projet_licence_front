@@ -394,3 +394,36 @@ h1, h4 {
     text-align: center;
     line-height: 100px;
 }
+
+.box {
+    padding: 10px; /* Reduced padding */
+    margin: 5px;  /* Reduced margin */
+    border: 1px solid #007bff;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: #e7f3ff;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    color: #007bff;
+    transition: background-color 0.3s, transform 0.3s;
+    flex: 1 1 calc(16.66% - 20px); /* Ensures proper width and alignment */
+}
+.box:hover {
+    background-color: #d0e7ff;
+    transform: scale(1.05);
+}
+.box.selected {
+    background-color: #007bff;
+    color: #fff;
+}
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -5px; /* Adjusted for proper alignment */
+}
+.col {
+    padding: 5px; /* Adjusted for proper alignment */
+    display: flex;
+    justify-content: center;
+}
