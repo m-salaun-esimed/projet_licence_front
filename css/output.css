@@ -1160,8 +1160,6 @@
   .navbar{
     transition: 2s;
     display: none;
-    position: sticky;
-    top:0;
   }
 
   .bodyRoulette{
@@ -1197,6 +1195,8 @@
 
   .navbarPhone{
     display: block;
+    position: sticky;
+    top:0;
   }
 
   .navbar__link {
