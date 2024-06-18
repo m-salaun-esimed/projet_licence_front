@@ -1,6 +1,6 @@
 export default class Api {
     constructor() {
-        this.apiServer = "https://www.main-bvxea6i-ilzfunk6nmoog.fr-4.platformsh.site/";
+        this.apiServer = "https://www.main-bvxea6i-ilzfunk6nmoog.fr-4.platformsh.site";
         // this.apiServer = "http://localhost:3333";
 
         this.myHeaders = new Headers({
