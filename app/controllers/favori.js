@@ -226,7 +226,7 @@ class Favori {
         console.log(suggestion)
         if (suggestion){
             if (suggestion.type === "movie"){
-                this.responsePlatform = await this.moviesModel.getPlatforms(idapi, sessionStorage.getItem("token"))
+                this.responsePlatform = await this.moviesModel.getMoviePlatforms(idapi, sessionStorage.getItem("token"))
             }
             else{
                 this.responsePlatform = await this.serieModel.getPlatforms(idapi, sessionStorage.getItem("token"))
@@ -306,7 +306,7 @@ class Favori {
                 if (this.listeDeFav[i].idapi === idapi){
                     if (this.listeDeFav[i].typecontenu === "film"){
                         this.responseInfo = await this.moviesModel.getMovieByIdMovieApi(idapi)
-                        this.responsePlatform = await this.moviesModel.getPlatforms(idapi, sessionStorage.getItem("token"))
+                        this.responsePlatform = await this.moviesModel.getMoviePlatforms(idapi, sessionStorage.getItem("token"))
                     }
                     else {
                         this.responseInfo = await this.serieModel.getSerieByIdSerieApi(idapi)

@@ -1,14 +1,17 @@
 import BaseController from "../controllers/basecontroller.js"
 import CategorieModel from "../dataModel/categorieModel.js";
+import MoviesModel from "../dataModel/moviesModel.js";
 
 class FormulaireController extends BaseController {
     constructor() {
         super()
         this.categorieModel = new CategorieModel()
+        this.movieModel = new MoviesModel()
 
         document.getElementById("type").style.display = "none";
         document.getElementById("cardType").style.display = "block"
         document.getElementById("cardGenres").style.display = "none"
+        document.getElementById("cardPlatforms").style.display = "none"
         if (localStorage.getItem("listGenre") !== null){
             navigate("rouletteAleatoire")
         }
@@ -23,7 +26,6 @@ class FormulaireController extends BaseController {
         localStorage.setItem("type", selectedType.value);
 
         if (selectedType.value === "film") {
-            //TODO AFFICHER LES GENRES FILM
             document.getElementById("cardType").style.display = "none";
             document.getElementById("cardGenres").style.display = "block";
             this.getMovieGenres();
@@ -58,7 +60,6 @@ class FormulaireController extends BaseController {
             box.dataset.name = genre.name;
             box.innerHTML = genre.name;
 
-            // Add click event listener to the box
             box.addEventListener('click', function() {
                 this.classList.toggle('selected');
             });
@@ -67,6 +68,39 @@ class FormulaireController extends BaseController {
             row.appendChild(col);
         });
     }
+
+    async getPlatforms(){
+        const response = await this.movieModel.getPlatforms(sessionStorage.getItem("token"));
+        const maxPerRow = 8;
+        const container = document.getElementById('platforms');
+
+        let row;
+        response.forEach((platform, index) => {
+            if (index % maxPerRow === 0) {
+                row = document.createElement('div');
+                row.classList.add('row');
+                container.appendChild(row);
+            }
+
+            const col = document.createElement('div');
+            col.classList.add('col');
+
+            const box2 = document.createElement('div');
+            box2.classList.add('box2');
+            box2.dataset.idapi = platform.idapi;
+            box2.dataset.provider_name = platform.provider_name;
+            box2.innerHTML = platform.provider_name;
+
+            // Add click event listener to the box
+            box2.addEventListener('click', function() {
+                this.classList.toggle('selected');
+            });
+
+            col.appendChild(box2);
+            row.appendChild(col);
+        });
+    }
+
 
     async getSerieGenres(){
         const response = await this.categorieModel.getAllCategorieSerie(sessionStorage.getItem("token"));
@@ -119,11 +153,29 @@ class FormulaireController extends BaseController {
             alert("Maximun 3 categories");
         } else {
             localStorage.setItem("listGenre", JSON.stringify(selectedGenres));
-            navigate("rouletteAleatoire");
+            // navigate("rouletteAleatoire");
+            document.getElementById("cardGenres").style.display = "none"
+            document.getElementById("cardPlatforms").style.display = "block"
+            this.getPlatforms();
         }
 
         console.log("Genres sélectionnés :", selectedGenres);
         return selectedGenres;
+    }
+
+    traiterFormulairePlatforms(){
+        const selectedBoxes = document.querySelectorAll('.box2.selected');
+        const selectedPlatforms = [];
+
+        selectedBoxes.forEach(box => {
+            selectedPlatforms.push({
+                idapi: box.dataset.idapi,
+                provider_name: box.dataset.provider_name
+            });
+        });
+        localStorage.setItem("platforms", JSON.stringify(selectedPlatforms));
+        navigate("rouletteAleatoire");
+        console.log("platforms sélectionnées :", selectedPlatforms);
     }
 
     deconnexion(){

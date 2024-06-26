@@ -5,9 +5,9 @@ export default class MoviesModel {
         this.api = new MoviesRoute();
     }
 
-    async get5RandomMovies(categoryids, token){
+    async get5RandomMovies(categoryids, platformsids, token){
         try {
-            return await this.api.get5RandomMovies(categoryids, token)
+            return await this.api.get5RandomMovies(categoryids, platformsids, token)
         }catch (e){
             throw e;
         }
@@ -25,9 +25,17 @@ export default class MoviesModel {
         }
     }
 
-    async getPlatforms(idapi, token){
+    async getMoviePlatforms(idapi, token){
         try {
-            return await this.api.getPlatforms(idapi, token)
+            return await this.api.getMoviePlatforms(idapi, token)
+        }catch (e){
+            throw e;
+        }
+    }
+
+    async getPlatforms(){
+        try {
+            return await this.api.getPlatforms()
         }catch (e){
             throw e;
         }

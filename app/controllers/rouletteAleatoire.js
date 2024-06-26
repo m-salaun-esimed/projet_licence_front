@@ -74,9 +74,11 @@ class RouletteAleatoire {
             const token = sessionStorage.getItem("token")
             const listGenre = JSON.parse(localStorage.getItem("listGenre"));
             const categoryids = listGenre.map(genre => genre.id);
+            const platforms = JSON.parse(localStorage.getItem("platforms"));
+            const platformsids = platforms.map(platforms => platforms.idapi);
             let response;
             if (localStorage.getItem("type")=== "film"){
-                response = await this.moviesModel.get5RandomMovies(categoryids, token);
+                response = await this.moviesModel.get5RandomMovies(categoryids, platformsids, token);
             }
             else {
                 response = await this.serieModel.get5RandomSeries(categoryids, token);
@@ -102,6 +104,7 @@ class RouletteAleatoire {
         // location.reload()
         localStorage.removeItem("listGenre");
         localStorage.removeItem("type");
+        localStorage.removeItem("platforms");
         navigate("formulaireRoulette");
     }
 
@@ -153,7 +156,7 @@ class RouletteAleatoire {
             console.error("Element .imageMovie non trouvé");
         }
 
-        const response = await this.moviesModel.getPlatforms(this.options[index].idapi, sessionStorage.getItem("token"));
+        const response = await this.moviesModel.getMoviePlatforms(this.options[index].idapi, sessionStorage.getItem("token"));
         console.log(response);
 
         if (response && response.flatrate) {
@@ -194,7 +197,7 @@ class RouletteAleatoire {
             </a>
             </div>`;
             });
-            platformsHTML += '</div>'; // Fermeture de la div row
+            platformsHTML += '</div>';
 
             const platformsElement = document.querySelector('.platforms');
             platformsElement.innerHTML = platformsHTML;
@@ -348,7 +351,7 @@ class RouletteAleatoire {
             console.error("Element .imageMovie non trouvé");
         }
 
-        const response = await this.moviesModel.getPlatforms(random.idapi, sessionStorage.getItem("token"));
+        const response = await this.moviesModel.getMoviePlatforms(random.idapi, sessionStorage.getItem("token"));
         console.log(response);
 
         if (response && response.flatrate) {

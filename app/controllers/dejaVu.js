@@ -172,7 +172,7 @@ class DejaVu {
             console.log(typecontenu)
             if (typecontenu === 'film'){
                 this.responseInfo = await this.moviesModel.getMovieByIdMovieApi(idapi)
-                this.responsePlatform = await this.moviesModel.getPlatforms(idapi, sessionStorage.getItem("token"))
+                this.responsePlatform = await this.moviesModel.getMoviePlatforms(idapi, sessionStorage.getItem("token"))
             }
             else {
                 this.responseInfo = await this.serieModel.getSerieByIdSerieApi(idapi)

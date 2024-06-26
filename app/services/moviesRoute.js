@@ -5,11 +5,12 @@ export default class MoviesRoute extends Api {
         this.routesUrl = ``;
     }
 
-    async get5RandomMovies(categoryids, token) {
+    async get5RandomMovies(categoryids,platformsids, token) {
         try {
             let events = `movie/randomMovies`;
             const headers = new Headers();
             headers.append('categoryids', categoryids.join(','));
+            headers.append('platformsIds', platformsids.join(','));
             headers.append('Authorization', token);
             const response = await fetch(`${this.apiServer}/${events}`, { method: 'GET', headers });
             const data = await response.json();
@@ -55,12 +56,26 @@ export default class MoviesRoute extends Api {
         }
     }
 
-    async getPlatforms(idapi, token){
+    async getMoviePlatforms(idapi, token){
         try {
             let events = `movie/platform`;
             const headers = new Headers();
             headers.append('idmovieapi', idapi);
             headers.append('Authorization', token);
+            const response = await fetch(`${this.apiServer}/${events}`, { method: 'GET', headers });
+            const data = await response.json();
+            return data;
+        } catch (e) {
+            console.error(e);
+            throw e;
+        }
+    }
+
+    async getPlatforms(){
+        try {
+            let events = `platforms`;
+            const headers = new Headers();
+            headers.append('Authorization', sessionStorage.getItem("token"));
             const response = await fetch(`${this.apiServer}/${events}`, { method: 'GET', headers });
             const data = await response.json();
             return data;
